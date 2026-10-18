@@ -2,6 +2,7 @@ api/config.php
 uploads/*
 !uploads/.gitkeep
 *.sql
+!database/schema.sql
 .history/
 .qodo/
 .vscode/
