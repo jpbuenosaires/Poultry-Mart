@@ -7,9 +7,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap" rel="stylesheet"/>
   <!-- Shared design tokens from fulfillment portal -->
-  <link rel="stylesheet" href="/css/fulfillment-entry.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/base.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/inventory-fix.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/login.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/layout.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/notifications.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/pages.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/queue.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/modals.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/tables.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/components.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/responsive.css"/>
   <!-- Admin-specific overrides -->
-  <link rel="stylesheet" href="/css/admin-entry.css"/>
+  <link rel="stylesheet" href="/css/admin/base.css"/>
+  <link rel="stylesheet" href="/css/admin/login.css"/>
+  <link rel="stylesheet" href="/css/admin/forms-buttons.css"/>
+  <link rel="stylesheet" href="/css/admin/layout.css"/>
+  <link rel="stylesheet" href="/css/admin/components.css"/>
+  <link rel="stylesheet" href="/css/admin/responsive.css"/>
+  <link rel="stylesheet" href="/css/admin/extensions.css"/>
 </head>
 <body class="portal-body portal-body--admin">
 
@@ -1267,7 +1283,26 @@
 <script src="js/shared/utils.js"></script>
 <script src="js/shared/uiHelpers.js"></script>
 <script src="js/shared/apiService.js"></script>
-<script src="js/controllers/admin.js"></script>
+<script src="js/controllers/admin/core.js"></script>
+<script src="js/controllers/admin/auth.js"></script>
+<script src="js/controllers/admin/dashboard.js"></script>
+<script src="js/controllers/admin/orders.js"></script>
+<script src="js/controllers/admin/orderScan.js"></script>
+<script src="js/controllers/admin/returns.js"></script>
+<script src="js/controllers/admin/products.js"></script>
+<script src="js/controllers/admin/categories.js"></script>
+<script src="js/controllers/admin/inventory.js"></script>
+<script src="js/controllers/admin/users.js"></script>
+<script src="js/controllers/admin/riders.js"></script>
+<script src="js/controllers/admin/payments.js"></script>
+<script src="js/controllers/admin/promos.js"></script>
+<script src="js/controllers/admin/settings.js"></script>
+<script src="js/controllers/admin/reports.js"></script>
+<script src="js/controllers/admin/disputes.js"></script>
+<script src="js/controllers/admin/notifications.js"></script>
+<script src="js/controllers/admin/auditLog.js"></script>
+<script src="js/controllers/admin/print.js"></script>
+<script src="js/controllers/admin/init.js"></script>
 
 </body>
 </html>

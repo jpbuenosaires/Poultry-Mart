@@ -1,0 +1,161 @@
+/* fulfillment/login.css - accessibility and login screen */
+/* ============================================================
+   SECTION 4 · ACCESSIBILITY — FOCUS RINGS & SR-ONLY
+   ============================================================ */
+:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius:  var(--radius-xs);
+}
+
+.sr-only {
+  position:   absolute !important;
+  width:       1px !important;
+  height:      1px !important;
+  padding:     0 !important;
+  margin:     -1px !important;
+  overflow:   hidden !important;
+  clip:        rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border:      0 !important;
+}
+
+
+/* ============================================================
+   SECTION 5 · LOGIN SCREEN
+   ============================================================ */
+.portal-login {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           100%;          /* ← fills the flex row so card truly centers */
+  min-height:      100vh;
+  padding:         1.5rem;
+  background:
+    radial-gradient(ellipse 70% 55% at 70% -10%, rgba(25,118,210,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 110%, rgba(46,125,50,.12) 0%, transparent 55%),
+    var(--bg-app);
+}
+
+/* Card */
+.portal-login__card {
+  width:         100%;
+  max-width:     420px;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:       2.5rem 2.25rem 2rem;
+  box-shadow:    var(--shadow-lg);
+  animation:     login-card-in .38s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+@keyframes login-card-in {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+
+/* Brand block inside login card */
+.portal-login__brand {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;      /* ← centers brand block horizontally */
+  gap:             .75rem;
+  margin-bottom:   1.75rem;
+  padding-bottom:  1.25rem;
+  border-bottom:   1px solid var(--border); /* subtle divider under brand */
+}
+
+.brand-chicken {
+  font-size:   2.1rem;
+  line-height: 1;
+  filter:      drop-shadow(0 2px 4px rgba(0,0,0,.12));
+  flex-shrink: 0;
+}
+
+.brand-wordmark {
+  font-family:    var(--font-display);
+  font-size:      1.5rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.02em;
+  line-height:    1.1;
+}
+.brand-wordmark strong { color: var(--primary); }
+
+.brand-portal-label {
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-top:  .1rem;
+}
+
+/* Heading & subtitle */
+.portal-login__heading {
+  font-family:    var(--font-display);
+  font-size:      1.5rem;
+  font-weight:    800;
+  color:          var(--text-main);
+  margin-bottom:  .35rem;
+  text-align:     center;       /* ← centered heading */
+  margin-top:     1.25rem;      /* breathing room below brand divider */
+}
+
+.portal-login__sub {
+  font-size:     .875rem;
+  color:         var(--text-muted);
+  margin-bottom: 1.75rem;
+  line-height:   1.5;
+  text-align:    center;        /* ← centered subtitle */
+}
+
+/* Demo hint (below sign-in button) */
+.portal-login__hint {
+  font-size:    .8rem;
+  color:        var(--text-muted);
+  text-align:   center;
+  margin-top:   1.25rem;
+  padding:      .65rem .75rem;
+  background:   var(--bg-alt);
+  border-radius: var(--radius-sm);
+  border:       1px dashed var(--border);
+  line-height:  1.55;
+}
+.portal-login__hint strong { color: var(--text-main); }
+
+/* Top-margin utility applied to login button */
+.btn--mt { margin-top: .75rem; }  /* ← more breathing room above CTA */
+
+/* Enhanced sign-in button for login form */
+.portal-login__card .btn-primary {
+  background:  linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+  box-shadow:  0 3px 12px rgba(46,125,50,.35);
+  font-size:   .95rem;
+  letter-spacing: .01em;
+  min-height:  44px;
+}
+.portal-login__card .btn-primary:hover {
+  background:  linear-gradient(135deg, #1B5E20 0%, #145214 100%);
+  box-shadow:  0 5px 18px rgba(46,125,50,.45);
+  transform:   translateY(-2px);
+}
+
+/* Back / switch-role link */
+.auth-back-link {
+  text-align: center;
+  margin-top: .9rem;
+  font-size:  .82rem;
+}
+
+.link-green {
+  color:       var(--primary);
+  font-weight: 500;
+  transition:  color var(--ease);
+}
+.link-green:hover { color: var(--primary-hover); }
+
+/* Form group spacing modifier used in login form */
+.form-group--spaced { margin-top: .875rem; }
+
+

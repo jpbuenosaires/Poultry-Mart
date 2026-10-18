@@ -1,0 +1,213 @@
+/* customer/base.css - variables, reset, typography */
+/* ============================================================
+   customer-entry.css — PoultryMart Customer Storefront
+   Farm-fresh · Premium · Fully Responsive (320px → 1920px+)
+   Fonts: Playfair Display (headings) · DM Sans (body/UI)
+   ============================================================ */
+
+
+/* ============================================================
+   VARIABLES
+   ============================================================ */
+
+:root {
+  /* --- Brand Colors --- */
+  --primary:            #1a7c4f;
+  --primary-hover:      #155f3c;
+  --primary-light:      #e8f5ee;
+  --primary-subtle:     #d0ede0;
+
+  /* --- Backgrounds --- */
+  --bg-body:            #FAFAFA;
+  --bg-card:            #ffffff;
+  --bg-alt:             #f4f4f2;
+  --bg-overlay:         rgba(18, 40, 26, 0.55);
+
+  /* --- Text --- */
+  --text-main:          #1a2a20;
+  --text-muted:         #6b7c73;
+  --text-light:         #9aab9e;
+  --text-on-primary:    #ffffff;
+
+  /* --- Borders --- */
+  --border:             #e3e8e5;
+  --border-focus:       #1a7c4f;
+  --radius-sm:          6px;
+  --radius:             10px;
+  --radius-lg:          16px;
+  --radius-xl:          22px;
+
+  /* --- Semantic Colors --- */
+  --success:            #1a7c4f;
+  --success-bg:         #e8f5ee;
+  --warning:            #d97706;
+  --warning-bg:         #fef3c7;
+  --error:              #dc2626;
+  --error-bg:             #fef2f2;
+  --info:               #0369a1;
+  --info-bg:            #e0f2fe;
+
+  /* --- Convenience aliases used in JS-generated HTML --- */
+  --green:              #1a7c4f;
+  --red:                #dc2626;
+  --red-light:          #fef2f2;
+  --orange:             #d97706;
+
+  /* --- Shadows --- */
+  --shadow-xs:          0 1px 3px rgba(26,44,32,.06), 0 1px 2px rgba(26,44,32,.04);
+  --shadow-sm:          0 2px 8px rgba(26,44,32,.08), 0 1px 3px rgba(26,44,32,.05);
+  --shadow-md:          0 4px 16px rgba(26,44,32,.10), 0 2px 6px rgba(26,44,32,.06);
+  --shadow-lg:          0 8px 32px rgba(26,44,32,.13), 0 4px 12px rgba(26,44,32,.07);
+  --shadow-xl:          0 16px 48px rgba(26,44,32,.16), 0 8px 20px rgba(26,44,32,.09);
+
+  /* --- Header --- */
+  --header-h:           68px;
+
+  /* --- Transitions --- */
+  --t:                  0.2s ease;
+
+  /* --- Typography Scale --- */
+  --fs-xs:              0.75rem;
+  --fs-sm:              0.85rem;
+  --fs-base:            1rem;
+  --fs-md:              1.1rem;
+  --fs-lg:              1.25rem;
+  --fs-xl:              1.5rem;
+  --fs-2xl:             2rem;
+  --fs-3xl:             2.75rem;
+  --fs-4xl:             3.5rem;
+}
+
+
+/* ============================================================
+   RESET & BASE
+   ============================================================ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: 'DM Sans', system-ui, sans-serif;
+  font-size: var(--fs-base);
+  line-height: 1.6;
+  color: var(--text-main);
+  background-color: var(--bg-body);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+  transition: color var(--t);
+}
+
+a:hover {
+  color: var(--primary-hover);
+}
+
+button {
+  cursor: pointer;
+  font-family: inherit;
+  border: none;
+  background: none;
+}
+
+input,
+select,
+textarea {
+  font-family: inherit;
+  font-size: var(--fs-base);
+}
+
+ul, ol {
+  list-style: none;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+/* --- Focus Ring (Accessibility) --- */
+:focus-visible {
+  outline: 2.5px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+/* --- Page view system --- */
+.page {
+  display: none;
+  min-height: calc(100vh - var(--header-h));
+  animation: pageFadeIn 0.22s ease;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes pageFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Container --- */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+
+/* ============================================================
+   TYPOGRAPHY
+   ============================================================ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+
+h1 { font-size: clamp(var(--fs-2xl), 5vw, var(--fs-4xl)); }
+h2 { font-size: clamp(var(--fs-xl),  3vw, var(--fs-3xl)); }
+h3 { font-size: clamp(var(--fs-lg),  2vw, var(--fs-2xl)); }
+h4 { font-size: var(--fs-lg); }
+
+p { color: var(--text-muted); line-height: 1.7; }
+
+small, .label-muted {
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+}
+
+.required-mark {
+  color: var(--error);
+  margin-left: 2px;
+}
+
+.price-unit {
+  font-size: var(--fs-xs);
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: 1px;
+}
+
+

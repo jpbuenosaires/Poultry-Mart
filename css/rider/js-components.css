@@ -1,0 +1,526 @@
+/* rider/js-components.css - JS-rendered component coverage and extractions */
+/* ============================================================
+   SECTION 32 — JS-RENDERED COMPONENT COVERAGE
+   Styles for all classes dynamically injected by rider.js
+   that were previously orphaned (no CSS rule).
+   ============================================================ */
+
+
+/* ── Notification panel items ───────────────────────────── */
+.notif-item {
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  transition: background var(--ease);
+  background: var(--bg-card);
+}
+.notif-item:last-child { border-bottom: none; }
+.notif-item:hover      { background: var(--bg-alt); }
+.notif-item:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+/* Read state — dimmed */
+.notif-item.read {
+  opacity: .6;
+  background: var(--bg-alt);
+}
+.notif-msg {
+  font-size: .875rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  margin-bottom: .2rem;
+}
+.notif-time {
+  font-size: .72rem;
+  color: var(--text-muted);
+  display: block;
+  line-height: 1.3;
+}
+.notif-empty {
+  padding: 2rem 1rem;
+  text-align: center;
+  font-size: .875rem;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+
+/* ── Order detail modal — key-value rows ────────────────── */
+.detail-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .35rem 0;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+.detail-row-label {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  padding-top: .1rem;
+}
+.detail-row-value {
+  color: var(--text-main);
+  text-align: right;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+}
+
+/* Total row — highlighted */
+.total-row {
+  margin-top: .5rem;
+  padding: .625rem .75rem;
+  background: var(--success-pale);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(46,125,50,.15);
+}
+.total-row .detail-row-label { color: var(--success-text); }
+.total-row .detail-row-value {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+/* Delivery address block */
+.detail-address {
+  font-size: .9rem;
+  color: var(--text-main);
+  line-height: 1.65;
+  font-style: normal;
+}
+
+/* Special instructions highlight */
+.special-instructions {
+  display: block;
+  background: var(--warning-pale);
+  color: var(--warning-text);
+  border-left: 3px solid var(--warning);
+  padding: .4rem .65rem;
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  font-size: .875rem;
+  line-height: 1.5;
+}
+
+
+/* ── Order items table (inside modal) ───────────────────── */
+.order-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .865rem;
+  margin-top: .25rem;
+}
+.order-items-table th {
+  padding: .45rem .75rem;
+  text-align: left;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  background: #FAFBFC;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.order-items-table td {
+  padding: .55rem .75rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  line-height: 1.4;
+}
+.order-items-table tbody tr:last-child td { border-bottom: none; }
+.order-items-table tbody tr:hover { background: #F0F7F0; }
+
+/* Table cell utilities */
+.item-name-cell {
+  font-weight: 500;
+  max-width: 180px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.item-weight-actual {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.text-right { text-align: right; }
+
+
+/* ── COD collection banner ──────────────────────────────── */
+.cod-collect-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: .875rem 1rem;
+  background: var(--warning);
+  color: #000;
+  border-radius: var(--radius-sm);
+  margin-top: .75rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+  text-align: center;
+  line-height: 1.4;
+}
+
+/* GCash notice (verified) */
+.gcash-notice {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .75rem 1rem;
+  background: var(--info-pale);
+  color: var(--info-text);
+  border-radius: var(--radius-sm);
+  font-size: .875rem;
+  font-weight: 600;
+  margin-top: .75rem;
+  border: 1px solid rgba(25,118,210,.18);
+  line-height: 1.45;
+}
+
+/* GCash unverified warning */
+.gcash-unverified-warning {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .875rem 1rem;
+  background: var(--error);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  font-weight: 700;
+  text-align: center;
+  margin-top: .75rem;
+  line-height: 1.45;
+}
+
+/* Estimated total warning */
+.estimated-warning {
+  display: flex;
+  align-items: flex-start;
+  gap: .4rem;
+  padding: .55rem .75rem;
+  background: var(--warning-pale);
+  color: var(--warning-text);
+  border-radius: var(--radius-xs);
+  font-size: .8rem;
+  font-weight: 500;
+  line-height: 1.5;
+  margin-top: .5rem;
+  border: 1px solid rgba(249,168,37,.25);
+}
+
+
+/* ── Partial delivery checklist ─────────────────────────── */
+.partial-item-row {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: .875rem;
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background var(--ease);
+  border-radius: var(--radius-xs);
+}
+.partial-item-row:last-child { border-bottom: none; }
+.partial-item-row:hover { background: var(--bg-alt); }
+
+.partial-item-check {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+  cursor: pointer;
+}
+
+
+/* ── Performance rate bar ───────────────────────────────── */
+.perf-rate-bar {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  min-width: 100px;
+}
+.perf-rate-bar > span {
+  font-size: .8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  min-width: 36px;
+  text-align: right;
+}
+.perf-rate-fill {
+  flex: 1;
+  height: 7px;
+  background: var(--primary);
+  border-radius: var(--radius-pill);
+  transition: width .4s ease;
+  min-width: 2px;
+  max-width: 100%;
+}
+/* Wrap bar + fill together inside a track */
+.perf-rate-bar::before {
+  content: none; /* track is the bar's parent; handled by JS width% */
+}
+/* Override: add a track background via wrapper if needed */
+.perf-rate-bar {
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  height: 8px;
+  position: relative;
+  flex: 1;
+  max-width: 240px;      /* Prevents stretching too wide on large screens */
+  margin-right: 48px;    /* Creates safe space for the absolute text */
+}
+.perf-rate-bar > span {
+  position: absolute;
+  right: -48px;          /* Shifted slightly to breathe */
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body);
+}
+
+/* ── POD image thumbnail (inside modal) ─────────────────── */
+.pod-image {
+  width: 100%;
+  max-height: 220px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  display: block;
+}
+
+
+/* ── Shift summary card (dashboard) ─────────────────────── */
+.shift-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.125rem;
+  margin-bottom: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.shift-summary-card h4 {
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  color: var(--text-muted);
+  margin-bottom: .75rem;
+}
+
+/* ── Stat pills (dashboard + performance summary bar) ───── */
+
+/* Override stat-info to use flex column and re-order label to the top */
+.pill-green .stat-info,
+.pill-orange .stat-info,
+.pill-blue .stat-info,
+.pill-money .stat-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+  justify-content: center;
+}
+
+/* Label: Uppercase, bold, gray, positioned on TOP */
+.pill-green .stat-label,
+.pill-orange .stat-label,
+.pill-blue .stat-label,
+.pill-money .stat-label {
+  font-family: var(--font-body) !important;
+  font-size: .75rem !important;
+  font-weight: 700 !important; 
+  color: var(--text-muted) !important;
+  text-transform: uppercase !important;
+  letter-spacing: .08em !important;
+  line-height: 1.3 !important;
+  margin: 0 0 .25rem 0 !important;
+  order: 1 !important; /* Top */
+}
+
+/* Value: Massive, bold, serif, positioned on BOTTOM */
+.pill-green .stat-value,
+.pill-orange .stat-value,
+.pill-blue .stat-value,
+.pill-money .stat-value {
+  font-family: var(--font-display) !important;
+  font-size: 1.85rem !important; /* Big emphasis */
+  font-weight: 800 !important; /* Extra bold */
+  color: var(--text-main) !important;
+  line-height: 1.1 !important;
+  letter-spacing: -.02em !important;
+  margin: 0 !important;
+  order: 2 !important; /* Bottom */
+}
+
+
+/* ── Settings profile rows ──────────────────────────────── */
+.settings-profile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .5rem;
+  padding: .4rem 0;
+  font-size: .875rem;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--border);
+}
+.settings-profile-row:last-child { border-bottom: none; }
+.settings-profile-row .detail-row-label {
+  flex-shrink: 0;
+  width: 72px;
+}
+
+
+/* ── Remittance status badges ───────────────────────────── */
+.remit-status {
+  display: inline-flex;
+  align-items: center;
+  padding: .2rem .55rem;
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  line-height: 1.3;
+  background: #F3F4F6;
+  color: #374151;
+}
+.remit-status-Pending  {
+  background: var(--warning-pale);
+  color: var(--warning-text);
+}
+.remit-status-Approved {
+  background: var(--success-pale);
+  color: var(--success-text);
+}
+.remit-status-Rejected {
+  background: var(--error-pale);
+  color: var(--error-text);
+}
+
+
+/* ── Responsive: pill layout on mobile ──────────────────── */
+@media (max-width: 480px) {
+  .perf-rate-bar > span {
+    right: -38px;
+    font-size: .72rem;
+  }
+}
+
+/* ============================================================
+   SECTION 33 — DYNAMIC JS COMPONENT EXTRACTIONS
+   (Replaces inline styles injected via JS modals/alerts)
+   ============================================================ */
+
+/* ── Scan Guard Overlay ─────────────────────────────────── */
+.scan-guard-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.7);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.scan-guard-overlay.open { display: flex; }
+.scan-guard-box {
+  background: var(--surface, #fff);
+  border-radius: var(--radius-md);
+  padding: 1.5rem;
+  max-width: 420px;
+  width: 100%;
+  text-align: center;
+  box-shadow: var(--shadow-modal);
+}
+.scan-guard-icon { font-size: 2rem; margin-bottom: .5rem; line-height: 1; }
+.scan-guard-title { margin: 0 0 .5rem; font-size: 1.1rem; }
+.scan-guard-desc { font-size: .9rem; color: var(--text-muted); margin-bottom: 1rem; }
+.scan-guard-input { text-align: center; font-size: 1.1rem; letter-spacing: .05em; margin-bottom: .75rem; }
+.scan-guard-actions { display: flex; gap: .5rem; justify-content: center; margin-top: .5rem; }
+
+/* ── Shift Summary Stats (Dashboard & Modals) ───────────── */
+.shift-stat-grid {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.shift-stat-box {
+  flex: 1;
+  min-width: 140px;
+  padding: 1.25rem 1rem;
+  border-radius: var(--radius-md);
+  text-align: center;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  position: relative;
+  overflow: hidden;
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+.shift-stat-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Add vibrant accent lines to the bottom of the cards */
+.shift-stat-box.cod     { border-bottom: 4px solid #F59E0B; }
+.shift-stat-box.cod .shift-stat-val { color: #B45309; }
+
+.shift-stat-box.gcash   { border-bottom: 4px solid #0284C7; }
+.shift-stat-box.gcash .shift-stat-val { color: #0369A1; }
+
+.shift-stat-box.prepaid { border-bottom: 4px solid #059669; }
+.shift-stat-box.prepaid .shift-stat-val { color: #047857; }
+
+.shift-stat-box.failed  { border-bottom: 4px solid #DC2626; }
+.shift-stat-box.failed .shift-stat-val { color: #B91C1C; }
+
+.shift-stat-val { 
+  font-family: var(--font-display); 
+  font-size: 1.8rem; 
+  font-weight: 800; 
+  line-height: 1.1; 
+}
+.shift-stat-label { 
+  font-size: .8rem; 
+  font-weight: 700; 
+  color: var(--text-muted);
+  margin-top: .4rem; 
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+
+/* ── Shift QR Modal Details ─────────────────────────────── */
+.shift-qr-wrapper { text-align: center; }
+.shift-qr-hint { margin-bottom: .75rem; font-size: .9rem; color: var(--text-muted); }
+.shift-qr-img {
+  border: 4px solid var(--border);
+  border-radius: var(--radius-sm);
+  max-width: 220px;
+  display: inline-block;
+}
+.shift-details-wrapper { margin-top: 1.25rem; }
+.shift-details-title {
+  font-size: .85rem;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  margin-bottom: .6rem;
+  color: var(--text-muted);
+}
+.shift-failed-title { font-size: .85rem; margin-bottom: .4rem; margin-top: 1rem; }
+.shift-failed-list { font-size: .85rem; padding-left: 1.2rem; color: var(--text-muted); }

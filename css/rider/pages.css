@@ -1,0 +1,93 @@
+/* rider/pages.css - page content wrapper */
+/* ============================================================
+   SECTION 7 — RIDER PAGE CONTENT WRAPPER
+   ============================================================ */
+#rider-pages-wrapper {
+  flex: 1;
+  padding: 1.25rem 1.125rem;
+  overflow-y: auto;
+}
+
+/* ── Individual pages ─────────────────────────────────── */
+.rider-page {
+  display: none;
+  outline: none;      /* receives programmatic focus; no ring */
+}
+.rider-page.active {
+  display: block;
+  animation: view-in .2s ease both;
+}
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Page header row (title + filter controls) */
+.rider-page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: .75rem;
+  margin-bottom: 1.125rem;
+  flex-wrap: wrap;
+}
+.rider-page-header h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  line-height: 1.2;
+  color: var(--text-main);
+}
+.rider-page-sub {
+  font-size: .82rem;
+  color: var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.5;
+}
+
+/* Section sub-headings (h4 inside pages) */
+.section-subheading {
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 1.25rem 0 .5rem;
+  padding-bottom: .35rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Date-range filter row (Aligned Box) */
+.rider-filter-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.25rem;
+  flex-wrap: nowrap;
+  margin: 0 0 1rem 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.rider-filter-row .form-group {
+  margin-bottom: 0;
+  flex: 1;
+}
+.rider-filter-input {
+  width: 100%;
+  max-width: 180px;
+}
+
+@media (max-width: 768px) {
+  .rider-filter-row {
+    flex-wrap: wrap;
+    padding: 1rem;
+    gap: .75rem;
+  }
+  .rider-filter-input {
+    max-width: 100%;
+  }
+}
+
+

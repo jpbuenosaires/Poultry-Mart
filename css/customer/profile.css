@@ -1,0 +1,151 @@
+/* customer/profile.css - profile page */
+   PROFILE PAGE
+   ============================================================ */
+
+.profile-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 2.5rem;
+  align-items: start;
+  padding-block: 2.5rem 4rem;
+}
+
+/* Profile Nav */
+.profile-nav {
+  position: sticky;
+  top: calc(var(--header-h) + 1.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: .75rem;
+  box-shadow: var(--shadow-xs);
+}
+
+.profile-nav-btn {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  min-height: 46px;
+  padding: .6rem .9rem;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius);
+  text-align: left;
+  border-left: 3px solid transparent;
+  transition: background var(--t), color var(--t), border-color var(--t);
+}
+
+.profile-nav-btn:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.profile-nav-btn.active {
+  background: var(--primary-light);
+  color: var(--primary);
+  border-left-color: var(--primary);
+}
+
+/* Profile Content / Tabs */
+.profile-content {
+  min-width: 0;
+}
+
+.profile-tab {
+  display: none;
+  animation: pageFadeIn 0.2s ease;
+}
+
+.profile-tab.active {
+  display: block;
+}
+
+/* Address List */
+#address-list {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  margin-bottom: 1rem;
+}
+
+.address-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .9rem 1.1rem;
+  background: var(--bg-body);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  transition: border-color var(--t);
+}
+
+.address-item:hover { border-color: var(--primary-subtle); }
+
+.address-item-label {
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: .2rem;
+}
+
+.address-item-detail {
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  line-height: 1.5;
+}
+
+.address-default-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  background: var(--success-bg);
+  color: var(--primary);
+  border-radius: 99px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  border: 1px solid var(--primary-subtle);
+}
+
+.address-item-actions {
+  display: flex;
+  gap: .5rem;
+  flex-shrink: 0;
+}
+
+/* Address Forms */
+.address-form {
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.25rem 1.5rem;
+  margin-top: 1rem;
+  animation: pageFadeIn 0.2s ease;
+}
+
+.address-form h4 {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--fs-lg);
+  margin-bottom: 1rem;
+}
+
+.address-form-actions {
+  display: flex;
+  gap: .65rem;
+  margin-top: 1rem;
+  flex-wrap: wrap;
+}
+
+#edit-address-form {
+  margin-top: 1rem;
+}
+
+
+/* ============================================================

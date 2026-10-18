@@ -1,0 +1,525 @@
+/* fulfillment/queue.css - queue/packed/dispatch cards and zone view */
+/* ============================================================
+   SECTION 16 · QUEUE CARDS  (packing queue + returns)
+   ============================================================ */
+.queue-card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid transparent;
+  border-radius: var(--radius-md);
+  margin-bottom: .875rem;
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  transition:    box-shadow var(--ease);
+}
+.queue-card:hover { box-shadow: var(--shadow-md); }
+
+/* Priority states */
+.queue-card.priority-urgent {
+  border-left-color: var(--error);
+  background: linear-gradient(to right, rgba(211,47,47,.025) 0%, transparent 36px);
+}
+.queue-card.priority-normal {
+  border-left-color: var(--success);
+}
+
+/* Card header */
+.queue-card-header {
+  display:         flex;
+  align-items:     center;
+  gap:             .6rem;
+  padding:         .75rem 1rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  flex-wrap:       wrap;
+}
+
+.queue-checkbox-wrap {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.queue-checkbox {
+  width:        16px;
+  height:       16px;
+  cursor:       pointer;
+  accent-color: var(--primary);
+  flex-shrink:  0;
+}
+.queue-checkbox:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.queue-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+}
+
+.queue-delivery-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .6rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--info-pale);
+  color:         var(--info-text);
+  white-space:   nowrap;
+}
+
+.queue-urgency-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .6rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--error-pale);
+  color:         var(--error-text);
+  white-space:   nowrap;
+  animation:     urgency-pulse 1.6s ease infinite;
+}
+@keyframes urgency-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .65; }
+}
+
+/* Badge applied by JS when customer edits order */
+.queue-edit-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .15rem .45rem;
+  font-size:     .68rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--orange);
+  color:         #fff;
+  margin-left:   .35rem;
+  white-space:   nowrap;
+  flex-shrink:   0;
+}
+
+.queue-card-header-actions {
+  margin-left: auto;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-shrink: 0;
+}
+
+/* Card body — three-column layout */
+.queue-card-body {
+  display:   grid;
+  grid-template-columns: 1fr 1.5fr .85fr;
+  gap:       .875rem 1rem;
+  padding:   .875rem 1rem;
+  align-items: start;
+}
+
+.queue-col-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .25rem;
+}
+
+.queue-customer-col,
+.queue-items-col,
+.queue-action-col { min-width: 0; }
+
+.queue-customer-name {
+  font-weight: 600;
+  color:       var(--text-main);
+  font-size:   .875rem;
+  line-height: 1.3;
+}
+
+.queue-customer-detail {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.5;
+}
+
+.queue-items-list-wrap { min-height: 1.5rem; }
+
+.queue-items-list {
+  list-style: none;
+  margin:     0;
+  padding:    0;
+  display:    flex;
+  flex-direction: column;
+  gap:        .25rem;
+}
+.queue-items-list li {
+  display:    flex;
+  align-items: center;
+  gap:        .4rem;
+  font-size:  .82rem;
+  color:      var(--text-main);
+  line-height: 1.3;
+}
+
+.queue-item-catch {
+  font-size:   .7rem;
+  color:       var(--orange);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.queue-items-more {
+  font-size:  .72rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  font-style: italic;
+}
+
+.queue-action-col {
+  display:        flex;
+  flex-direction: column;
+  align-items:    stretch;      /* ← all child buttons fill the column */
+  gap:            .5rem;
+  min-width:      130px;
+}
+
+/* Primary pack/action button — full-width inside action col */
+.queue-action-col .btn-primary,
+.queue-action-col .btn-action-green {
+  width:        100%;
+  justify-content: center;
+  min-height:   38px;
+  font-size:    .82rem;
+  background:   linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  box-shadow:   0 2px 8px rgba(46,125,50,.3);
+}
+.queue-action-col .btn-primary:hover,
+.queue-action-col .btn-action-green:hover {
+  box-shadow:  0 4px 14px rgba(46,125,50,.4);
+  transform:   translateY(-1px);
+}
+
+/* Secondary buttons inside action col */
+.queue-action-col .btn-action,
+.queue-action-col .btn-outline {
+  width:        100%;
+  justify-content: center;
+  min-height:   34px;
+  font-size:    .78rem;
+}
+
+.queue-est-total {
+  display:        flex;
+  flex-direction: column;
+  gap:            .1rem;
+  font-size:      .72rem;
+  color:          var(--text-muted);
+  font-weight:    500;
+}
+.queue-est-total strong {
+  font-family: var(--font-display);
+  font-size:   1.05rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  line-height: 1.1;
+}
+
+
+/* ============================================================
+   SECTION 17 · PACKED CARDS  (assign riders page)
+   ============================================================ */
+.packed-card {
+  display:       flex;
+  align-items:   center;
+  gap:           1rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid var(--info);
+  border-radius: var(--radius-md);
+  padding:       .875rem 1rem;
+  margin-bottom: .75rem;
+  box-shadow:    var(--shadow-sm);
+  flex-wrap:     wrap;
+  transition:    box-shadow var(--ease);
+}
+.packed-card:hover { box-shadow: var(--shadow-md); }
+
+.packed-info {
+  flex:      1;
+  min-width: 0;
+}
+
+.packed-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  line-height:    1.2;
+}
+
+.packed-customer {
+  font-size:   .82rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  margin-top:  .2rem;
+}
+
+.packed-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.4;
+}
+
+.packed-final {
+  text-align:  right;
+  flex-shrink: 0;
+}
+
+.packed-final-amount {
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  font-weight: 700;
+  color:       var(--primary);
+  line-height: 1.1;
+}
+
+.packed-final-label {
+  font-size:  .68rem;
+  color:      var(--text-muted);
+  margin-top: .15rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* Shared row of action buttons (packed, dispatch, all-orders) */
+.btn-actions-row {
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+  flex-shrink: 0;
+}
+
+/* Action button variants */
+.btn-action {
+  display:       inline-flex;
+  align-items:   center;
+  justify-content: center;
+  gap:           .3rem;
+  padding:       .3rem .75rem;
+  font-family:   var(--font-body);
+  font-size:     .78rem;
+  font-weight:   600;
+  border-radius: var(--radius-xs);
+  border:        1.5px solid transparent;
+  cursor:        pointer;
+  white-space:   nowrap;
+  min-height:    30px;
+  transition:    background var(--ease), color var(--ease), border-color var(--ease), transform var(--ease);
+  text-decoration: none;
+}
+.btn-action:hover  { transform: translateY(-1px); }
+.btn-action:active { transform: translateY(0); }
+
+.btn-action-blue {
+  background:  var(--info-pale);
+  color:       var(--info-text);
+  border-color: rgba(25,118,210,.3);
+}
+.btn-action-blue:hover {
+  background:  var(--info);
+  color:       #fff;
+  border-color: var(--info);
+}
+
+.btn-action-green {
+  background:  var(--success-pale);
+  color:       var(--success-text);
+  border-color: rgba(46,125,50,.3);
+}
+.btn-action-green:hover {
+  background:  var(--success);
+  color:       #fff;
+  border-color: var(--success);
+}
+
+.btn-action-muted {
+  background:  var(--bg-alt);
+  color:       var(--text-muted);
+  border-color: var(--border);
+}
+.btn-action-muted:hover {
+  background:  #E5E7EB;
+  color:       var(--text-main);
+  border-color: #9CA3AF;
+}
+.btn-action:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 18 · DISPATCH CARDS  (active dispatch page)
+   ============================================================ */
+.dispatch-card {
+  display:       flex;
+  align-items:   center;
+  gap:           1rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid var(--orange);
+  border-radius: var(--radius-md);
+  padding:       .875rem 1rem;
+  margin-bottom: .75rem;
+  box-shadow:    var(--shadow-sm);
+  flex-wrap:     wrap;
+  transition:    box-shadow var(--ease);
+}
+.dispatch-card:hover { box-shadow: var(--shadow-md); }
+
+.dispatch-status-indicator {
+  font-size:   1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  animation:   dispatch-pulse 2s ease infinite;
+}
+@keyframes dispatch-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.1); opacity: .75; }
+}
+
+.dispatch-info {
+  flex:      1;
+  min-width: 0;
+}
+
+.dispatch-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  line-height:    1.2;
+}
+
+.dispatch-customer {
+  font-size:   .82rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  margin-top:  .2rem;
+}
+
+.dispatch-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.4;
+}
+
+.dispatch-total {
+  text-align:  right;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  font-weight: 700;
+  color:       var(--primary);
+}
+
+
+/* ============================================================
+   SECTION 19 · ZONE VIEW  (grouped assign-riders view)
+   ============================================================ */
+.zone-group-card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+}
+
+.zone-group-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             .75rem;
+  padding:         .75rem 1rem;
+  background:      #FAFBFC;
+  border-bottom:   1px solid var(--border);
+  flex-wrap:       wrap;
+}
+.zone-group-header > div {
+  display:     flex;
+  align-items: center;
+  gap:         .45rem;
+  font-weight: 700;
+  font-size:   .95rem;
+  color:       var(--text-main);
+}
+
+.zone-group-icon { font-size: 1rem; line-height: 1; }
+
+.zone-order-count {
+  font-size:     .72rem;
+  font-weight:   600;
+  color:         var(--text-muted);
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding:       .1rem .5rem;
+}
+
+.zone-batch-btn { flex-shrink: 0; }
+
+.zone-order-list { padding: .5rem 0; }
+
+.zone-order-row {
+  display:       grid;
+  grid-template-columns: 1fr 1.5fr 1fr auto auto;
+  gap:           .5rem;
+  align-items:   center;
+  padding:       .5rem 1rem;
+  font-size:     .82rem;
+  color:         var(--text-main);
+  border-bottom: 1px solid var(--border);
+  transition:    background var(--ease);
+}
+.zone-order-row:last-child { border-bottom: none; }
+.zone-order-row:hover      { background: #F0F7F0; }
+
+.zone-order-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size:   .82rem;
+  color:       var(--text-main);
+}
+
+/* Mini order list inside batch-assign modal */
+.zone-assign-order-list {
+  max-height:  200px;
+  overflow-y:  auto;
+  border:      1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: .5rem;
+}
+
+.zone-mini-order {
+  padding:     .45rem .875rem;
+  font-size:   .82rem;
+  color:       var(--text-main);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.4;
+}
+.zone-mini-order:last-child { border-bottom: none; }
+
+

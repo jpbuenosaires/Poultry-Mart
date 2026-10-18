@@ -1,0 +1,43 @@
+/* fulfillment/inventory-fix.css - inventory table responsiveness fix */
+/* Inventory table needs more horizontal room for 8 columns */
+/* ============================================================
+   FIX: INVENTORY TABLE RESPONSIVENESS
+   ============================================================ */
+
+/* 1. Remove the hardcoded minimum width */
+#inventory-table {
+  min-width: 100% !important;
+  width: 100% !important;
+  table-layout: auto; 
+}
+
+/* 2. Allow text (like long product names) to wrap naturally */
+#inventory-table th,
+#inventory-table td {
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 0.6rem 0.4rem; /* Keeps padding tight to save space */
+  vertical-align: middle;
+}
+
+/* 3. Protect the "Stock Level" bar from getting squished too small */
+#inventory-table th:nth-child(7),
+#inventory-table td:nth-child(7) {
+  min-width: 130px; 
+}
+
+/* 4. Keep the "Adjust" button on a single line */
+#inventory-table th:last-child,
+#inventory-table td:last-child {
+  white-space: nowrap;
+  width: 100px;
+}
+
+/* All Orders table needs room for 9 columns */
+#all-orders-table {
+  min-width: 980px;
+}
+
+[hidden] { display: none !important; }
+
+

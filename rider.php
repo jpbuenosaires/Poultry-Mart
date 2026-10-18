@@ -11,7 +11,16 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
   <!-- Portal specific -->
-  <link rel="stylesheet" href="/css/rider-entry.css"/>
+  <link rel="stylesheet" href="/css/rider/base.css"/>
+  <link rel="stylesheet" href="/css/rider/login.css"/>
+  <link rel="stylesheet" href="/css/rider/shell.css"/>
+  <link rel="stylesheet" href="/css/rider/pages.css"/>
+  <link rel="stylesheet" href="/css/rider/components.css"/>
+  <link rel="stylesheet" href="/css/rider/deliveries.css"/>
+  <link rel="stylesheet" href="/css/rider/modals.css"/>
+  <link rel="stylesheet" href="/css/rider/settings-misc.css"/>
+  <link rel="stylesheet" href="/css/rider/responsive.css"/>
+  <link rel="stylesheet" href="/css/rider/js-components.css"/>
 </head>
 <body class="portal-body portal-body--rider">
 
@@ -822,6 +831,29 @@
 <script src="js/shared/utils.js"></script>
 <script src="js/shared/uiHelpers.js"></script>
 <script src="js/shared/apiService.js"></script>
-<script src="js/controllers/rider.js"></script>
+<script src="js/controllers/rider/core.js"></script>
+<script src="js/controllers/rider/navigation.js"></script>
+<script src="js/controllers/rider/auth.js"></script>
+<script src="js/controllers/rider/appInit.js"></script>
+<script src="js/controllers/rider/polling.js"></script>
+<script src="js/controllers/rider/dutyStatus.js"></script>
+<script src="js/controllers/rider/dashboard.js"></script>
+<script src="js/controllers/rider/activeOrders.js"></script>
+<script src="js/controllers/rider/history.js"></script>
+<script src="js/controllers/rider/deliveryCards.js"></script>
+<script src="js/controllers/rider/orderDetail.js"></script>
+<script src="js/controllers/rider/statusActions.js"></script>
+<script src="js/controllers/rider/completeDelivery.js"></script>
+<script src="js/controllers/rider/podSignature.js"></script>
+<script src="js/controllers/rider/offlineQueue.js"></script>
+<script src="js/controllers/rider/submitDelivery.js"></script>
+<script src="js/controllers/rider/issueReport.js"></script>
+<script src="js/controllers/rider/notifications.js"></script>
+<script src="js/controllers/rider/performance.js"></script>
+<script src="js/controllers/rider/settings.js"></script>
+<script src="js/controllers/rider/cashRemittance.js"></script>
+<script src="js/controllers/rider/keyboard.js"></script>
+<script src="js/controllers/rider/endOfShift.js"></script>
+<script src="js/controllers/rider/boot.js"></script>
 </body>
 </html>

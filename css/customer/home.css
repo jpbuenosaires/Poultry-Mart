@@ -1,0 +1,198 @@
+/* customer/home.css - hero, section layout, small page hero */
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+
+.hero {
+  position: relative;
+  min-height: clamp(500px, 70vh, 700px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--primary);
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
+    linear-gradient(135deg, #145f3c 0%, #1a7c4f 40%, #218a59 70%, #2da86e 100%);
+  background-attachment: fixed;
+  z-index: 0;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: var(--bg-body);
+  clip-path: ellipse(55% 100% at 50% 100%);
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding-block: clamp(3.5rem, 8vh, 6rem);
+  color: #fff;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 0.4rem 1.1rem;
+  background: rgba(255,255,255,.15);
+  border: 1px solid rgba(255,255,255,.35);
+  border-radius: 99px;
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(6px);
+  letter-spacing: .03em;
+}
+
+.hero-content h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2.25rem, 7vw, 4.5rem);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.1;
+  margin-bottom: 1.25rem;
+  text-shadow: 0 2px 12px rgba(0,0,0,.15);
+}
+
+.hero-content h1 em {
+  font-style: italic;
+  color: rgba(255,255,255,.85);
+}
+
+.hero-content p {
+  font-size: clamp(var(--fs-base), 2.2vw, var(--fs-lg));
+  color: rgba(255,255,255,.88);
+  max-width: 580px;
+  margin: 0 auto 2.25rem;
+  line-height: 1.65;
+}
+
+.hero-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+
+.hero-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.hero-stats > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+}
+
+.hero-stats strong {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: #fff;
+  font-weight: 800;
+}
+
+.hero-stats span {
+  font-size: var(--fs-xs);
+  color: rgba(255,255,255,.75);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+
+/* ============================================================
+   SECTION LAYOUT
+   ============================================================ */
+
+.section {
+  padding-block: clamp(3rem, 7vh, 5rem);
+}
+
+.section-alt {
+  background: var(--bg-alt);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(1.5rem, 3vh, 2.5rem);
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+
+.section-header h2,
+.section-header h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+.view-all {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--primary);
+  transition: gap var(--t);
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+}
+
+.view-all:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+
+/* ============================================================
+   PAGE HERO SMALL (sub-pages banner)
+   ============================================================ */
+
+.page-hero-sm {
+  background: linear-gradient(135deg, #145f3c, #1a7c4f);
+  padding: 2.25rem 0 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero-sm::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  right: 0;
+  height: 40px;
+  background: var(--bg-body);
+  clip-path: ellipse(55% 100% at 50% 100%);
+}
+
+.page-hero-sm h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(var(--fs-xl), 4vw, var(--fs-3xl));
+  color: #fff;
+  margin-bottom: .35rem;
+}
+
+.page-hero-sm p {
+  color: rgba(255,255,255,.8);
+  font-size: var(--fs-sm);
+}
+
+

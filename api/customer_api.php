@@ -6,32 +6,14 @@
  * No SQL lives here.
  */
 
-// ── Guarantee a clean JSON response on every code path ───────────
-// Without these three lines, any PHP notice/warning (e.g. "Undefined index",
-// deprecated call, or an uncaught exception) gets prepended to the output as
-// plain text.  The browser then receives "Notice: …{…json…}" which is not
-// valid JSON, res.json() throws a SyntaxError, and products silently fail to
-// load — intermittently, depending on which code path triggered the notice.
-header('Content-Type: application/json; charset=utf-8');
-ini_set('display_errors', '0');          // never mix PHP errors into our JSON
-error_reporting(E_ALL);                  // still log them server-side
-
-set_exception_handler(function (Throwable $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Server error: ' . $e->getMessage(),
-    ]);
-    exit;
-});
-
+require_once __DIR__ . '/helpers/json_bootstrap.php';
 require_once __DIR__ . '/db.php';
 
 // Ensure all API endpoints operate in local Philippine time
 date_default_timezone_set('Asia/Manila');
 
-$action = $_GET['action'] ?? '';
-$body   = json_decode(file_get_contents('php://input'), true) ?? [];
+$action = Request::action();
+$body   = Request::body();
 
 // ── Service instances ────────────────────────────────────────────
 $auth      = new AuthService($conn);

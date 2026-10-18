@@ -1,0 +1,676 @@
+/* rider/components.css - stats, panel, tabs, table, filters, forms, buttons, badges */
+/* ============================================================
+   SECTION 8 — COMPONENTS: STATS GRID & CARDS
+   (Identical to admin; shared across portals)
+   ============================================================ */
+/* Rider summary bar (performance page) merges with stats-grid */
+.stats-grid,
+.rider-summary-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem 1.125rem;
+  display: flex;
+  align-items: flex-start;
+  gap: .875rem;
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--ease), transform var(--ease);
+}
+.stat-card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+.stat-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.stat-icon.green  { background: var(--success-pale);  color: var(--success); }
+.stat-icon.orange { background: #FFF3E0;               color: #E65100; }
+.stat-icon.blue   { background: var(--info-pale);      color: var(--info); }
+.stat-icon.purple { background: #F3E5F5;               color: #7B1FA2; }
+
+.stat-info { flex: 1; min-width: 0; }
+
+.stat-label {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  line-height: 1.3;
+  margin-bottom: .2rem;
+}
+
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.1;
+  letter-spacing: -.01em;
+}
+
+.stat-sub {
+  font-size: .72rem;
+  color: var(--text-muted);
+  margin-top: .25rem;
+  line-height: 1.4;
+}
+
+
+/* ============================================================
+   SECTION 9 — COMPONENTS: RIDER PANEL
+   (.rider-panel is a structural clone of .admin-panel,
+    used everywhere .admin-panel was used in admin.php)
+   ============================================================ */
+.rider-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  margin-bottom: 1.25rem;
+}
+/* Remove default bottom margin when inside a grid */
+.settings-grid .rider-panel,
+.dashboard-grid .rider-panel {
+  margin-bottom: 0;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .875rem 1.125rem;
+  border-bottom: 1px solid var(--border);
+  background: #FAFBFC;
+  flex-wrap: wrap;
+  min-height: 52px;
+}
+.panel-title {
+  font-family: var(--font-body);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -.01em;
+}
+.panel-title small {
+  font-size: .78rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: .4rem;
+}
+.panel-controls {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+.panel-body {
+  padding: 1.125rem;
+}
+.panel-body.no-pad {
+  padding: 0;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.panel-hint {
+  font-size: .82rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  padding: .75rem 1.125rem;
+  background: #FAFBFC;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+}
+.panel-hint strong { color: var(--text-main); }
+.panel-hint em     { color: var(--primary); font-style: normal; font-weight: 600; }
+
+
+/* ============================================================
+   SECTION 10 — COMPONENTS: STATUS TAB BAR
+   ============================================================ */
+.rider-tab-bar {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: .5rem;
+  margin-bottom: .875rem;
+  scrollbar-width: none;
+}
+.rider-tab-bar::-webkit-scrollbar { display: none; }
+
+.tab-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+/* Active tab gets a solid fill */
+.tab-btn.active {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.tab-btn.active:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  color: #fff;
+  transform: none;
+  box-shadow: none;
+}
+
+
+/* ============================================================
+   SECTION 11 — COMPONENTS: DATA TABLE
+   (Identical to admin-entry.css)
+   ============================================================ */
+.data-table,
+.rider-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .865rem;
+}
+
+.data-table th,
+.rider-table th {
+  padding: .875rem 1rem;
+  text-align: left;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: #4B5563;
+  background: #F3F4F6;
+  border-bottom: 2px solid var(--border);
+  white-space: nowrap;
+}
+
+.data-table td,
+.rider-table td {
+  padding: 1.125rem 1rem;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-main);
+  font-size: .9rem;
+  line-height: 1.5;
+}
+
+/* Make the Order Numbers pop out more */
+.order-num {
+  font-family: var(--font-display);
+  font-size: .95rem;
+  font-weight: 800;
+  color: var(--primary-hover);
+  letter-spacing: -.01em;
+}
+
+.data-table tbody tr:last-child td,
+.rider-table tbody tr:last-child td { border-bottom: none; }
+
+.data-table tbody tr,
+.rider-table tbody tr {
+  transition: background var(--ease);
+}
+
+.data-table tbody tr:hover,
+.rider-table tbody tr:hover { 
+  background: #F4FBF4; 
+}
+
+/* Actions column */
+.data-table .td-actions {
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+  flex-wrap: wrap;
+}
+
+/* Table scroll wrapper (White Box Effect) */
+.rider-table-wrap,
+.panel-body.no-pad {
+  background: var(--bg-card);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Table states */
+.table-loading {
+  text-align: center;
+  padding: 2.5rem 1rem;
+  color: var(--text-muted);
+  font-size: .875rem;
+  font-style: italic;
+}
+.table-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .6rem;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  color: var(--text-muted);
+}
+.table-empty span { font-size: 2rem; line-height: 1; opacity: .7; }
+.table-empty p    { font-size: .875rem; }
+
+/* Order number cell */
+.order-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -.01em;
+}
+
+
+/* ============================================================
+   SECTION 12 — COMPONENTS: FILTER BAR
+   ============================================================ */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  flex-wrap: wrap;
+}
+
+.search-input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.search-input-wrap svg {
+  position: absolute;
+  left: .65rem;
+  color: var(--text-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+.search-input-wrap .form-input {
+  padding-left: 2.1rem;
+}
+
+
+/* ============================================================
+   SECTION 13 — FORMS (Inputs, Selects, Textareas)
+   ============================================================ */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  margin-bottom: 1rem;
+}
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label,
+.form-field  label {
+  font-size: .78rem;
+  font-weight: 600;
+  color: var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height: 1.3;
+}
+
+.form-input {
+  display: block;
+  width: 100%;
+  /* 48px — comfortable mobile touch target */
+  height: 48px;
+  padding: .5rem .875rem;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 400;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  appearance: none;
+  -webkit-appearance: none;
+  transition: border-color var(--ease), box-shadow var(--ease), background var(--ease);
+  line-height: 1.5;
+}
+.form-input::placeholder { color: var(--text-muted); opacity: .7; }
+.form-input:hover         { border-color: #9CA3AF; }
+.form-input:focus,
+.form-input:focus-visible {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.18);
+  background: var(--bg-card);
+}
+.form-input:disabled,
+.form-input[readonly] {
+  background: #F3F4F6;
+  color: var(--text-muted);
+  cursor: not-allowed;
+  border-color: var(--border);
+}
+
+textarea.form-input {
+  height: auto;
+  resize: vertical;
+  min-height: 88px;
+  line-height: 1.55;
+}
+
+select.form-input {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .75rem center;
+  padding-right: 2.25rem;
+  cursor: pointer;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .875rem;
+  margin-bottom: .875rem;
+}
+.form-row.single   { grid-template-columns: 1fr; }
+.form-row.fourths  { grid-template-columns: repeat(4, 1fr); }
+.form-row:last-child { margin-bottom: 0; }
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+}
+
+.form-error {
+  font-size: .82rem;
+  color: var(--error);
+  font-weight: 600;
+  min-height: 1.2em;
+  margin-bottom: .35rem;
+}
+.form-success {
+  font-size: .82rem;
+  color: var(--success);
+  font-weight: 600;
+  min-height: 1.2em;
+  margin-bottom: .35rem;
+}
+
+.form-section-divider {
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .35rem;
+  margin: .875rem 0 .625rem;
+}
+.form-section-divider:first-child { margin-top: 0; }
+
+.field-hint {
+  font-size: .72rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin-top: .15rem;
+}
+
+.req {
+  color: var(--error);
+  margin-left: .2rem;
+  font-weight: 700;
+}
+
+.action-select {
+  display: inline-flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 .75rem;
+  font-family: var(--font-body);
+  font-size: .875rem;
+  font-weight: 500;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236B7280' stroke-width='1.5' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right .55rem center;
+  padding-right: 1.875rem;
+  transition: border-color var(--ease);
+}
+.action-select:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-color: var(--primary);
+}
+
+
+/* ============================================================
+   SECTION 14 — BUTTONS
+   (Sized up for mobile touch; min-height = --touch-min)
+   ============================================================ */
+
+/* Primary */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .625rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: var(--touch-min);
+  transition:
+    background   var(--ease),
+    border-color var(--ease),
+    box-shadow   var(--ease),
+    transform    var(--ease);
+  box-shadow: 0 1px 3px rgba(46,125,50,.3);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary:hover {
+  background: var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(46,125,50,.35);
+}
+.btn-primary:active {
+  background: var(--primary-active);
+  transform: translateY(0);
+  box-shadow: none;
+}
+.btn-primary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.btn-primary:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Outline */
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .625rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 600;
+  color: var(--text-main);
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: var(--touch-min);
+  transition:
+    background    var(--ease),
+    border-color  var(--ease),
+    color         var(--ease),
+    transform     var(--ease),
+    box-shadow    var(--ease);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-pale);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(46,125,50,.12);
+}
+.btn-outline:active  { transform: translateY(0); box-shadow: none; }
+.btn-outline:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+.btn-outline:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* Danger */
+.btn-danger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .625rem 1.25rem;
+  font-family: var(--font-body);
+  font-size: .9375rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--error);
+  border: 1.5px solid var(--error);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+  min-height: var(--touch-min);
+  transition:
+    background    var(--ease),
+    border-color  var(--ease),
+    box-shadow    var(--ease),
+    transform     var(--ease);
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-danger:hover {
+  background: #B71C1C;
+  border-color: #B71C1C;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 10px rgba(211,47,47,.3);
+}
+.btn-danger:active  { transform: translateY(0); box-shadow: none; }
+.btn-danger:focus-visible {
+  outline: 2px solid var(--error);
+  outline-offset: 3px;
+}
+.btn-danger:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+/* Small modifier (keeps 44px height for touch) */
+.btn-sm {
+  padding: .4rem .875rem;
+  font-size: .82rem;
+  min-height: 44px;
+  border-radius: var(--radius-xs);
+}
+
+/* Full-width */
+.full-width {
+  width: 100%;
+  justify-content: center;
+  margin-top: .25rem;
+}
+
+
+/* ============================================================
+   SECTION 15 — BADGES
+   ============================================================ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: .2rem .55rem;
+  font-family: var(--font-body);
+  font-size: .72rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  line-height: 1.3;
+  vertical-align: middle;
+  background: #F3F4F6;
+  color: #374151;
+}
+
+.badge-paid        { background: var(--success-pale);  color: var(--success-text); }
+.badge-unpaid      { background: var(--error-pale);    color: var(--error-text); }
+.badge-active      { background: var(--success-pale);  color: var(--success-text); }
+.badge-archived    { background: #F3F4F6;              color: #6B7280; }
+.badge-blocked     { background: var(--error-pale);    color: var(--error-text); }
+.badge-suspended   { background: var(--warning-pale);  color: var(--warning-text); }
+.badge-featured    { background: #FFF8E1;              color: #E65100; }
+.badge-pending     { background: var(--warning-pale);  color: var(--warning-text); }
+.badge-packed      { background: var(--info-pale);     color: var(--info-text); }
+.badge-out-for-delivery,
+.badge-out_for_delivery {
+  background: #FFF3E0;
+  color: #BF360C;
+}
+.badge-arrived     { background: #EDE7F6;              color: #4527A0; }
+.badge-completed   { background: var(--success-pale);  color: var(--success-text); }
+.badge-cancelled   { background: var(--error-pale);    color: var(--error-text); }
+
+/* Pay-status badges (generated by payBadge()) */
+.pay-status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .18rem .45rem;
+  font-size: .7rem;
+  font-weight: 700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  line-height: 1.3;
+}
+.pay-status-Paid       { background: var(--success-pale);  color: var(--success-text); }
+.pay-status-Unpaid     { background: var(--error-pale);    color: var(--error-text); }
+.pay-status-Unverified { background: var(--warning-pale);  color: var(--warning-text); }
+.pay-status-Pending    { background: var(--info-pale);     color: var(--info-text); }
+
+

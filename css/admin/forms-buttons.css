@@ -1,0 +1,109 @@
+/* admin/forms-buttons.css - forms and buttons */
+/* ════════════════════════════════════════════════════════════
+   § 4  FORMS
+═══════════════════════════════════════════════════════════════*/
+.form-group               { display: flex; flex-direction: column; gap: .35rem; }
+.form-group--spaced       { margin-top: .9rem; }
+.form-group label         { font-size: .83rem; font-weight: 600; color: var(--text-body); }
+.form-row                 { flex-direction: row; align-items: center; gap: 1.5rem; flex-wrap: wrap; }
+
+.form-input {
+  width: 100%;
+  padding: .55rem .8rem;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg-input);
+  color: var(--text-body);
+  font-size: .92rem;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  appearance: none;
+}
+.form-input:focus {
+  outline: none;
+  border-color: var(--border-focus);
+  box-shadow: 0 0 0 3px rgba(217,119,6,.15);
+}
+.form-input--sm { width: auto; min-width: 140px; }
+.form-input[readonly] { background: var(--bg-table-head); cursor: default; }
+
+.form-error {
+  color: var(--error);
+  font-size: .82rem;
+  font-weight: 500;
+  margin-top: .4rem;
+}
+
+/* ════════════════════════════════════════════════════════════
+   § 5  BUTTONS
+═══════════════════════════════════════════════════════════════*/
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .6rem 1.25rem;
+  background: var(--brand-primary);
+  color: #fff;
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: background var(--transition), box-shadow var(--transition), transform 60ms;
+}
+.btn-primary:hover  { background: var(--brand-dark); }
+.btn-primary:active { transform: scale(.98); }
+.btn-primary:disabled { opacity: .55; cursor: not-allowed; }
+.btn--mt { margin-top: 1.25rem; }
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  padding: .58rem 1.1rem;
+  background: transparent;
+  color: var(--text-body);
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: .9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+.btn-outline:hover { border-color: var(--brand-primary); background: var(--brand-light); }
+
+/* Action icon-buttons in tables */
+.btn-action {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .28rem .55rem;
+  font-size: .8rem;
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  border: 1.5px solid transparent;
+  transition: background var(--transition), border-color var(--transition);
+  background: #f1f0ec;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+.btn-action:hover              { background: #e6e4de; }
+.btn-action-blue               { background: #dbeafe; color: var(--info);    border-color: #bfdbfe; }
+.btn-action-blue:hover         { background: #bfdbfe; }
+.btn-action-green              { background: #dcfce7; color: var(--success); border-color: #bbf7d0; }
+.btn-action-green:hover        { background: #bbf7d0; }
+.btn-action-red                { background: #fee2e2; color: var(--error);   border-color: #fecaca; }
+.btn-action-red:hover          { background: #fecaca; }
+.btn-action-warn               { background: #fef3c7; color: var(--warning); border-color: #fde68a; }
+.btn-action-warn:hover         { background: #fde68a; }
+.btn-action-muted              { background: #f1f0ec; color: var(--text-muted); }
+
+/* Invisible anchor-style button */
+.link-btn { background: none; border: none; color: var(--brand-primary); font-size: inherit; font-weight: 600; cursor: pointer; padding: 0; text-decoration: underline dotted; }
+.link-btn:hover { color: var(--brand-dark); }
+
+/* Icon-only round button */
+.icon-btn { display: inline-flex; align-items: center; justify-content: center; padding: .45rem; border-radius: var(--radius-sm); color: var(--text-body); transition: background var(--transition); }
+.icon-btn:hover { background: rgba(0,0,0,.06); }
+

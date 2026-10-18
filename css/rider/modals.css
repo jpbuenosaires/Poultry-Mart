@@ -1,0 +1,407 @@
+/* rider/modals.css - bottom-sheet modals, confirm dialog, POD */
+/* ============================================================
+   SECTION 18 — MODALS AS BOTTOM-SHEET DRAWERS
+   On desktop these behave like standard centred modals.
+   On mobile (≤768px) they slide up from the bottom as drawers.
+   ============================================================ */
+
+/* ── Overlay ────────────────────────────────────────────── */
+.rider-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.50);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.rider-modal-overlay.open,
+.rider-modal-overlay[aria-hidden="false"] {
+  display: flex;
+  animation: modal-overlay-in .18s ease both;
+}
+@keyframes modal-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal sheet ────────────────────────────────────────── */
+.rider-modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 520px;
+  max-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position: relative;
+}
+.rider-modal.wide { max-width: 780px; }
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0);   }
+}
+
+/* ── Drag handle (visible on mobile, cosmetic on desktop) ─ */
+.rider-modal-drag-handle {
+  width: 40px;
+  height: 5px;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  margin: .75rem auto .25rem;
+  flex-shrink: 0;
+  cursor: grab;
+}
+.rider-modal-drag-handle:active { cursor: grabbing; }
+
+/* ── Modal header ───────────────────────────────────────── */
+.rider-modal-header,
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .875rem 1.25rem;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  background: #FAFBFC;
+  gap: .75rem;
+}
+.rider-modal-title,
+.modal-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -.01em;
+  line-height: 1.3;
+}
+
+/* Close buttons */
+.rider-modal-close,
+.modal-close-btn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  color: var(--text-muted);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: background var(--ease), color var(--ease);
+  flex-shrink: 0;
+  font-size: 1rem;
+}
+.rider-modal-close:hover,
+.modal-close-btn:hover {
+  background: var(--error-pale);
+  color: var(--error);
+}
+.rider-modal-close:focus-visible,
+.modal-close-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ── Modal body ─────────────────────────────────────────── */
+.rider-modal-body,
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+.rider-modal-body::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar { width: 5px; height: 5px; }
+.rider-modal-body::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track { background: transparent; }
+.rider-modal-body::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.rider-modal-body::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+/* ── Modal footer ───────────────────────────────────────── */
+.rider-modal-footer,
+.modal-footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: .5rem;
+  padding: .875rem 1.25rem 1.125rem;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  background: #FAFBFC;
+}
+/* On phones, buttons in footer should stretch full width */
+@media (max-width: 480px) {
+  .rider-modal-footer,
+  .modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding-bottom: 1.5rem; /* safe area buffer */
+  }
+  .rider-modal-footer .btn-primary,
+  .rider-modal-footer .btn-outline,
+  .rider-modal-footer .btn-danger,
+  .modal-footer .btn-primary,
+  .modal-footer .btn-outline,
+  .modal-footer .btn-danger {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* ── Admin modal aliases (shared modal markup uses these) ── */
+.admin-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  overflow-y: auto;
+}
+.admin-modal-overlay.open,
+.admin-modal-overlay[aria-hidden="false"] {
+  display: flex;
+  animation: modal-overlay-in .18s ease both;
+}
+.admin-modal {
+  background: var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 480px;
+  max-height: calc(100vh - 2rem);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+}
+.admin-modal.wide { max-width: 780px; }
+
+
+/* ============================================================
+   SECTION 19 — CONFIRM DIALOG  (smaller centred card)
+   ============================================================ */
+.rider-confirm-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.55);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  z-index: 600;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+.rider-confirm-overlay.open,
+.rider-confirm-overlay[aria-hidden="false"] {
+  display: flex;
+  animation: modal-overlay-in .15s ease both;
+}
+
+.rider-confirm-box {
+  background: var(--bg-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-modal);
+  width: 100%;
+  max-width: 380px;
+  padding: 2rem 1.75rem 1.75rem;
+  text-align: center;
+  animation: confirm-in .22s var(--ease-spring) both;
+}
+@keyframes confirm-in {
+  from { opacity: 0; transform: scale(.88) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.rider-confirm-icon {
+  font-size: 2.5rem;
+  line-height: 1;
+  margin-bottom: .875rem;
+}
+
+.rider-confirm-title {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--text-main);
+  margin-bottom: .35rem;
+  letter-spacing: -.01em;
+}
+
+.rider-confirm-body {
+  font-size: .875rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin-bottom: 1.25rem;
+}
+
+.rider-confirm-amount {
+  background: var(--warning-pale);
+  border-radius: var(--radius-sm);
+  padding: .875rem 1rem;
+  margin-bottom: 1.25rem;
+}
+.amount-label {
+  font-size: .75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--text-muted);
+  margin-bottom: .3rem;
+}
+.amount-value {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--warning-text);
+  line-height: 1.1;
+}
+
+.rider-confirm-actions {
+  display: flex;
+  gap: .75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.rider-confirm-actions .btn-primary,
+.rider-confirm-actions .btn-outline {
+  flex: 1;
+  min-width: 100px;
+}
+
+
+/* ============================================================
+   SECTION 20 — POD & SIGNATURE
+   Proof of Delivery upload area and signature canvas.
+   ============================================================ */
+
+/* ── Upload area ─────────────────────────────────────────── */
+.pod-upload-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .5rem;
+  padding: 1.75rem 1rem;
+  border: 2px dashed var(--border-input);
+  border-radius: var(--radius-md);
+  background: var(--bg-alt);
+  cursor: pointer;
+  text-align: center;
+  transition:
+    border-color var(--ease),
+    background   var(--ease);
+  min-height: 120px;
+  /* Prevent text selection on tap */
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.pod-upload-area:hover,
+.pod-upload-area:focus-visible {
+  border-color: var(--primary);
+  background: var(--primary-pale);
+  outline: none;
+}
+/* Active drag-over state */
+.pod-upload-area.dragover {
+  border-color: var(--primary);
+  background: var(--primary-pale);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.15);
+}
+
+.pod-upload-icon {
+  font-size: 2rem;
+  line-height: 1;
+  opacity: .7;
+}
+
+.pod-upload-text {
+  font-size: .875rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+.pod-upload-text strong { color: var(--text-main); }
+.pod-upload-text small  { font-size: .75rem; }
+
+/* ── Preview ─────────────────────────────────────────────── */
+.pod-preview {
+  margin-top: .75rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .5rem;
+}
+.pod-preview img {
+  width: 100%;
+  max-height: 260px;
+  object-fit: contain;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+}
+.pod-preview-remove {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  padding: .45rem .875rem;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  font-weight: 600;
+  color: var(--error-text);
+  background: var(--error-pale);
+  border: 1px solid rgba(211,47,47,.25);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  min-height: var(--touch-min);
+  transition: background var(--ease), border-color var(--ease);
+}
+.pod-preview-remove:hover {
+  background: #FFCDD2;
+  border-color: rgba(211,47,47,.4);
+}
+.pod-preview-remove:focus-visible {
+  outline: 2px solid var(--error);
+  outline-offset: 2px;
+}
+
+/* ── Signature canvas ───────────────────────────────────── */
+#pod-sig-canvas {
+  display: block;
+  width: 100%;
+  height: 180px;
+  border: 2px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  background: #fff;
+  /* Critical: prevents scroll during finger drawing */
+  touch-action: none;
+  cursor: crosshair;
+  transition: border-color var(--ease), box-shadow var(--ease);
+}
+#pod-sig-canvas:active,
+#pod-sig-canvas:hover {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.12);
+}
+
+

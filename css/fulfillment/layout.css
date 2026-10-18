@@ -1,0 +1,612 @@
+/* fulfillment/layout.css - app shell, sidebar, main, topbar */
+/* ============================================================
+   SECTION 6 · APP SHELL — BODY WRAPPERS
+   ============================================================ */
+/* ============================================================
+   FIX: APP SHELL & FLEX ROUTING
+   ============================================================ */
+
+/* 1. Make the app wrapper the actual flex container so it fills the body */
+#portal-app {
+  display: flex;
+  width: 100%;
+  flex: 1; /* Forces the app wrapper to take up all the dead 30% space */
+  min-height: 100vh;
+}
+
+/* 2. Prevent the main content from blowing out horizontally */
+.portal-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* CRITICAL: Allows flex child to shrink below table widths */
+  width: 100%;
+}
+
+/* 3. Fix the active page display bug 
+   (It was previously set to display: block, which broke the internal flex columns) */
+.staff-page.active {
+  display: flex; 
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 4. Ensure wide tables trigger a horizontal scrollbar *inside* the panel, 
+      rather than stretching the whole screen */
+.panel-body.no-pad {
+  padding: 0;
+  overflow-x: auto; 
+  max-width: 100%; /* Keeps the table constrained to its parent card */
+}
+
+   .portal-body,
+.portal-body--admin,
+.portal-body--fulfillment {
+  display:    flex;
+  width:      100%;
+  min-height: 100vh;
+  position:   relative;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   SECTION 7 · SIDEBAR OVERLAY  (mobile backdrop)
+   ============================================================ */
+.portal-sidebar-overlay {
+  display:           none;
+  position:          fixed;
+  inset:             0;
+  background:        rgba(0,0,0,.45);
+  backdrop-filter:   blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index:           199;
+  transition:        opacity var(--ease);
+  cursor:            pointer;
+}
+/* JS toggles .open OR .visible */
+.portal-sidebar-overlay.open,
+.portal-sidebar-overlay.visible {
+  display:   block;
+  animation: fade-in .18s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ============================================================
+   SECTION 8 · SIDEBAR
+   ============================================================ */
+.portal-sidebar {
+  position:   fixed;
+  top:        0;
+  left:       0;
+  width:      var(--sidebar-width);
+  height:     100vh;
+  background: var(--bg-sidebar);
+  color:      var(--text-sidebar);
+  display:    flex;
+  flex-direction: column;
+  z-index:    200;
+  box-shadow: var(--shadow-sidebar);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.1) transparent;
+  transition: transform .26s cubic-bezier(.4,0,.2,1);
+}
+.portal-sidebar::-webkit-scrollbar       { width: 4px; }
+.portal-sidebar::-webkit-scrollbar-track { background: transparent; }
+.portal-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 2px; }
+
+/* ── Sidebar Header ─────────────────────────────────────── */
+.portal-sidebar__header {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  padding:     1.25rem 1.125rem 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+  transition:  background var(--ease);
+}
+.portal-sidebar__header:hover {
+  background: var(--bg-sidebar-hover);
+}
+.portal-sidebar__header:focus-visible {
+  outline:        2px solid rgba(255,255,255,.6);
+  outline-offset: -2px;
+  border-radius:  var(--radius-xs);
+}
+
+.portal-sidebar__header .logo-icon {
+  font-size:   1.55rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.portal-sidebar__header .logo-text {
+  font-family:    var(--font-display);
+  font-size:      1.125rem;
+  font-weight:    700;
+  color:          #fff;
+  letter-spacing: -.01em;
+  flex:           1;
+  min-width:      0;
+}
+.portal-sidebar__header .logo-text strong { color: #81C784; }
+
+/* ── Staff Tag (blue/orange — differentiates from admin green) */
+.staff-tag {
+  font-family:    var(--font-body);
+  font-size:      .6rem;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background:     var(--staff-accent-pale);
+  color:          var(--staff-accent-text);
+  border:         1px solid var(--staff-accent-border);
+  border-radius:  var(--radius-pill);
+  padding:        .15rem .45rem;
+  flex-shrink:    0;
+}
+
+/* ── (Legacy) Admin Tag kept for drop-in compatibility ──── */
+.admin-tag {
+  font-family:    var(--font-body);
+  font-size:      .6rem;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background:     rgba(129,199,132,.2);
+  color:          #A5D6A7;
+  border:         1px solid rgba(129,199,132,.35);
+  border-radius:  var(--radius-pill);
+  padding:        .15rem .45rem;
+  flex-shrink:    0;
+}
+
+/* ── User Pill ──────────────────────────────────────────── */
+.portal-user-pill {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  padding:     .875rem 1.125rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+
+.portal-avatar {
+  width:        34px;
+  height:       34px;
+  border-radius: 50%;
+  background:   linear-gradient(135deg, #42A5F5 0%, #1565C0 100%); /* blue for staff */
+  color:        #fff;
+  font-size:    .7rem;
+  font-weight:  700;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  flex-shrink:  0;
+  letter-spacing: .05em;
+  box-shadow:   0 2px 6px rgba(0,0,0,.25);
+}
+
+/* Wrapper for name + role (fulfillment uses .portal-user-info) */
+.portal-user-info {
+  flex:      1;
+  min-width: 0;
+  display:   flex;
+  flex-direction: column;
+  gap: .05rem;
+}
+
+.portal-user-name {
+  font-size:   .82rem;
+  font-weight: 600;
+  color:       #fff;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+.portal-role-tag {
+  font-size:  .7rem;
+  color:      var(--text-sidebar-muted);
+  line-height: 1.2;
+  margin-top: .1rem;
+}
+
+/* ── Navigation ────────────────────────────────────────── */
+.portal-nav {
+  display:        flex;
+  flex-direction: column;
+  padding:        .625rem 0;
+  flex:           1;
+  gap:            1px;
+}
+
+.portal-nav__section {
+  display:        block;
+  font-size:      .63rem;
+  font-weight:    700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color:          var(--text-sidebar-muted);
+  padding:        .875rem 1.125rem .3rem;
+  pointer-events: none;
+  user-select:    none;
+}
+
+.portal-nav__btn,
+.sidebar-link {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  width:       100%;
+  padding:     .625rem 1.125rem;
+  font-size:   .875rem;
+  font-weight: 500;
+  color:       var(--text-sidebar);
+  background:  transparent;
+  border:      none;
+  border-radius: 0;
+  cursor:      pointer;
+  text-align:  left;
+  transition:  background var(--ease), color var(--ease);
+  position:    relative;
+  min-height:  42px;
+  line-height: 1.4;
+}
+.portal-nav__btn:hover,
+.sidebar-link:hover {
+  background: var(--bg-sidebar-hover);
+  color:      #fff;
+}
+.portal-nav__btn.active,
+.sidebar-link.active {
+  background:  var(--bg-sidebar-active);
+  color:       #fff;
+  font-weight: 600;
+}
+
+/* Active left-border indicator — blue for staff */
+.portal-nav__btn.active::before,
+.sidebar-link.active::before {
+  content:       '';
+  position:      absolute;
+  left:          0;
+  top:           20%;
+  bottom:        20%;
+  width:         3px;
+  background:    #90CAF9;     /* staff blue accent on sidebar */
+  border-radius: 0 2px 2px 0;
+}
+.portal-nav__btn:focus-visible,
+.sidebar-link:focus-visible {
+  outline:        2px solid rgba(255,255,255,.55);
+  outline-offset: -2px;
+}
+
+.nav-icon {
+  width:      16px;
+  height:     16px;
+  flex-shrink: 0;
+  opacity:    .75;
+  transition: opacity var(--ease);
+}
+.portal-nav__btn:hover   .nav-icon,
+.portal-nav__btn.active  .nav-icon,
+.sidebar-link:hover      .nav-icon,
+.sidebar-link.active     .nav-icon { opacity: 1; }
+
+/* Nav badge (counters) */
+/* Update near Line 411 in fulfillment-entry.css */
+.nav-badge {
+  margin-left: auto;
+  background-color: var(--error) !important; /* Keep it red/orange even if not active */
+  color: #FFFFFF !important;                /* Force white text always */
+  font-size: .7rem;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  display: inline-flex !important;           /* Ensure it doesn't get hidden */
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  line-height: 1;
+  flex-shrink: 0;
+  z-index: 5;                                /* Ensure it sits above button layers */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);     /* Add depth against dark green */
+}
+
+/* Ensure color variants also force white text */
+.nav-badge-orange { background-color: var(--orange) !important; color: #FFFFFF !important; }
+.nav-badge-red    { background-color: var(--error) !important;  color: #FFFFFF !important; }
+.portal-nav__btn .nav-badge,
+.sidebar-link .nav-badge {
+  opacity: 1 !important; /* Prevent the badge from fading when the button is inactive */
+}
+/* ── Sidebar Footer (Logout) ───────────────────────────── */
+.portal-sidebar__footer {
+  padding:      .75rem .75rem 1rem;
+  border-top:   1px solid rgba(255,255,255,.08);
+  flex-shrink:  0;
+}
+
+.portal-nav__logout {
+  display:      flex;
+  align-items:  center;
+  gap:          .6rem;
+  width:        100%;
+  padding:      .55rem .875rem;
+  font-size:    .82rem;
+  font-weight:  500;
+  color:        rgba(255,255,255,.55);
+  background:   transparent;
+  border:       1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-sm);
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), border-color var(--ease);
+  min-height:   40px;
+}
+.portal-nav__logout:hover {
+  background:   rgba(211,47,47,.15);
+  color:        #EF9A9A;
+  border-color: rgba(211,47,47,.3);
+}
+.portal-nav__logout:focus-visible {
+  outline:        2px solid rgba(255,255,255,.55);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 9 · MAIN CONTENT AREA
+   ============================================================ */
+.portal-main {
+  margin-left:    var(--sidebar-width);
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  min-width:      0;
+  min-height:     100vh;
+  /* No explicit width — flex: 1 already fills remaining space */
+  /* No overflow-x: hidden — it clips table columns */
+}
+
+
+/* ============================================================
+   SECTION 10 · TOPBAR
+   ============================================================ */
+.portal-topbar {
+  position:   sticky;
+  top:        0;
+  z-index:    100;
+  height:     var(--topbar-height);
+  display:    flex;
+  align-items: center;
+  gap:        .875rem;
+  padding:    0 1.5rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter:          blur(12px);
+  -webkit-backdrop-filter:  blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), var(--shadow-xs);
+}
+
+/* Hamburger / icon buttons */
+.topbar-menu-btn,
+.icon-btn {
+  width:        38px;
+  height:       38px;
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.topbar-menu-btn:hover,
+.icon-btn:hover {
+  background: var(--bg-alt);
+  color:      var(--text-main);
+}
+.topbar-menu-btn:focus-visible,
+.icon-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Hidden on desktop; JS or media query reveals it */
+.topbar-menu-btn { display: none; }
+
+/* Title / subtitle */
+.topbar-title {
+  flex:        1;
+  font-size:   1.05rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  display:     flex;
+  flex-direction: column;
+  gap:         .1rem;
+}
+.topbar-title small {
+  font-size:   .72rem;
+  font-weight: 400;
+  color:       var(--text-muted);
+  letter-spacing: 0;
+}
+
+.topbar-actions {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-shrink: 0;
+}
+
+/* ── Scan Mode Area (fulfillment-specific) ──────────────── */
+.topbar-scan-area {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-shrink: 0;
+}
+
+.scan-mode-btn {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          .35rem;
+  height:       34px;
+  padding:      0 .875rem;
+  font-family:  var(--font-body);
+  font-size:    .82rem;
+  font-weight:  600;
+  color:        var(--text-muted);
+  background:   var(--bg-alt);
+  border:       1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), border-color var(--ease), box-shadow var(--ease);
+  user-select:  none;
+  white-space:  nowrap;
+}
+.scan-mode-btn:hover {
+  border-color: var(--info);
+  color:        var(--info);
+  background:   var(--info-pale);
+}
+/* Active / pressed state when scan mode is enabled */
+.scan-mode-btn.scan-mode-active,
+.scan-mode-btn[aria-pressed="true"] {
+  background:   var(--info);
+  color:        #fff;
+  border-color: var(--info);
+  box-shadow:   0 0 0 3px rgba(25,118,210,.25), inset 0 1px 3px rgba(0,0,0,.15);
+}
+.scan-mode-btn:focus-visible {
+  outline:        2px solid var(--info);
+  outline-offset: 2px;
+}
+
+/* Hidden scanner input — becomes visible when scan mode active */
+.scan-input-hidden {
+  position: absolute;
+  left:     -9999px;
+  opacity:  0;
+  width:    1px;
+  height:   1px;
+  pointer-events: none;
+}
+.scan-input-visible {
+  position:     static;
+  opacity:      1;
+  width:        180px;
+  height:       34px;
+  padding:      .35rem .65rem;
+  font-family:  var(--font-body);
+  font-size:    .82rem;
+  color:        var(--text-main);
+  background:   var(--bg-card);
+  border:       1.5px solid var(--info);
+  border-radius: var(--radius-sm);
+  pointer-events: auto;
+  transition:   box-shadow var(--ease);
+}
+.scan-input-visible:focus {
+  outline:   none;
+  box-shadow: 0 0 0 3px rgba(25,118,210,.18);
+}
+
+/* ── Notification Bell ──────────────────────────────────── */
+.notif-bell-btn {
+  position:     relative;
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  width:        38px;
+  height:       38px;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.notif-bell-btn:hover {
+  background: var(--warning-pale);
+  color:      var(--warning-text);
+}
+.notif-bell-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.notif-bell-badge {
+  position:      absolute;
+  top:           5px;
+  right:         5px;
+  min-width:     16px;
+  height:        16px;
+  background:    var(--error);
+  color:         #fff;
+  font-size:     .58rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  padding:       0 3px;
+  line-height:   1;
+  border:        2px solid #fff;
+  pointer-events: none;
+}
+
+/* ── Staff Refresh Button ───────────────────────────────── */
+.staff-refresh-btn {
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  width:        34px;
+  height:       34px;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), transform var(--ease);
+  flex-shrink:  0;
+}
+.staff-refresh-btn:hover {
+  background: var(--bg-alt);
+  color:      var(--text-main);
+  transform:  rotate(30deg);
+}
+.staff-refresh-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ── Live Clock ─────────────────────────────────────────── */
+.staff-topbar-clock {
+  font-size:      .8rem;
+  font-weight:    600;
+  color:          var(--text-muted);
+  letter-spacing: .02em;
+  white-space:    nowrap;
+  flex-shrink:    0;
+}
+
+

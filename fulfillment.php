@@ -8,7 +8,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
 
   <!-- Portal specific -->
-  <link rel="stylesheet" href="/css/fulfillment-entry.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/base.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/inventory-fix.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/login.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/layout.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/notifications.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/pages.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/queue.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/modals.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/tables.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/components.css"/>
+  <link rel="stylesheet" href="/css/fulfillment/responsive.css"/>
 
 </head>
 <body class="portal-body portal-body--fulfillment">
@@ -625,7 +635,26 @@
 <script src="js/shared/utils.js"></script>
 <script src="js/shared/uiHelpers.js"></script>
 <script src="js/shared/apiService.js"></script>
-<script src="js/controllers/fulfillment.js"></script>
+<script src="js/controllers/fulfillment/core.js"></script>
+<script src="js/controllers/fulfillment/focusTrap.js"></script>
+<script src="js/controllers/fulfillment/auth.js"></script>
+<script src="js/controllers/fulfillment/appInit.js"></script>
+<script src="js/controllers/fulfillment/navigation.js"></script>
+<script src="js/controllers/fulfillment/scanMode.js"></script>
+<script src="js/controllers/fulfillment/orderPolling.js"></script>
+<script src="js/controllers/fulfillment/packingQueue.js"></script>
+<script src="js/controllers/fulfillment/prepSheet.js"></script>
+<script src="js/controllers/fulfillment/packOrder.js"></script>
+<script src="js/controllers/fulfillment/printing.js"></script>
+<script src="js/controllers/fulfillment/assignRiders.js"></script>
+<script src="js/controllers/fulfillment/activeDispatch.js"></script>
+<script src="js/controllers/fulfillment/returns.js"></script>
+<script src="js/controllers/fulfillment/allOrders.js"></script>
+<script src="js/controllers/fulfillment/inventory.js"></script>
+<script src="js/controllers/fulfillment/orderDetail.js"></script>
+<script src="js/controllers/fulfillment/lowStock.js"></script>
+<script src="js/controllers/fulfillment/keyboard.js"></script>
+<script src="js/controllers/fulfillment/init.js"></script>
 
 
 </body>

@@ -11,25 +11,13 @@
  */
 
 // ── Guarantee a clean JSON response on every code path ───────────
-header('Content-Type: application/json; charset=utf-8');
-ini_set('display_errors', '0');
-error_reporting(E_ALL);
-
-set_exception_handler(function (Throwable $e) {
-    http_response_code(500);
-    echo json_encode([
-        'success' => false,
-        'message' => 'Server error: ' . $e->getMessage(),
-    ]);
-    exit;
-});
-
+require_once __DIR__ . '/helpers/json_bootstrap.php';
 require_once __DIR__ . '/db.php';
 
 date_default_timezone_set('Asia/Manila');
 
-$action = $_GET['action'] ?? '';
-$body   = json_decode(file_get_contents('php://input'), true) ?? [];
+$action = Request::action();
+$body   = Request::body();
 
 // ── Service instances ─────────────────────────────────────────────
 $auth      = new AuthService($conn);

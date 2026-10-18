@@ -1,0 +1,746 @@
+/* fulfillment/modals.css - pack modal, legacy modals, order detail modal */
+/* ============================================================
+   SECTION 20 · PACK ORDER MODAL — Pack-specific layout
+   ============================================================ */
+
+/* Staff modal overlay (used by pack, assign, POD, etc.) */
+.staff-modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.staff-modal-overlay[style*="flex"],
+.staff-modal-overlay.open {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+@keyframes modal-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Staff modal box */
+.staff-modal {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     520px;
+  max-height:    calc(100vh - 2rem);
+  display:       flex;
+  flex-direction: column;
+  overflow:      hidden;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+}
+
+/* Pack order modal — extra wide for item list */
+.staff-modal.pack-modal-box,
+.pack-modal-box {
+  max-width: 680px;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0);    }
+}
+
+/* Shared modal header / body / footer (used by both staff-modal and admin-modal) */
+.modal-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         1.125rem 1.25rem .875rem;
+  border-bottom:   1px solid var(--border);
+  flex-shrink:     0;
+  background:      #FAFBFC;
+}
+.modal-header h3 {
+  font-size:      1rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  display:        flex;
+  align-items:    center;
+  gap:            .4rem;
+}
+
+.modal-close-btn {
+  width:        32px;
+  height:       32px;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.modal-close-btn:hover {
+  background: var(--error-pale);
+  color:      var(--error);
+}
+.modal-close-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.modal-body {
+  flex:        1;
+  overflow-y:  auto;
+  padding:     1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: flex-end;
+  gap:             .5rem;
+  padding:         .875rem 1.25rem 1.125rem;
+  border-top:      1px solid var(--border);
+  flex-shrink:     0;
+  flex-wrap:       wrap;
+  background:      #FAFBFC;
+}
+
+/* Pack-modal order meta (inline with header) */
+.pack-modal-order-meta {
+  font-size:  .85rem;
+  color:      var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ── Customer Strip ─────────────────────────────────────── */
+.pack-customer-strip {
+  display:       grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap:           .625rem .875rem;
+  padding:       .875rem 1rem;
+  background:    linear-gradient(to right, #F0F7FF, #EEF2FF);
+  border:        1px solid #DBEAFE;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.pack-cs-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .1rem;
+}
+
+.pack-cs-val {
+  font-size:   .82rem;
+  font-weight: 600;
+  color:       var(--text-main);
+  line-height: 1.4;
+  word-break:  break-word;
+}
+
+/* ── Items Fieldset ─────────────────────────────────────── */
+.pack-items-fieldset {
+  border:        1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:       0;
+  margin-bottom: 1rem;
+}
+
+.pack-items-legend {
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  padding:        .35rem .75rem;
+  margin-left:    .5rem;
+  background:     var(--bg-card);
+  border-radius:  var(--radius-xs);
+}
+
+#pack-items-list { padding: .25rem 0; }
+
+/* ── Individual Pack Item Row ───────────────────────────── */
+.pack-item-row {
+  display:       grid;
+  grid-template-columns: 1fr auto auto;
+  gap:           .625rem .875rem;
+  align-items:   start;
+  padding:       .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition:    background var(--ease);
+}
+.pack-item-row:last-child { border-bottom: none; }
+.pack-item-row:hover      { background: var(--bg-alt); }
+
+/* Out-of-stock state — muted & strikethrough hint */
+.pack-item-row.oos-active {
+  opacity:    .55;
+  background: var(--error-pale);
+}
+.pack-item-row.oos-active .pack-item-name { text-decoration: line-through; }
+
+.pack-item-info { min-width: 0; }
+
+.pack-item-name {
+  font-size:   .875rem;
+  font-weight: 600;
+  color:       var(--text-main);
+  line-height: 1.3;
+  margin-bottom: .25rem;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+}
+
+.pack-item-catch-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .1rem .4rem;
+  font-size:     .65rem;
+  font-weight:   700;
+  border-radius: var(--radius-xs);
+  background:    #FFF3E0;
+  color:         #E65100;
+  border:        1px solid rgba(230,81,0,.25);
+  white-space:   nowrap;
+}
+
+.pack-item-fixed-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .1rem .4rem;
+  font-size:     .65rem;
+  font-weight:   700;
+  border-radius: var(--radius-xs);
+  background:    var(--info-pale);
+  color:         var(--info-text);
+  border:        1px solid rgba(25,118,210,.2);
+  white-space:   nowrap;
+}
+
+.pack-item-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: .35rem;
+}
+
+/* FIFO batch pill */
+.batch-pill {
+  display:       flex;
+  align-items:   center;
+  gap:           .35rem;
+  flex-wrap:     wrap;
+  padding:       .3rem .65rem;
+  font-size:     .72rem;
+  color:         var(--text-muted);
+  background:    #F0F9FF;
+  border:        1px solid #BAE6FD;
+  border-radius: var(--radius-xs);
+  margin-top:    .35rem;
+  line-height:   1.45;
+}
+
+.batch-change-btn {
+  display:       inline;
+  font-size:     .7rem;
+  font-weight:   600;
+  color:         var(--info);
+  background:    none;
+  border:        none;
+  cursor:        pointer;
+  padding:       0;
+  text-decoration: underline;
+  transition:    color var(--ease);
+}
+.batch-change-btn:hover { color: var(--info-text); }
+
+/* Remaining after pack preview */
+.batch-remaining-preview {
+  font-size:   .72rem;
+  color:       var(--text-muted);
+  margin-top:  .2rem;
+  font-style:  italic;
+}
+.batch-remaining-preview.low      { color: var(--warning-text); font-weight: 600; }
+.batch-remaining-preview.depleted { color: var(--error);        font-weight: 700; }
+
+/* Batch override dropdown */
+.batch-override-select {
+  margin-top:    .5rem;
+  padding:       .5rem .65rem;
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-xs);
+}
+
+.batch-override-label {
+  display:     block;
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  margin-bottom: .3rem;
+}
+
+.batch-override-sel {
+  width:     100%;
+  max-width: 340px;
+  height:    36px;
+  font-size: .82rem;
+}
+
+/* OOS toggle */
+.oos-toggle-row {
+  margin-top: .5rem;
+}
+
+.oos-toggle-label {
+  display:     flex;
+  align-items: center;
+  gap:         .4rem;
+  font-size:   .75rem;
+  font-weight: 500;
+  color:       var(--text-muted);
+  cursor:      pointer;
+  transition:  color var(--ease);
+}
+.oos-toggle-label:hover { color: var(--error); }
+
+.oos-checkbox {
+  width:        14px;
+  height:       14px;
+  cursor:       pointer;
+  accent-color: var(--error);
+}
+
+/* Split batch UI */
+.split-batch-area {
+  margin-top:    .5rem;
+  padding:       .65rem .75rem;
+  background:    #FFF8E1;
+  border:        1.5px solid var(--warning);
+  border-radius: var(--radius-sm);
+}
+
+.split-batch-header {
+  font-size:     .75rem;
+  font-weight:   700;
+  color:         var(--warning-text);
+  margin-bottom: .5rem;
+}
+
+.split-batch-row {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  margin-bottom: .4rem;
+}
+.split-batch-row:last-child { margin-bottom: 0; }
+
+.split-label {
+  flex:      1;
+  font-size: .75rem;
+  color:     var(--text-muted);
+  line-height: 1.3;
+}
+
+.split-wt-input {
+  width:      100px;
+  height:     34px;
+  padding:    .3rem .55rem;
+  font-family: var(--font-body);
+  font-size:  .82rem;
+  font-weight: 600;
+  color:      var(--text-main);
+  background: var(--bg-card);
+  border:     1.5px solid var(--border-input);
+  border-radius: var(--radius-xs);
+  text-align: right;
+  transition: border-color var(--ease), box-shadow var(--ease);
+  -moz-appearance: textfield;
+}
+.split-wt-input::-webkit-outer-spin-button,
+.split-wt-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.split-wt-input:focus {
+  outline:   none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.15);
+}
+.split-wt-input[readonly] {
+  background: #F3F4F6;
+  color:      var(--text-muted);
+  cursor:     not-allowed;
+}
+
+.split-unit {
+  font-size:  .72rem;
+  color:      var(--text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.split-batch-warning {
+  font-size:   .78rem;
+  color:       var(--error);
+  font-weight: 600;
+  margin-top:  .4rem;
+  line-height: 1.45;
+}
+
+/* Weight input turns amber when split is needed */
+.pack-weight-input.split-needed {
+  border-color: var(--warning);
+  box-shadow:   0 0 0 3px rgba(249,168,37,.2);
+}
+
+/* ── Weight & Subtotal columns ──────────────────────────── */
+.pack-item-weight-group {
+  min-width:  120px;
+  display:    flex;
+  flex-direction: column;
+  gap:        .3rem;
+  align-items: flex-end;
+}
+.pack-item-weight-group label {
+  font-size:   .65rem;
+  font-weight: 700;
+  color:       var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  align-self:  flex-start;
+}
+
+.pack-weight-input {
+  width:      110px;
+  height:     38px;
+  padding:    .35rem .6rem;
+  font-family: var(--font-body);
+  font-size:  .875rem;
+  font-weight: 600;
+  color:      var(--text-main);
+  background: var(--bg-card);
+  border:     1.5px solid var(--border-input);
+  border-radius: var(--radius-xs);
+  text-align: right;
+  transition: border-color var(--ease), box-shadow var(--ease);
+  -moz-appearance: textfield;
+}
+.pack-weight-input::-webkit-outer-spin-button,
+.pack-weight-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pack-weight-input:focus {
+  outline:   none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.15);
+}
+.pack-weight-input:disabled {
+  background: #F3F4F6;
+  color:      var(--text-muted);
+  cursor:     not-allowed;
+}
+
+.pack-fixed-summary {
+  display:     flex;
+  align-items: center;
+  gap:         .4rem;
+  font-size:   .875rem;
+  color:       var(--text-main);
+  padding:     .35rem 0;
+}
+
+.pack-item-subtotal {
+  min-width:   72px;
+  text-align:  right;
+  font-family: var(--font-display);
+  font-size:   .95rem;
+  font-weight: 700;
+  color:       var(--primary);
+  align-self:  center;
+}
+
+/* ── Pack Total Strip ───────────────────────────────────── */
+.pack-total-strip {
+  background:    linear-gradient(to right, #F0FDF4, #F9FAFB);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:       .75rem 1rem;
+  display:       flex;
+  flex-direction: column;
+  gap:           .35rem;
+}
+
+.pack-total-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       .875rem;
+  color:           var(--text-muted);
+  gap:             .5rem;
+}
+
+.pack-total-row.pack-grand-total {
+  border-top:    1px solid var(--border);
+  padding-top:   .5rem;
+  margin-top:    .15rem;
+  font-size:     .95rem;
+  font-weight:   700;
+  color:         var(--text-main);
+}
+.pack-total-row.pack-grand-total strong {
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  color:       var(--primary);
+}
+
+
+/* ============================================================
+   SECTION 21 · LEGACY MODAL SYSTEM
+   (batch-assign, detail, adjust-stock, dispatch-confirm,
+    prep-sheet — all use .modal-overlay / .modal-box / .modal-close)
+   ============================================================ */
+.modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.modal-overlay[style*="flex"] {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+.modal-box {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     600px;
+  max-height:    calc(100vh - 2rem);
+  overflow-y:    auto;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+  padding:       1.75rem 1.5rem 1.5rem;
+}
+
+.modal-box h2 {
+  font-size:     1.1rem;
+  font-weight:   700;
+  color:         var(--text-main);
+  margin-bottom: .75rem;
+}
+
+.modal-close {
+  position:    absolute;
+  top:         .875rem;
+  right:       .875rem;
+  width:       28px;
+  height:      28px;
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  font-size:   1rem;
+  font-weight: 700;
+  color:       var(--text-muted);
+  background:  transparent;
+  border:      none;
+  cursor:      pointer;
+  line-height: 1;
+  transition:  background var(--ease), color var(--ease);
+}
+.modal-close:hover {
+  background: var(--error-pale);
+  color:      var(--error);
+}
+.modal-close:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Admin modal (kept for backward compatibility with shared partials) */
+.admin-modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.admin-modal-overlay.open,
+.admin-modal-overlay[aria-hidden="false"] {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+.admin-modal {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     480px;
+  max-height:    calc(100vh - 2rem);
+  display:       flex;
+  flex-direction: column;
+  overflow:      hidden;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+}
+.admin-modal.wide { max-width: 780px; }
+
+/* Staff modal alias (for .admin-modal patterns used in staff context) */
+.staff-modal-overlay.admin-modal-overlay {
+  /* fused — staff portal may use admin-modal-overlay class too */
+}
+
+
+/* ============================================================
+   SECTION 22 · ORDER DETAIL MODAL CONTENT
+   ============================================================ */
+.detail-section {
+  margin-bottom: 1.25rem;
+}
+
+.detail-section-title {
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  border-bottom:  1px solid var(--border);
+  padding-bottom: .35rem;
+  margin-bottom:  .75rem;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:    .625rem .875rem;
+}
+
+.detail-info-item { min-width: 0; }
+
+.detail-info-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .1rem;
+}
+
+.detail-info-val {
+  font-size:   .875rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  line-height: 1.45;
+  word-break:  break-word;
+}
+
+/* Items table inside detail modal */
+.detail-items-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .82rem;
+  margin-top:      .5rem;
+}
+.detail-items-table th {
+  padding:        .5rem .75rem;
+  text-align:     left;
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+.detail-items-table td {
+  padding:       .5rem .75rem;
+  border-bottom: 1px solid var(--border);
+  color:         var(--text-main);
+  vertical-align: middle;
+}
+.detail-items-table tbody tr:last-child td { border-bottom: none; }
+.detail-items-table tbody tr:hover { background: #F0F7F0; }
+
+/* Totals rows below item table */
+.detail-total-rows {
+  padding:    .75rem 0 0;
+  margin-top: .5rem;
+  border-top: 1px solid var(--border);
+  display:    flex;
+  flex-direction: column;
+  gap:        .3rem;
+}
+
+.detail-total-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       .875rem;
+  color:           var(--text-muted);
+  padding:         .1rem 0;
+}
+.detail-total-row.grand {
+  font-size:   .95rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  border-top:  1px solid var(--border);
+  padding-top: .4rem;
+  margin-top:  .2rem;
+}
+.detail-total-row.grand span:last-child {
+  font-family: var(--font-display);
+  font-size:   1.1rem;
+  color:       var(--primary);
+}
+
+/* Status / pay badges inside detail */
+.status-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .55rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space:   nowrap;
+  line-height:   1.3;
+  vertical-align: middle;
+  background:    #F3F4F6;
+  color:         #374151;
+}
+.pay-status-Paid,
+.pay-status-Verified    { background: var(--success-pale); color: var(--success-text); }
+.pay-status-Unpaid      { background: var(--error-pale);   color: var(--error-text);   }
+.pay-status-Refunded    { background: var(--warning-pale); color: var(--warning-text); }
+
+

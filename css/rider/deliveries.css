@@ -1,0 +1,344 @@
+/* rider/deliveries.css - delivery cards and status stepper */
+/* ============================================================
+   SECTION 16 — DELIVERY CARDS
+   The central UI component of the Rider portal.
+   Each card represents one active delivery assignment.
+   ============================================================ */
+
+/* ── Priority variants ─────────────────────────────────── */
+.delivery-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border);
+  border-left: 5px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: .875rem;
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: box-shadow var(--ease), border-color var(--ease);
+  position: relative;
+}
+.delivery-card:hover { box-shadow: var(--shadow-md); }
+
+/* Normal — packed, not yet started */
+.delivery-card.priority-normal {
+  border-left-color: #9CA3AF;
+}
+
+/* Active — Out for Delivery or Arrived (green accent, subtle glow) */
+.delivery-card.priority-active {
+  border-left-color: var(--primary);
+  background: linear-gradient(to right, rgba(46,125,50,.03) 0%, transparent 32px);
+}
+
+/* Urgent — overdue delivery window (red accent) */
+.delivery-card.priority-urgent {
+  border-left-color: var(--error);
+  background: linear-gradient(to right, rgba(211,47,47,.04) 0%, transparent 32px);
+  animation: pulse-urgent 2.5s ease-in-out infinite;
+}
+@keyframes pulse-urgent {
+  0%,100% { box-shadow: var(--shadow-sm); }
+  50%      { box-shadow: 0 0 0 3px rgba(211,47,47,.18), var(--shadow-sm); }
+}
+
+/* ── Time-window warning banner ────────────────────────── */
+.time-window-warning {
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  padding: .5rem .875rem;
+  background: var(--error-pale);
+  color: var(--error-text);
+  font-size: .8rem;
+  font-weight: 600;
+  line-height: 1.4;
+  border-bottom: 1px solid rgba(211,47,47,.15);
+}
+
+/* ── Card header ────────────────────────────────────────── */
+.delivery-card-header {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .4rem;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: #FAFBFC;
+}
+
+.delivery-order-num {
+  font-family: var(--font-display);
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -.01em;
+  flex-shrink: 0;
+}
+
+/* Time slot badge */
+.delivery-slot-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .18rem .5rem;
+  font-size: .7rem;
+  font-weight: 600;
+  background: var(--info-pale);
+  color: var(--info-text);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+/* Urgency badge */
+.delivery-urgency-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .25rem;
+  padding: .18rem .5rem;
+  font-size: .7rem;
+  font-weight: 700;
+  background: var(--error-pale);
+  color: var(--error-text);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+  animation: urgency-flash 1.8s ease-in-out infinite;
+}
+@keyframes urgency-flash {
+  0%,100% { opacity: 1; }
+  50%      { opacity: .7; }
+}
+
+.delivery-card-header-actions {
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+/* ── Card body (two-column layout) ─────────────────────── */
+.delivery-card-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: .75rem;
+  padding: .875rem 1rem;
+}
+
+.delivery-customer-col,
+.delivery-address-col {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  min-width: 0;
+}
+
+.delivery-col-label {
+  font-size: .65rem;
+  font-weight: 700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  line-height: 1.2;
+}
+
+.delivery-customer-name {
+  font-weight: 700;
+  font-size: .9rem;
+  color: var(--text-main);
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.delivery-customer-phone {
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  flex-wrap: wrap;
+  margin-top: .15rem;
+}
+/* Ensure call/sms links are large enough for thumbs */
+.delivery-customer-phone .btn-outline,
+.delivery-customer-phone .btn-sm {
+  min-height: 44px;
+}
+
+.delivery-address-text {
+  font-size: .82rem;
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+.delivery-map-link {
+  display: inline-flex;
+  align-items: center;
+  gap: .3rem;
+}
+
+/* ── Card footer (total + action buttons) ──────────────── */
+.delivery-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--border);
+  background: #FAFBFC;
+  flex-wrap: wrap;
+}
+
+.delivery-total {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--primary);
+  line-height: 1.1;
+}
+
+.delivery-pay-method {
+  font-size: .75rem;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: .3rem;
+  margin-top: .2rem;
+  flex-wrap: wrap;
+}
+
+.delivery-footer-actions {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+/* Ensure action buttons meet touch targets */
+.delivery-footer-actions .btn-primary,
+.delivery-footer-actions .btn-outline,
+.delivery-footer-actions .btn-danger {
+  min-height: var(--touch-min);
+}
+
+/* Zone grouping */
+.zone-group {
+  margin-bottom: .5rem;
+}
+.zone-group-heading {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin: 1rem 0 .4rem;
+  font-size: .72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+  padding-bottom: .3rem;
+}
+
+
+/* ============================================================
+   SECTION 17 — ORDER DETAIL: STATUS STEPPER
+   ============================================================ */
+.order-stepper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: .25rem;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  flex: 1;
+  min-width: 72px;
+  position: relative;
+  text-align: center;
+}
+.step-item + .step-item::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  right: 50%;
+  left: calc(-50% + 12px);
+  height: 2px;
+  background: var(--border);
+  z-index: 0;
+}
+.step-item.done   + .step-item::before,
+.step-item.active + .step-item::before { background: var(--primary); }
+
+.step-dot {
+  position: relative;
+  z-index: 1;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  background: var(--bg-card);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: .7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  transition: background var(--ease), border-color var(--ease), color var(--ease);
+  flex-shrink: 0;
+}
+.step-item.done .step-dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.step-item.active .step-dot {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+  box-shadow: 0 0 0 4px rgba(46,125,50,.2);
+}
+.step-label {
+  font-size: .62rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  line-height: 1.3;
+  max-width: 72px;
+}
+.step-item.active .step-label { color: var(--primary); font-weight: 700; }
+.step-item.done   .step-label { color: var(--text-main); }
+
+/* Detail sections inside modal body */
+.detail-section {
+  margin-bottom: 1.25rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+.detail-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.detail-section-title {
+  font-size: .82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-muted);
+  margin-bottom: .65rem;
+}
+.optional-label {
+  font-size: .72rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--text-muted);
+  margin-left: .3rem;
+}
+
+

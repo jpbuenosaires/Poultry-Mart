@@ -1,0 +1,261 @@
+/* rider/responsive.css - breakpoints and print utilities */
+/* ============================================================
+   SECTION 28 — RESPONSIVE: TABLET  (≤1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .stats-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .settings-grid {
+    grid-template-columns: 1fr;
+  }
+  .form-row.fourths {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+
+/* ============================================================
+   SECTION 29 — RESPONSIVE: MOBILE  (≤768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* ── Layout ─────────────────────────────────────────────── */
+  .portal-main {
+    margin-left: 0;
+  }
+
+  #rider-pages-wrapper {
+    padding: .875rem .75rem;
+  }
+
+  /* ── Topbar ─────────────────────────────────────────────── */
+  .portal-topbar {
+    padding: 0 .75rem;
+    gap: .4rem;
+  }
+  .topbar-title small { display: none; }
+
+  /* ── Stats: 2 columns ──────────────────────────────────── */
+  .stats-grid,
+  .rider-summary-bar {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  /* ── Settings: stack ───────────────────────────────────── */
+  .settings-grid { grid-template-columns: 1fr; }
+
+  /* ── Forms: single column ──────────────────────────────── */
+  .form-row,
+  .form-row.fourths {
+    grid-template-columns: 1fr;
+  }
+
+  /* ── Delivery card body: stack columns ─────────────────── */
+  .delivery-card-body {
+    grid-template-columns: 1fr;
+    gap: .875rem;
+  }
+  .delivery-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: .625rem;
+  }
+  .delivery-footer-actions {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  /* ── Tables: horizontal scroll ─────────────────────────── */
+  .rider-table-wrap,
+  .panel-body.no-pad {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .data-table,
+  .rider-table {
+    min-width: 520px;
+  }
+
+  /* ── Login card ─────────────────────────────────────────── */
+  .portal-login__card {
+    padding: 1.75rem 1.125rem 1.5rem;
+  }
+
+  /* ── Rider modals → bottom-sheet drawers ────────────────── */
+  .rider-modal,
+  .admin-modal,
+  .admin-modal.wide {
+    max-width: 100%;
+    /* Rounded corners only on top */
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    margin-top: auto;
+    max-height: 92vh;
+    /* Slide up animation replaces scale-in on mobile */
+    animation: drawer-up var(--ease-drawer) both;
+  }
+  @keyframes drawer-up {
+    from { transform: translateY(100%); }
+    to   { transform: translateY(0);   }
+  }
+
+  .rider-modal-overlay.open,
+  .rider-modal-overlay[aria-hidden="false"],
+  .admin-modal-overlay.open,
+  .admin-modal-overlay[aria-hidden="false"] {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  /* Drag handle is more prominent on mobile */
+  .rider-modal-drag-handle {
+    width: 48px;
+    height: 5px;
+    background: #CBD5E1;
+    margin: .875rem auto .25rem;
+  }
+
+  /* Confirm box: fill more of the screen */
+  .rider-confirm-box {
+    max-width: 100%;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+    padding: 1.75rem 1.25rem 2rem;
+  }
+  .rider-confirm-overlay.open {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  /* Toast: edge-to-edge at bottom */
+  .toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+  .rider-toast-container,
+  .portal-toast-stack {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    max-width: none;
+  }
+
+  /* Notification panel: full-width */
+  .rider-notif-panel {
+    right: 0;
+    left: 0;
+    width: 100%;
+    max-width: 100%;
+    border-radius: 0;
+    top: var(--topbar-height);
+  }
+}
+
+
+/* ============================================================
+   SECTION 30 — RESPONSIVE: SMALL PHONES  (≤480px)
+   ============================================================ */
+@media (max-width: 480px) {
+
+  .stats-grid,
+  .rider-summary-bar {
+    grid-template-columns: 1fr;
+  }
+
+  /* Stat card more compact */
+  .stat-card {
+    padding: .875rem .875rem;
+  }
+
+  /* Delivery card: slightly less padding */
+  .delivery-card-header,
+  .delivery-card-body,
+  .delivery-card-footer {
+    padding-left: .75rem;
+    padding-right: .75rem;
+  }
+
+  /* Action buttons in card footer go full width */
+  .delivery-footer-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .delivery-footer-actions .btn-primary,
+  .delivery-footer-actions .btn-outline,
+  .delivery-footer-actions .btn-danger {
+    width: 100%;
+    justify-content: center;
+  }
+
+  /* POD canvas height reduced on very small screens */
+  #pod-sig-canvas {
+    height: 150px;
+  }
+
+  /* Filter bar stacks */
+  .filter-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .filter-bar .form-input,
+  .filter-bar .search-input-wrap {
+    width: 100%;
+  }
+  .rider-filter-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .rider-filter-input {
+    max-width: none;
+  }
+
+  /* Duty toggle: text hidden, icon only */
+  #rider-duty-label { display: none; }
+  #rider-duty-toggle { min-width: 44px; padding: 0 .6rem; }
+}
+
+
+/* ============================================================
+   SECTION 31 — PRINT UTILITIES
+   ============================================================ */
+@media print {
+  .portal-sidebar,
+  .portal-topbar,
+  .portal-sidebar-overlay,
+  .btn-primary,
+  .btn-outline,
+  .btn-danger,
+  .modal-footer,
+  .rider-modal-footer,
+  .toast,
+  .rider-toast-container,
+  .portal-toast-stack,
+  #cancellation-alert-overlay {
+    display: none !important;
+  }
+
+  .portal-main { margin-left: 0 !important; }
+
+  .rider-modal-overlay,
+  .admin-modal-overlay {
+    position: static !important;
+    background: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .rider-modal,
+  .admin-modal {
+    box-shadow: none !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+    max-height: none !important;
+  }
+
+  /* Print-only delivery slip */
+  .print-only {
+    display: block;
+  }
+}
+
+

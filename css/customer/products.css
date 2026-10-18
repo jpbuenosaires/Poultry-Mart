@@ -1,0 +1,310 @@
+/* customer/products.css - product grid/cards, categories, promo banner */
+/* ============================================================
+   PRODUCT GRID & CARDS
+   ============================================================ */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px, 100%), 1fr));
+  gap: 1.25rem;
+}
+
+/* --- Card --- */
+.product-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  box-shadow: var(--shadow-xs);
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-subtle);
+}
+
+.product-card-oos {
+  opacity: .72;
+  filter: grayscale(.25);
+}
+
+.product-card-oos:hover {
+  transform: none;
+}
+
+/* --- Card Image --- */
+.product-card-img {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, var(--primary-light) 0%, var(--bg-alt) 100%);
+  user-select: none;
+  transition: font-size var(--t);
+}
+
+.product-card:hover .product-card-img {
+  font-size: 4rem;
+}
+
+/* --- Card Body --- */
+.product-card-body {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.product-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.2rem;
+  min-height: 22px;
+}
+
+.product-card-cat {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .07em;
+  color: var(--text-light);
+}
+
+.product-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-main);
+  line-height: 1.3;
+}
+
+.product-card-price {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-top: 0.25rem;
+}
+
+.product-card-meta {
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+}
+
+/* --- Card Footer --- */
+.product-card-footer {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--border);
+  background: var(--bg-body);
+}
+
+.product-card-footer .btn-primary {
+  width: 100%;
+  min-height: 40px;
+  font-size: var(--fs-sm);
+}
+
+/* --- Star Row --- */
+.star-row {
+  display: flex;
+  align-items: center;
+  gap: .25rem;
+  font-size: .9rem;
+  margin-block: 0.2rem;
+}
+
+.star-row .star-filled { color: #f59e0b; }
+.star-row .star-half   { color: #f59e0b; opacity: .6; }
+.star-row .star-empty  { color: #d1d5db; }
+
+.star-count {
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+  font-weight: 500;
+}
+
+/* --- Badges --- */
+.badge-featured,
+.badge-wholesale,
+.badge-catch,
+.badge-pack,
+.badge-piece,
+.badge-out-of-stock,
+.badge-low-stock {
+  display: inline-flex;
+  align-items: center;
+  gap: .2rem;
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: .02em;
+  white-space: nowrap;
+  line-height: 1.5;
+}
+
+.badge-featured {
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+}
+
+.badge-wholesale {
+  background: #ede9fe;
+  color: #5b21b6;
+  border: 1px solid #ddd6fe;
+}
+
+.badge-catch {
+  background: var(--warning-bg);
+  color: var(--warning);
+  border: 1px solid #fde68a;
+}
+
+.badge-pack {
+  background: #dbeafe;
+  color: #1d4ed8;
+  border: 1px solid #bfdbfe;
+}
+
+.badge-piece {
+  background: var(--primary-light);
+  color: var(--primary-hover);
+  border: 1px solid var(--primary-subtle);
+}
+
+.badge-out-of-stock {
+  background: var(--error-bg);
+  color: var(--error);
+  border: 1px solid #fecaca;
+}
+
+.badge-low-stock {
+  background: var(--warning-bg);
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+
+/* ============================================================
+   CATEGORY GRID
+   ============================================================ */
+
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(170px, 100%), 1fr));
+  gap: 1rem;
+}
+
+.category-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: transform var(--t), box-shadow var(--t), border-color var(--t);
+  box-shadow: var(--shadow-xs);
+}
+
+.category-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-subtle);
+}
+
+.category-card-icon {
+  font-size: 2.5rem;
+  margin-bottom: .75rem;
+  display: block;
+}
+
+.category-card-name {
+  font-family: 'Playfair Display', serif;
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: .3rem;
+}
+
+.category-card-count {
+  font-size: var(--fs-xs);
+  color: var(--text-light);
+}
+
+/* --- Category description banner (catalog) --- */
+#category-description-banner,
+.category-description-banner {
+  display: none;
+  align-items: center;
+  gap: 1rem;
+  background: var(--primary-light);
+  border: 1px solid var(--primary-subtle);
+  border-radius: var(--radius-lg);
+  padding: 1rem 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+.cat-desc-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.cat-desc-title {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--fs-md);
+  color: var(--primary-hover);
+  display: block;
+  margin-bottom: .2rem;
+}
+
+.cat-desc-text {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+
+/* ============================================================
+   PROMO BANNER
+   ============================================================ */
+
+.promo-banner {
+  margin-block: 3rem;
+}
+
+.promo-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+  border: 2px solid var(--primary-subtle);
+  border-radius: var(--radius-xl);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  flex-wrap: wrap;
+}
+
+.promo-inner h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: var(--fs-xl);
+  color: var(--primary-hover);
+  margin-bottom: .5rem;
+}
+
+.promo-inner p {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  max-width: 520px;
+  line-height: 1.65;
+}
+
+

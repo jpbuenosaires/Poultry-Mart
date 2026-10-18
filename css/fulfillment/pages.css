@@ -1,0 +1,214 @@
+/* fulfillment/pages.css - staff pages, panel, queue summary */
+/* ============================================================
+   SECTION 13 · STAFF PAGES (page-level shell)
+   ============================================================ */
+.staff-page {
+  display: none;
+  flex:    1;
+  flex-direction: column;
+  width:   100%;    /* ← guarantees page fills its column */
+}
+.staff-page.active {
+  display:    block;
+  animation:  view-in .2s ease both;
+  padding:    1.5rem 1.75rem;
+  width:      100%;
+  box-sizing: border-box;
+}
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Page header row (title + filter controls) */
+.staff-page-header {
+  display:         flex;
+  align-items:     center;       /* ← vertically align title and controls */
+  justify-content: space-between;
+  gap:             .75rem;
+  margin-bottom:   1rem;
+  flex-wrap:       wrap;
+}
+
+/* Title block — prevent it from stretching and pushing controls off */
+.staff-page-header > div:first-child {
+  flex:     1;
+  min-width: 0;
+}
+
+/* Controls/filter row — keep it compact and right-aligned */
+.staff-page-header .staff-filter-row {
+  flex-shrink: 0;
+  flex-wrap:   nowrap;   /* ← stop Zone View + search from wrapping to new line */
+}
+.staff-page-header h2 {
+  font-size:   1.25rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  margin-bottom: .15rem;
+}
+
+/* Sub-text below page title */
+.staff-page-sub {
+  font-size:  .875rem;
+  color:      var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Filter row (search inputs + action buttons) */
+.staff-filter-row {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-wrap:   wrap;
+}
+
+.staff-filter-input {
+  height:     38px;
+  min-width:  160px;
+  max-width:  220px;
+  font-size:  .875rem;
+}
+
+
+/* ============================================================
+   SECTION 14 · STAFF PANEL  (mirrors .admin-panel exactly)
+   ============================================================ */
+.staff-panel {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  margin-bottom: 1.25rem;
+}
+.dashboard-grid .staff-panel,
+.settings-grid  .staff-panel {
+  margin-bottom: 0;
+}
+.staff-panel--spaced { margin-bottom: .75rem; }
+
+/* Reuse shared panel sub-elements (panel-header etc.) */
+.panel-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             .75rem;
+  padding:         .875rem 1.125rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  flex-wrap:       wrap;
+  min-height:      52px;
+}
+
+/* All Orders filter bar — force filters into a single horizontal row */
+.panel-header .filter-bar {
+  flex-shrink: 0;
+  flex-wrap:   nowrap;
+  gap:         .5rem;
+}
+
+/* Constrain the filter inputs so they don't push the table wide */
+.panel-header .filter-bar .form-input,
+.panel-header .filter-bar .staff-filter-input {
+  min-width:  120px;
+  max-width:  200px;
+  width:      auto;
+}
+
+/* Also keep .admin-panel for any shared partial templates */
+.admin-panel {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  margin-bottom: 1.25rem;
+}
+.dashboard-grid .admin-panel,
+.settings-grid  .admin-panel {
+  margin-bottom: 0;
+}
+.admin-panel--spaced { margin-bottom: .75rem; }
+
+.panel-title {
+  font-family:    var(--font-body);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+}
+.panel-title small {
+  font-size:   .78rem;
+  font-weight: 400;
+  color:       var(--text-muted);
+  margin-left: .4rem;
+}
+
+.panel-controls {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-wrap:   wrap;
+}
+
+.panel-body { padding: 1.125rem; }
+.panel-body.no-pad  { padding: 0; overflow-x: auto; } /* ← tables scroll inside, page doesn't clip */
+.panel-body--flush-bottom { padding-bottom: 0; }
+
+/* Ensure tables inside scroll wrappers always lay out at natural width */
+.panel-body.no-pad > .data-table {
+  min-width: 720px;  /* prevents columns from crushing before scroll kicks in */
+}
+
+.panel-hint {
+  font-size:     .82rem;
+  color:         var(--text-muted);
+  line-height:   1.6;
+  padding:       .625rem 1.125rem;
+  background:    #FAFBFC;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-top:    1px solid var(--border); /* ← visually anchors hint below header */
+}
+.panel-hint strong { color: var(--text-main); }
+.panel-hint em     { color: var(--primary); font-style: normal; font-weight: 600; }
+.panel-hint strong { color: var(--text-main); }
+.panel-hint em     { color: var(--primary); font-style: normal; font-weight: 600; }
+
+
+/* ============================================================
+   SECTION 15 · QUEUE SUMMARY BAR
+   ============================================================ */
+.queue-summary-bar {
+  display:       flex;
+  align-items:   center;
+  gap:           .5rem;
+  flex-wrap:     wrap;
+  padding:       .625rem 0;
+  margin-bottom: .875rem;
+}
+
+.queue-stat-pill {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           .3rem;
+  padding:       .3rem .75rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size:     .82rem;
+  font-weight:   500;
+  color:         var(--text-muted);
+  box-shadow:    var(--shadow-xs);
+  white-space:   nowrap;
+}
+
+.qsp-icon { font-size: .9rem; line-height: 1; }
+
+.qsp-val {
+  font-weight: 700;
+  color:       var(--text-main);
+  min-width:   1ch;
+}
+
+

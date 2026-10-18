@@ -27,8 +27,8 @@ require_once __DIR__ . '/db.php';
 
 header('Content-Type: application/json');
 
-$action = $_GET['action'] ?? '';
-$body   = json_decode(file_get_contents('php://input'), true) ?? [];
+$action = Request::action();
+$body   = Request::body();
 
 // ── Staff role guard ──────────────────────────────────────────
 // Accepts staff_id from session; validates role.

@@ -1,0 +1,43 @@
+/* admin/login.css - login screen */
+/* ════════════════════════════════════════════════════════════
+   § 3  LOGIN SCREEN
+═══════════════════════════════════════════════════════════════*/
+.portal-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background: linear-gradient(135deg, #1c1917 0%, #292524 60%, #3d2c1a 100%);
+}
+
+.portal-login__card {
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.portal-login__brand {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  margin-bottom: 1.75rem;
+}
+.brand-chicken { font-size: 2.25rem; line-height: 1; }
+.brand-wordmark {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -.02em;
+  color: var(--text-body);
+}
+.brand-wordmark strong { color: var(--brand-primary); }
+.brand-portal-label { font-size: .78rem; color: var(--text-muted); font-weight: 500; margin-top: .1rem; }
+
+.portal-login__heading { font-size: 1.3rem; font-weight: 700; margin-bottom: .25rem; }
+.portal-login__sub     { color: var(--text-muted); font-size: .875rem; margin-bottom: 1.5rem; }
+.portal-login__hint    { font-size: .8rem; color: var(--text-muted); margin-top: 1rem; text-align: center; }
+

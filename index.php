@@ -6,7 +6,25 @@
   <title>PoultryMart – Fresh Poultry Delivered in Albay</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/css/customer-entry.css"/>
+  <link rel="stylesheet" href="/css/customer/base.css"/>
+  <link rel="stylesheet" href="/css/customer/buttons.css"/>
+  <link rel="stylesheet" href="/css/customer/header.css"/>
+  <link rel="stylesheet" href="/css/customer/home.css"/>
+  <link rel="stylesheet" href="/css/customer/products.css"/>
+  <link rel="stylesheet" href="/css/customer/states-footer.css"/>
+  <link rel="stylesheet" href="/css/customer/catalog.css"/>
+  <link rel="stylesheet" href="/css/customer/product-detail.css"/>
+  <link rel="stylesheet" href="/css/customer/forms.css"/>
+  <link rel="stylesheet" href="/css/customer/cart.css"/>
+  <link rel="stylesheet" href="/css/customer/checkout.css"/>
+  <link rel="stylesheet" href="/css/customer/orders.css"/>
+  <link rel="stylesheet" href="/css/customer/modals.css"/>
+  <link rel="stylesheet" href="/css/customer/profile.css"/>
+  <link rel="stylesheet" href="/css/customer/auth.css"/>
+  <link rel="stylesheet" href="/css/customer/toast-misc.css"/>
+  <link rel="stylesheet" href="/css/customer/responsive.css"/>
+  <link rel="stylesheet" href="/css/customer/product-patches.css"/>
+  <link rel="stylesheet" href="/css/customer/orders-page.css"/>
 </head>
 <body>
 
@@ -842,6 +860,20 @@
 <script src="js/shared/utils.js"></script>
 <script src="js/shared/uiHelpers.js"></script>
 <script src="js/shared/apiService.js"></script>
-<script src="js/controllers/customer.js"></script>
+<script src="js/controllers/customer/core.js"></script>
+<script src="js/controllers/customer/addressData.js"></script>
+<script src="js/controllers/customer/navigation.js"></script>
+<script src="js/controllers/customer/auth.js"></script>
+<script src="js/controllers/customer/notifications.js"></script>
+<script src="js/controllers/customer/cart.js"></script>
+<script src="js/controllers/customer/catalog.js"></script>
+<script src="js/controllers/customer/productDetail.js"></script>
+<script src="js/controllers/customer/cartPage.js"></script>
+<script src="js/controllers/customer/checkout.js"></script>
+<script src="js/controllers/customer/orders.js"></script>
+<script src="js/controllers/customer/orderDetail.js"></script>
+<script src="js/controllers/customer/orderModals.js"></script>
+<script src="js/controllers/customer/profile.js"></script>
+<script src="js/controllers/customer/shell.js"></script>
 </body>
 </html>

@@ -1,0 +1,418 @@
+/* rider/settings-misc.css - settings, toasts, alert overlay, pagination, toggle, misc, scrollbar */
+/* ============================================================
+   SECTION 21 — SETTINGS PAGE
+   ============================================================ */
+.settings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+/* Settings cards (password, profile, etc.) */
+.settings-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+}
+.settings-card-full {
+  grid-column: 1 / -1;
+}
+.settings-card-title {
+  font-size: .95rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+}
+
+.settings-profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+  padding: .75rem 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+/* Remittance form row */
+.remit-form-row {
+  display: flex;
+  gap: .75rem;
+  flex-wrap: wrap;
+  margin-bottom: .75rem;
+}
+.remit-form-row .form-group { flex: 1; min-width: 140px; }
+
+.remit-history {
+  margin-top: .5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+
+/* ============================================================
+   SECTION 22 — TOAST NOTIFICATIONS
+   ============================================================ */
+.toast {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9990;
+  max-width: 360px;
+  min-width: 220px;
+  padding: .875rem 1.125rem;
+  background: #1F2937;
+  color: #F9FAFB;
+  border-radius: var(--radius-md);
+  font-size: .875rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-lg);
+  line-height: 1.45;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity .2s ease, transform .2s ease;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+.toast.success { background: var(--success); }
+.toast.error   { background: var(--error);   }
+.toast.warning { background: #E65100;         }
+.toast.info    { background: var(--info);     }
+
+/* Stacked toast container (showToastStack helper) */
+.rider-toast-container,
+.portal-toast-stack {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: .45rem;
+  z-index: 9999;
+  max-width: 360px;
+  pointer-events: none;
+}
+.rider-toast-container > *,
+.portal-toast-stack > * { pointer-events: auto; }
+
+/* Individual stacked toast items */
+.rider-toast {
+  display: flex;
+  align-items: flex-start;
+  gap: .6rem;
+  padding: .75rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--bg-card);
+  box-shadow: 0 4px 16px rgba(0,0,0,.14);
+  font-size: .875rem;
+  animation: toast-in .22s ease;
+}
+.rider-toast.warning { border-left: 4px solid var(--warning); }
+.rider-toast.error   { border-left: 4px solid var(--error);   }
+.rider-toast.success { border-left: 4px solid var(--green);   }
+.rider-toast.info    { border-left: 4px solid var(--blue);    }
+
+.toast-msg   { flex: 1; color: var(--text-main); line-height: 1.45; }
+.toast-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: .9rem;
+  color: var(--text-muted);
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  transition: color var(--ease);
+}
+.toast-close:hover { color: var(--text-main); }
+.toast-close:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@keyframes toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+
+/* ============================================================
+   SECTION 23 — CANCELLATION / FULL-SCREEN ALERT OVERLAY
+   Red full-screen alert for critical events (e.g. cancelled
+   order while rider is en route).
+   ============================================================ */
+#cancellation-alert-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(160deg, #B71C1C 0%, #D32F2F 100%);
+  z-index: 9000;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  animation: alert-in .3s ease both;
+}
+#cancellation-alert-overlay.active {
+  display: flex;
+}
+@keyframes alert-in {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1);   }
+}
+
+#cancellation-alert-overlay .alert-icon {
+  font-size: 4rem;
+  line-height: 1;
+  margin-bottom: 1rem;
+  animation: alert-bounce .6s var(--ease-spring) both;
+}
+@keyframes alert-bounce {
+  from { transform: scale(.4) translateY(-20px); }
+  to   { transform: scale(1)  translateY(0); }
+}
+
+#cancellation-alert-overlay .alert-title {
+  font-family: var(--font-display);
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: .5rem;
+  letter-spacing: -.02em;
+}
+
+#cancellation-alert-overlay .alert-message {
+  font-size: 1rem;
+  color: rgba(255,255,255,.85);
+  max-width: 360px;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+}
+
+#cancellation-alert-overlay .alert-dismiss {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: .4rem;
+  padding: .75rem 2rem;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 700;
+  color: #B71C1C;
+  background: #fff;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+  min-height: var(--touch-min);
+  transition: transform var(--ease), box-shadow var(--ease);
+}
+#cancellation-alert-overlay .alert-dismiss:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,.25);
+}
+#cancellation-alert-overlay .alert-dismiss:active { transform: none; }
+
+
+/* ============================================================
+   SECTION 24 — PAGINATION
+   ============================================================ */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: .3rem;
+  padding: .875rem 1rem;
+  border-top: 1px solid var(--border);
+  background: #FAFBFC;
+  flex-wrap: wrap;
+}
+.pagination button,
+.pagination .page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  font-family: var(--font-body);
+  font-size: .82rem;
+  font-weight: 600;
+  border-radius: var(--radius-xs);
+  border: 1.5px solid var(--border);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  transition: background var(--ease), border-color var(--ease), color var(--ease);
+}
+.pagination button:hover,
+.pagination .page-btn:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-pale);
+}
+.pagination button.active,
+.pagination .page-btn.active,
+.pagination button[aria-current="page"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: #fff;
+}
+.pagination button:disabled,
+.pagination .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+.pagination button:focus-visible,
+.pagination .page-btn:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 25 — TOGGLE SWITCH  (Settings)
+   ============================================================ */
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .75rem;
+  padding: .65rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.toggle-wrap:last-child { border-bottom: none; }
+
+.toggle-label { display: flex; flex-direction: column; gap: .1rem; }
+.toggle-label strong { font-size: .875rem; font-weight: 600; color: var(--text-main); }
+.toggle-label small  { font-size: .72rem; color: var(--text-muted); }
+
+.toggle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.toggle input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+.toggle-slider {
+  display: block;
+  width: 44px;
+  height: 24px;
+  background: #D1D5DB;
+  border-radius: var(--radius-pill);
+  position: relative;
+  transition: background var(--ease);
+  flex-shrink: 0;
+}
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  left: 3px;
+  top: 3px;
+  width: 18px;
+  height: 18px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+  transition: transform var(--ease);
+}
+.toggle input:checked + .toggle-slider              { background: var(--primary); }
+.toggle input:checked + .toggle-slider::after       { transform: translateX(20px); }
+.toggle input:focus-visible + .toggle-slider        {
+  box-shadow: 0 0 0 3px rgba(46,125,50,.25);
+}
+
+
+/* ============================================================
+   SECTION 26 — MISC UTILITY
+   ============================================================ */
+.bg-alt { background: var(--bg-alt); }
+
+.logo-icon {
+  line-height: 1;
+  display: inline-block;
+}
+
+.order-number-font,
+strong[style*="Playfair"] {
+  font-family: var(--font-display);
+}
+
+.text-muted { color: var(--text-muted); }
+
+tr[style*="cursor:pointer"] { cursor: pointer; }
+
+details > summary {
+  cursor: pointer;
+  list-style: none;
+  transition: color var(--ease);
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary:hover { color: var(--primary-hover); }
+details > summary:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius: var(--radius-xs);
+}
+
+/* Pricing hint block */
+.pricing-hint {
+  font-size: .8rem;
+  color: var(--text-muted);
+  background: var(--bg-alt);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 var(--radius-xs) var(--radius-xs) 0;
+  padding: .6rem .875rem;
+  margin: .5rem 0 .25rem;
+  line-height: 1.55;
+}
+.pricing-hint strong { color: var(--text-main); }
+
+/* Print-only elements hidden on screen */
+.print-only { display: none; }
+
+
+/* ============================================================
+   SECTION 27 — SCROLLBAR (WebKit)
+   ============================================================ */
+.rider-modal-body::-webkit-scrollbar,
+.modal-body::-webkit-scrollbar,
+#rider-pages-wrapper::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+.rider-modal-body::-webkit-scrollbar-track,
+.modal-body::-webkit-scrollbar-track,
+#rider-pages-wrapper::-webkit-scrollbar-track { background: transparent; }
+
+.rider-modal-body::-webkit-scrollbar-thumb,
+.modal-body::-webkit-scrollbar-thumb,
+#rider-pages-wrapper::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+.rider-modal-body::-webkit-scrollbar-thumb:hover,
+.modal-body::-webkit-scrollbar-thumb:hover,
+#rider-pages-wrapper::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+

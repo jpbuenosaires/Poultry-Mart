@@ -19,9 +19,12 @@ PHP, MySQL/MariaDB, JavaScript, HTML, CSS. Separate API endpoint per role in `ap
 ## Project structure
 
 ```
-api/          REST-style endpoints per role (admin, customer, fulfillment, rider), db.php, services/, helpers/
-css/ js/      Front-end styles and controllers for each portal
-components/   Shared UI components and product image assets
+api/          REST-style endpoint per role (admin, customer, fulfillment, rider), db.php
+  services/   Business logic (orders split into query, checkout, packing, delivery, payment, and dispute services behind OrderService)
+  helpers/    Shared request and response helpers
+js/           Shared helpers (shared/) and feature-based controllers per portal (controllers/<portal>/)
+css/          Section-based stylesheets per portal (<portal>/)
+components/   Product image assets
 database/     schema.sql - 25-table MySQL schema (structure only, no data)
 uploads/      Runtime uploads (not tracked)
 ```

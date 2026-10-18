@@ -1,0 +1,230 @@
+/* fulfillment/tables.css - inventory, staff and data tables */
+/* ============================================================
+   SECTION 23 · INVENTORY PAGE COMPONENTS
+   ============================================================ */
+
+/* Low-stock alert banner (above the table) */
+.inventory-alert-banner {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           .65rem;
+  padding:       .75rem 1rem;
+  background:    var(--warning-bg);
+  border:        1.5px solid var(--warning);
+  border-radius: var(--radius-sm);
+  margin-bottom: .5rem;
+  animation:     fade-in .2s ease;
+}
+
+.alert-icon {
+  font-size:   1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.alert-text {
+  font-size:  .875rem;
+  color:      var(--warning-dark);
+  line-height: 1.45;
+}
+.alert-text strong { color: var(--text-main); }
+
+/* Batch ID tag in inventory table */
+.batch-id-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .15rem .5rem;
+  font-size:     .75rem;
+  font-weight:   700;
+  font-family:   var(--font-display);
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color:         var(--text-main);
+}
+
+/* Stock level bar */
+.stock-bar-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+}
+
+.stock-bar {
+  flex:          1;
+  height:        8px;
+  background:    var(--border);
+  border-radius: var(--radius-pill);
+  overflow:      hidden;
+  min-width:     60px;
+}
+
+.stock-bar-fill {
+  height:        100%;
+  border-radius: var(--radius-pill);
+  transition:    width .4s ease;
+  background:    var(--success);   /* default: green (ok) */
+}
+
+/* State modifiers on the wrap */
+.stock-ok     .stock-bar-fill { background: var(--success); }
+.stock-low    .stock-bar-fill { background: var(--warning); }
+.stock-critical .stock-bar-fill { background: var(--error); }
+
+.stock-val {
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.stock-low     .stock-val    { color: var(--warning-text); }
+.stock-critical .stock-val  { color: var(--error-text);   }
+
+
+/* ============================================================
+   SECTION 24 · STAFF TABLE (prep sheet + general tables)
+   ============================================================ */
+/* General fulfillment table — shares most data-table rules */
+.staff-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .865rem;
+}
+.staff-table th {
+  padding:        .6rem 1rem;
+  text-align:     left;
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+.staff-table td {
+  padding:        .65rem 1rem;
+  vertical-align: middle;
+  border-bottom:  1px solid var(--border);
+  color:          var(--text-main);
+  line-height:    1.45;
+}
+.staff-table tbody tr:last-child td { border-bottom: none; }
+.staff-table tbody tr:hover { background: #F0F7F0; }
+
+/* Prep sheet specific modifier */
+.prep-sheet-table th:nth-child(2),
+.prep-sheet-table td:nth-child(2) { text-align: right; }
+.prep-sheet-table th:nth-child(3),
+.prep-sheet-table td:nth-child(3) { text-align: center; }
+
+/* Meta line above the prep sheet table */
+.prep-sheet-meta {
+  font-size:     .82rem;
+  color:         var(--text-muted);
+  padding:       .5rem 0 .875rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: .875rem;
+}
+
+
+/* ============================================================
+   SECTION 25 · DATA TABLE  (shared with admin CSS)
+   ============================================================ */
+.data-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .865rem;
+}
+
+.data-table th {
+  padding:        .6rem 1rem;
+  text-align:     left;
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+
+.data-table td {
+  padding:        .7rem 1rem;
+  vertical-align: middle;
+  border-bottom:  1px solid var(--border);
+  color:          var(--text-main);
+  line-height:    1.45;
+}
+
+
+/* 1. Allow the table to grow vertically to fit wrapped text */
+#all-orders-table {
+  width: 100% !important;
+  table-layout: auto; /* Changed from fixed to allow natural wrapping */
+}
+
+/* 2. Enable text wrapping for all headers and cells */
+#all-orders-table th,
+#all-orders-table td {
+  white-space: normal;     /* Allows text to wrap to the next line */
+  word-wrap: break-word;   /* Forces long strings like emails to break */
+  overflow-wrap: break-word;
+  text-overflow: clip;     /* Removes the ellipsis (...) */
+  padding: .7rem .5rem;    /* Maintains vertical breathing room for multi-line rows */
+  vertical-align: top;     /* Aligns content to the top for better readability when wrapped */
+}
+
+/* 3. Specifically handle the customer column email */
+#all-orders-table td:nth-child(2) small {
+  display: block;
+  white-space: normal;
+  word-break: break-all;   /* Ensures long emails break anywhere to stay in the column */
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* 4. Ensure the Actions column stays compact but visible */
+#all-orders-table th:last-child,
+#all-orders-table td:last-child {
+  width: 120px;            /* Narrower width since buttons can now stack */
+  min-width: 100px;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr { transition: background var(--ease); }
+.data-table tbody tr:hover { background: #F0F7F0; }
+
+.data-table .td-actions {
+  white-space: nowrap;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+  padding-top: .55rem;
+  padding-bottom: .55rem;
+}
+
+.table-loading {
+  text-align: center;
+  padding:    2.5rem 1rem;
+  color:      var(--text-muted);
+  font-size:  .875rem;
+  font-style: italic;
+}
+
+.table-empty {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            .6rem;
+  padding:        3rem 1rem;
+  text-align:     center;
+  color:          var(--text-muted);
+}
+.table-empty span { font-size: 2rem; line-height: 1; opacity: .7; }
+.table-empty p    { font-size: .875rem; }
+
+

@@ -1,0 +1,194 @@
+/* customer/orders-page.css - my orders page (late section; contains one 600px media query) */
+/* ============================================================
+   MY ORDERS PAGE
+   ============================================================ */
+
+/* ── Filter Bar ─────────────────────────────────────────────*/
+.orders-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: .75rem;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-md, 10px);
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0 1.75rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,.05);
+}
+
+.orders-filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: .3rem;
+  flex: 1;
+  min-width: 140px;
+}
+
+.filter-label-text {
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  color: var(--text-muted, #6b7280);
+}
+
+.filter-select,
+.filter-date {
+  height: 2.5rem;
+  padding: 0 .75rem;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-sm, 6px);
+  background: var(--bg-surface, #f9fafb);
+  color: var(--text-primary, #111);
+  font-size: .9rem;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color .15s, box-shadow .15s;
+  width: 100%;
+}
+
+.filter-select:focus,
+.filter-date:focus {
+  outline: none;
+  border-color: var(--accent, #16a34a);
+  box-shadow: 0 0 0 3px rgba(22,163,74,.12);
+}
+
+.orders-filter-clear {
+  height: 2.5rem;
+  padding: 0 1rem;
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-sm, 6px);
+  background: transparent;
+  color: var(--text-muted, #6b7280);
+  font-size: .85rem;
+  font-family: inherit;
+  cursor: pointer;
+  white-space: nowrap;
+  align-self: flex-end;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.orders-filter-clear:hover {
+  background: var(--red-light, #fff0f0);
+  color: var(--red, #dc2626);
+  border-color: var(--red, #dc2626);
+}
+
+/* ── Order List ─────────────────────────────────────────────*/
+.orders-list-inner {
+  display: flex;
+  flex-direction: column;
+  gap: .75rem;
+  padding-bottom: 3rem;
+}
+
+/* ── Order Card ─────────────────────────────────────────────*/
+.order-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--bg-card, #fff);
+  border: 1px solid var(--border, #e5e7eb);
+  border-radius: var(--radius-md, 10px);
+  padding: 1rem 1.25rem;
+  cursor: pointer;
+  transition: box-shadow .2s, transform .15s, border-color .2s;
+  text-decoration: none;
+}
+
+.order-card:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,.08);
+  transform: translateY(-1px);
+  border-color: var(--accent, #16a34a);
+}
+
+.order-card-icon {
+  font-size: 1.75rem;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-surface, #f9fafb);
+  border-radius: 50%;
+}
+
+.order-card-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.order-card-top {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  flex-wrap: wrap;
+}
+
+.order-number {
+  font-weight: 700;
+  font-size: .95rem;
+  color: var(--text-primary, #111);
+  letter-spacing: .02em;
+}
+
+.order-card-meta {
+  display: flex;
+  gap: 1rem;
+  font-size: .8rem;
+  color: var(--text-muted, #6b7280);
+  flex-wrap: wrap;
+}
+
+.order-card-amount {
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.amount-main {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--accent, #16a34a);
+}
+
+.amount-label {
+  font-size: .72rem;
+  color: var(--text-muted, #6b7280);
+  margin-top: .1rem;
+}
+
+.order-card-chevron {
+  color: var(--text-muted, #9ca3af);
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-left: .25rem;
+}
+
+/* ── Responsive ─────────────────────────────────────────────*/
+@media (max-width: 600px) {
+  .orders-filter-bar {
+    padding: .875rem 1rem;
+  }
+  .orders-filter-group {
+    min-width: calc(50% - .375rem);
+  }
+  .orders-filter-clear {
+    width: 100%;
+    flex: 1 0 100%;
+  }
+  .order-card {
+    padding: .875rem 1rem;
+    gap: .75rem;
+  }
+  .order-card-icon {
+    font-size: 1.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}

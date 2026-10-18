@@ -1,0 +1,135 @@
+/* fulfillment/notifications.css - notification panel and cancel overlay */
+/* ============================================================
+   SECTION 11 · NOTIFICATION PANEL
+   ============================================================ */
+.notif-panel {
+  position:    absolute;
+  top:         calc(var(--topbar-height) + 4px);
+  right:       1rem;
+  z-index:     300;
+  width:       360px;
+  max-width:   calc(100vw - 2rem);
+  background:  var(--bg-card);
+  border:      1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:  var(--shadow-lg);
+  overflow:    hidden;
+  animation:   notif-in .18s ease both;
+}
+
+@keyframes notif-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.notif-panel-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         .75rem 1rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  font-size:       .875rem;
+  font-weight:     700;
+  color:           var(--text-main);
+}
+
+.notif-dismiss-all {
+  font-size:   .75rem;
+  font-weight: 600;
+  color:       var(--primary);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  padding:     .2rem .4rem;
+  border-radius: var(--radius-xs);
+  transition:  color var(--ease), background var(--ease);
+}
+.notif-dismiss-all:hover {
+  color:      var(--primary-hover);
+  background: var(--primary-pale);
+}
+
+#notif-panel-body { max-height: 320px; overflow-y: auto; }
+
+/* Individual notification items */
+.notif-panel-item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         .65rem;
+  padding:     .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size:   .82rem;
+  line-height: 1.45;
+  transition:  background var(--ease);
+}
+.notif-panel-item:last-child { border-bottom: none; }
+.notif-panel-item:hover      { background: #FFF8E1; }
+
+/* Edit variant (customer changed order) */
+.notif-panel-item--edit:hover { background: var(--info-pale); }
+
+.notif-panel-icon {
+  font-size:   1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top:  .1rem;
+}
+
+
+/* ============================================================
+   SECTION 12 · CANCEL OVERLAY (full-screen urgent alert)
+   ============================================================ */
+.cancel-overlay {
+  position:        fixed;
+  inset:           0;
+  z-index:         9000;
+  background:      rgba(183,28,28,.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display:         none;        /* JS sets display:flex */
+  align-items:     center;
+  justify-content: center;
+  animation:       cancel-flash .5s ease;
+}
+
+@keyframes cancel-flash {
+  0%   { background: rgba(183,28,28,.4); }
+  50%  { background: rgba(183,28,28,.98); }
+  100% { background: rgba(183,28,28,.92); }
+}
+
+.cancel-overlay-inner {
+  text-align:    center;
+  padding:       2.5rem 2rem;
+  max-width:     480px;
+  color:         #fff;
+}
+
+.cancel-overlay-icon {
+  font-size:     3.5rem;
+  line-height:   1;
+  margin-bottom: .75rem;
+  animation:     icon-bounce .4s ease infinite alternate;
+}
+@keyframes icon-bounce {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+.cancel-overlay-inner h2 {
+  font-family:   var(--font-display);
+  font-size:     2rem;
+  font-weight:   800;
+  color:         #fff;
+  margin-bottom: .5rem;
+  letter-spacing: -.02em;
+}
+.cancel-overlay-inner p {
+  font-size:     1.05rem;
+  color:         rgba(255,255,255,.85);
+  margin-bottom: 1.5rem;
+  line-height:   1.55;
+}
+
+

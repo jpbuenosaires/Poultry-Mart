@@ -25,8 +25,8 @@ require_once __DIR__ . '/db.php';
 // Ensure we are sending JSON and not HTML errors
 header('Content-Type: application/json');
 
-$action   = $_GET['action'] ?? '';
-$body     = json_decode(file_get_contents('php://input'), true) ?? [];
+$action   = Request::action();
+$body     = Request::body();
 
 // 1. LOGIN ACTION (Must stay above the verify_rider check)
 if ($action === 'login') {

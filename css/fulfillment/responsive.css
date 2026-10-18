@@ -1,0 +1,485 @@
+/* fulfillment/responsive.css - breakpoints and print */
+/* ============================================================
+   SECTION 32 · RESPONSIVE — TABLET  (≤1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .queue-card-body {
+    grid-template-columns: 1fr 1.2fr;
+  }
+  .queue-action-col { grid-column: span 2; }
+
+  .form-row.fourths { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ============================================================
+   SECTION 33 · RESPONSIVE — MOBILE  (≤768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* Sidebar off-canvas */
+  .portal-sidebar {
+    transform:  translateX(-100%);
+    width:      272px;
+    transition: transform .26s cubic-bezier(.4,0,.2,1);
+  }
+  .portal-sidebar.open { transform: translateX(0); }
+
+  .portal-main  { margin-left: 0; }
+  .topbar-menu-btn { display: inline-flex; }
+
+  .portal-topbar { padding: 0 1rem; }
+
+  .staff-page.active { padding: 1rem .875rem; }
+
+  /* Queue card: stack columns */
+  .queue-card-body {
+    grid-template-columns: 1fr;
+  }
+  .queue-action-col { grid-column: span 1; }
+
+  /* Pack modal */
+  .staff-modal,
+  .staff-modal.pack-modal-box,
+  .pack-modal-box {
+    max-width:     100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-top:    auto;
+    max-height:    92vh;
+  }
+  .staff-modal-overlay[style*="flex"] {
+    align-items: flex-end;
+    padding:     0;
+  }
+
+  /* Admin modal mobile (for detail / batch-assign modals) */
+  .admin-modal,
+  .admin-modal.wide,
+  .modal-box {
+    max-width:     100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-top:    auto;
+    max-height:    90vh;
+  }
+  .admin-modal-overlay.open,
+  .admin-modal-overlay[aria-hidden="false"],
+  .modal-overlay[style*="flex"] {
+    align-items: flex-end;
+    padding:     0;
+  }
+
+  /* Packed/dispatch cards */
+  .packed-card,
+  .dispatch-card {
+    flex-direction: column;
+    align-items:    flex-start;
+  }
+  .packed-final  { text-align: left; }
+  .dispatch-total { text-align: left; }
+
+  /* Zone order row — simplified */
+  .zone-order-row {
+    grid-template-columns: 1fr auto auto;
+  }
+  .zone-order-row > span:nth-child(3) { display: none; }
+
+  /* Topbar scan area: hide label, shrink */
+  .topbar-scan-area { gap: .3rem; }
+  .scan-input-visible { width: 130px; }
+
+  /* Staff filter row: wrap fully */
+  .staff-filter-row { width: 100%; }
+  .staff-filter-input { max-width: 100%; flex: 1; }
+
+  .form-row,
+  .form-row.fourths { grid-template-columns: 1fr; }
+
+  /* Toast */
+  .toast {
+    bottom: 1rem;
+    right:  1rem;
+    left:   1rem;
+    max-width: none;
+  }
+
+  /* Notif panel */
+  .notif-panel {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+  }
+
+  /* Detail info grid */
+  .detail-info-grid { grid-template-columns: 1fr; }
+
+  /* Pack customer strip */
+  .pack-customer-strip { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ============================================================
+   SECTION 34 · RESPONSIVE — SMALL PHONES  (≤480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .topbar-title small  { display: none; }
+  .staff-topbar-clock  { display: none; }
+  .scan-mode-btn > span:last-child { display: none; } /* hide "Scan Mode" label text */
+
+  .pack-item-row {
+    grid-template-columns: 1fr;
+  }
+  .pack-item-weight-group { align-items: flex-start; }
+
+  .btn-actions-row { gap: .25rem; }
+  .btn-action      { font-size: .72rem; padding: .25rem .55rem; }
+
+  .modal-box { padding: 1.25rem 1rem 1.25rem; }
+
+  .queue-stat-pill { font-size: .75rem; padding: .25rem .55rem; }
+}
+
+
+/* ============================================================
+   SECTION 35 · PRINT STYLES
+   ============================================================ */
+@media print {
+
+/* Center documents but ONLY take up necessary width */
+  #prep-sheet-print,
+  #print-slip {
+    display: block !important;
+    width: max-content !important; /* Shrinks wrapper to fit the table exactly */
+    max-width: 100% !important;    /* Prevents it from bleeding off the paper */
+    margin: 0 auto !important;     /* Perfectly centers the snug box */
+    padding: 10mm 0 !important;    /* Top/bottom breathing room */
+  }
+
+  /* Let tables size naturally based on their text */
+  .slip-items-table, 
+  .prep-sheet-table {
+    width: auto !important;        /* Let the browser size columns based on text */
+    min-width: 350px;              /* Ensures it doesn't get too squished */
+  }
+
+  /* ── Hide all portal shell elements ───────────────────── */
+  .portal-sidebar,
+  .portal-topbar,
+  .portal-sidebar-overlay,
+  .notif-panel,
+  .cancel-overlay,
+  .btn-primary,
+  .btn-outline,
+  .btn-danger,
+  .btn-action,
+  .btn-actions-row,
+  .modal-footer,
+  .toast,
+  #staff-toast,
+  .topbar-scan-area,
+  .staff-refresh-btn,
+  .notif-bell-btn,
+  .staff-topbar-clock,
+  .staff-filter-row,
+  .queue-summary-bar,
+  .queue-checkbox-wrap,
+  .queue-card-header-actions,
+  .pagination,
+  .pack-items-fieldset ~ .modal-footer,
+  #select-all-btn,
+  #prep-sheet-btn,
+  #zone-view-btn {
+    display: none !important;
+  }
+
+  .portal-main      { margin-left: 0 !important; }
+  .staff-page.active { padding: 0 !important; }
+
+  /* Modal overlays become static / transparent for print */
+  .staff-modal-overlay,
+  .admin-modal-overlay,
+  .modal-overlay {
+    position:        static !important;
+    background:      none !important;
+    backdrop-filter: none !important;
+    padding:         0 !important;
+    display:         block !important;
+  }
+
+  .staff-modal,
+  .admin-modal,
+  .modal-box {
+    box-shadow:    none !important;
+    max-width:     none !important;
+    border-radius: 0 !important;
+    max-height:    none !important;
+    overflow:      visible !important;
+    animation:     none !important;
+  }
+
+  /* Only .print-only elements visible in print */
+  .print-only {
+    display: none;
+  }
+
+  /* Hides the main app and all modals whenever a print job is active via JS */
+  body:has([data-print-mode="active"]) #portal-app,
+  body:has([data-print-mode="active"]) #portal-login-screen,
+  body:has([data-print-mode="active"]) .staff-modal-overlay,
+  body:has([data-print-mode="active"]) .modal-overlay {
+      display: none !important;
+}
+
+/* Ensure the active print container is displayed */
+.print-only[data-print-mode="active"] {
+    display: block !important;
+}
+  /* Reset body */
+/* Reset body - CRITICAL: Break out of Flexbox for printing */
+  body, 
+  body.portal-body, 
+  body.portal-body--fulfillment {
+    display: block !important; 
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+  }
+
+  /* ── PACKING SLIP PRINT STYLES ─────────────────────────── */
+  .print-only { display: block; }
+
+  .slip-header {
+    display:         flex;
+    align-items:     baseline;
+    justify-content: space-between;
+    margin-bottom:   .5rem;
+  }
+
+  .slip-brand {
+    font-family: var(--font-display);
+    font-size:   1.35rem;
+    font-weight: 800;
+    color:       #111;
+  }
+
+  .slip-portal {
+    font-size:   .8rem;
+    color:       #555;
+    font-weight: 500;
+  }
+
+  .slip-hr {
+    border:          none;
+    border-top:      1.5px solid #333;
+    margin:          .5rem 0;
+  }
+
+  .slip-title {
+    font-family:   var(--font-display);
+    font-size:     1rem;
+    font-weight:   700;
+    margin-bottom: .5rem;
+    color:         #111;
+  }
+
+  .slip-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:    .3rem .875rem;
+    margin-bottom: .75rem;
+  }
+
+  .slip-meta-item { min-width: 0; }
+
+  .slip-meta-label {
+    font-size:      .6rem;
+    font-weight:    700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color:          #666;
+    margin-bottom:  .05rem;
+  }
+
+  .slip-meta-val {
+    font-size:  .78rem;
+    color:      #111;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .slip-items-table {
+    width:           100%;
+    border-collapse: collapse;
+    font-size:       .78rem;
+    margin-bottom:   .5rem;
+  }
+  .slip-items-table th {
+    border-bottom: 1.5px solid #333;
+    padding:       .3rem .5rem;
+    text-align:    left;
+    font-size:     .65rem;
+    font-weight:   700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color:         #555;
+  }
+  .slip-items-table td {
+    border-bottom: 1px solid #ddd;
+    padding:       .35rem .5rem;
+    color:         #111;
+    vertical-align: middle;
+  }
+  .slip-items-table tbody tr:last-child td { border-bottom: none; }
+
+  .slip-totals {
+    display:        flex;
+    flex-direction: column;
+    gap:            .2rem;
+    margin-top:     .5rem;
+    padding-top:    .4rem;
+    border-top:     1.5px solid #333;
+    max-width:      260px;
+    margin-left:    auto;
+  }
+
+  .slip-total-row {
+    display:         flex;
+    justify-content: space-between;
+    font-size:       .78rem;
+    color:           #333;
+  }
+
+  .slip-grand-row {
+    font-weight: 700;
+    font-size:   .95rem !important;
+    color:       #111 !important;
+    border-top:  1px solid #333;
+    padding-top: .3rem;
+    margin-top:  .15rem;
+  }
+
+  .slip-notes {
+    margin-top:    .75rem;
+    font-size:     .78rem;
+    color:         #333;
+    padding:       .4rem .6rem;
+    border:        1px dashed #999;
+    border-radius: 3px;
+    line-height:   1.5;
+  }
+
+  .slip-footer {
+    margin-top:  1rem;
+    text-align:  center;
+    font-size:   .72rem;
+    color:       #777;
+    line-height: 1.5;
+    border-top:  1px solid #ddd;
+    padding-top: .5rem;
+  }
+
+  /* ── THERMAL LABELS  (4×6 or 3×2 ratio) ───────────────── */
+  /*
+   * Standard thermal label sizes:
+   *   4×6 in → Shipping labels (e.g. Zebra ZPL)
+   *   3×2 in → Small item labels (40×60 mm equivalent)
+   * We target 3×2 inch (76×51 mm) for individual product labels.
+   * The .thermal-labels-area wraps all labels; each .thermal-label
+   * represents one discrete peel-off sticker.
+   */
+  .thermal-labels-area {
+    display:   block;
+    width:     100%;
+  }
+
+  .thermal-label {
+    display:        flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:          3in;
+    height:         2in;
+    padding:        .18in .2in;
+    border:         1.5px solid #333;
+    margin-bottom:  .15in;
+    page-break-inside: avoid;
+    break-inside:   avoid;
+    font-family:    var(--font-body), sans-serif;
+    background:     #fff;
+    overflow:       hidden;
+  }
+
+  .tl-brand {
+    font-size:   7pt;
+    font-weight: 700;
+    color:       #555;
+    letter-spacing: .04em;
+  }
+
+  .tl-product {
+    font-family: var(--font-display), serif;
+    font-size:   13pt;
+    font-weight: 700;
+    color:       #111;
+    line-height: 1.1;
+    margin:      2pt 0;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tl-order {
+    font-size:   8pt;
+    font-weight: 600;
+    color:       #333;
+    letter-spacing: .03em;
+  }
+
+  .tl-weight {
+    font-family: var(--font-display), serif;
+    font-size:   14pt;
+    font-weight: 800;
+    color:       #111;
+    letter-spacing: -.02em;
+  }
+
+  .tl-price {
+    font-size:   11pt;
+    font-weight: 700;
+    color:       #111;
+  }
+
+  .tl-customer {
+    font-size:   8pt;
+    font-weight: 600;
+    color:       #333;
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tl-date {
+    font-size:  7pt;
+    color:      #666;
+    margin-top: 1pt;
+  }
+
+  /* 4×6 label variant — swap width/height for shipping labels */
+  .thermal-label.label-4x6 {
+    width:  6in;
+    height: 4in;
+  }
+
+  /* ── PREP SHEET PRINT ───────────────────────────────────── */
+  .prep-sheet-meta {
+    font-size:  .75rem;
+    color:      #555;
+    margin-bottom: .5rem;
+  }
+
+  .prep-sheet-table th,
+  .prep-sheet-table td {
+    padding:  .35rem .5rem;
+    font-size: .78rem;
+  }
+}

@@ -30,6 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 
 // ── Autoload helpers and services ───────────────────────────────
 require_once __DIR__ . '/helpers/Response.php';
+require_once __DIR__ . '/helpers/Request.php';
 require_once __DIR__ . '/services/BaseService.php';
 require_once __DIR__ . '/services/AuthService.php';
 require_once __DIR__ . '/services/NotificationService.php';
@@ -37,5 +38,13 @@ require_once __DIR__ . '/services/UserService.php';
 require_once __DIR__ . '/services/ProductService.php';
 require_once __DIR__ . '/services/CartService.php';
 require_once __DIR__ . '/services/InventoryService.php';
+require_once __DIR__ . '/services/OrderQueryService.php';
+require_once __DIR__ . '/services/OrderCheckoutService.php';
+require_once __DIR__ . '/services/OrderModificationService.php';
+require_once __DIR__ . '/services/OrderPackingService.php';
+require_once __DIR__ . '/services/OrderLifecycleService.php';
+require_once __DIR__ . '/services/OrderDeliveryService.php';
+require_once __DIR__ . '/services/OrderPaymentService.php';
+require_once __DIR__ . '/services/OrderDisputeService.php';
 require_once __DIR__ . '/services/OrderService.php';
 require_once __DIR__ . '/services/ReportService.php';

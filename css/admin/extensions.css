@@ -1,0 +1,274 @@
+/* admin/extensions.css - admin extensions */
+/* ════════════════════════════════════════════════════════════
+   § ADMIN EXTENSIONS
+   All classes used exclusively by admin.js / admin.php that
+   are not present in the base fulfillment-entry.css
+═══════════════════════════════════════════════════════════════*/
+
+/* ── Stat grid & cards ──────────────────────────────────────*/
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+.stat-grid--sm { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: .6rem; }
+
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.1rem .9rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  gap: .85rem;
+  transition: box-shadow var(--transition);
+}
+.stat-card:hover      { box-shadow: var(--shadow-md); }
+.stat-card--green     { border-left: 4px solid var(--success); }
+.stat-card--warn      { border-left: 4px solid var(--warning); }
+.stat-card--blue      { border-left: 4px solid var(--info);    }
+
+.stat-icon { font-size: 1.75rem; flex-shrink: 0; line-height: 1; }
+.stat-info { display: flex; flex-direction: column; min-width: 0; }
+.stat-val  { font-size: 1.35rem; font-weight: 800; line-height: 1.1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.stat-label{ font-size: .72rem; color: var(--text-muted); font-weight: 500; margin-top: .15rem; }
+
+/* Rider stat pills (from utils.js statPillHTML) */
+.rider-stat-pill {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .75rem 1rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.rsp-icon  { font-size: 1.4rem; }
+.rsp-info  { display: flex; flex-direction: column; }
+.rsp-val   { font-size: 1.15rem; font-weight: 800; line-height: 1; }
+.rsp-label { font-size: .72rem; color: var(--text-muted); }
+.rsp--green{ border-left: 3px solid var(--success); }
+.rsp--red  { border-left: 3px solid var(--error);   }
+.rsp--blue { border-left: 3px solid var(--info);    }
+
+/* ── Revenue bar chart ──────────────────────────────────────*/
+.rev-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: .45rem;
+  height: 140px;
+  padding: .5rem 0 .25rem;
+  overflow-x: auto;
+}
+.rev-bar-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: .3rem;
+  flex: 1;
+  min-width: 32px;
+}
+.rev-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--brand-primary) 0%, var(--brand-dark) 100%);
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  min-height: 3px;
+  transition: opacity var(--transition);
+  cursor: default;
+}
+.rev-bar:hover        { opacity: .8; }
+.rev-bar-label        { font-size: .65rem; color: var(--text-muted); white-space: nowrap; }
+
+/* ── Status distribution row ────────────────────────────────*/
+.status-dist-row  { display: flex; flex-wrap: wrap; gap: .6rem; }
+.status-dist-pill { display: flex; align-items: center; gap: .4rem; padding: .35rem .75rem; background: var(--bg-table-head); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.dist-count       { font-size: .95rem; font-weight: 800; }
+
+/* ── Dashboard grid (2-col chart + pills) ───────────────────*/
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+@media (max-width: 760px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+/* ── Stock bar (inventory) ──────────────────────────────────*/
+.stock-bar-wrap {
+  width: 80px;
+  height: 7px;
+  background: #e5e4df;
+  border-radius: 99px;
+  overflow: hidden;
+  display: inline-block;
+  margin-right: .4rem;
+  vertical-align: middle;
+}
+.stock-bar      { height: 100%; border-radius: 99px; transition: width .3s ease; }
+.stock-bar--ok  { background: var(--success); }
+.stock-bar--low { background: var(--warning); }
+.stock-pct-badge { display: inline-block; padding: .15rem .45rem; border-radius: var(--radius-sm); font-size: .75rem; font-weight: 700; }
+.stock-pct--zero { background: #fee2e2; color: #991b1b; }
+.stock-pct--low  { background: #fef3c7; color: #92400e; }
+
+/* ── Inline bar (reports category breakdown) ────────────────*/
+.inline-bar {
+  height: 8px;
+  background: #e5e4df;
+  border-radius: 99px;
+  overflow: hidden;
+  min-width: 80px;
+}
+.inline-bar__fill { height: 100%; background: var(--brand-primary); border-radius: 99px; }
+
+/* ── Zone view groups ───────────────────────────────────────*/
+.zone-group-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.zone-group-header {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .75rem 1rem;
+  background: var(--bg-table-head);
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.zone-group-header strong { flex: 1; font-size: .95rem; }
+
+/* ── Pack order modal ───────────────────────────────────────*/
+.pack-items-list    { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1rem; }
+.pack-item-row      { background: var(--bg-table-head); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .85rem 1rem; }
+.pack-item-name     { font-weight: 600; font-size: .9rem; margin-bottom: .5rem; }
+.pack-item-controls { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.pack-weight-input  { width: 120px; }
+.pack-oos-label     { display: inline-flex; align-items: center; gap: .35rem; font-size: .85rem; font-weight: 600; color: var(--error); cursor: pointer; }
+.pack-total-preview { font-size: .9rem; font-weight: 600; color: var(--text-muted); padding: .5rem .75rem; background: var(--brand-light); border-radius: var(--radius-sm); border: 1px solid #fde68a; margin-bottom: .75rem; }
+
+/* ── Order detail ───────────────────────────────────────────*/
+.order-detail-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: .5rem; flex-wrap: wrap; }
+.order-items-table   { margin: 1rem 0; font-size: .85rem; }
+.order-totals        { background: var(--bg-table-head); border-radius: var(--radius-sm); padding: .85rem 1rem; margin-top: .5rem; }
+
+/* ── Notification bell ──────────────────────────────────────*/
+.topbar-notif    { position: relative; margin-left: .25rem; }
+.notif-bell-btn  { position: relative; }
+.notif-bell-badge{
+  position: absolute;
+  top: -4px; right: -4px;
+  min-width: 17px; height: 17px;
+  background: var(--error);
+  color: #fff;
+  border-radius: 999px;
+  font-size: .65rem;
+  font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0 .25rem;
+  line-height: 1;
+}
+.notif-panel {
+  position: absolute;
+  top: calc(100% + .5rem);
+  right: 0;
+  width: 320px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-lg);
+  z-index: 400;
+}
+.notif-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size: .88rem;
+}
+.bell-active { animation: bellShake .4s ease; }
+@keyframes bellShake {
+  0%,100% { transform: rotate(0);  }
+  20%     { transform: rotate(14deg); }
+  40%     { transform: rotate(-10deg);}
+  60%     { transform: rotate(6deg); }
+  80%     { transform: rotate(-4deg);}
+}
+
+/* ── Toggle switch (operational hours) ─────────────────────*/
+.toggle-switch { display: inline-flex; align-items: center; cursor: pointer; }
+.toggle-switch input { position: absolute; opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  display: inline-block;
+  width: 38px; height: 20px;
+  background: #d1d5db;
+  border-radius: 999px;
+  position: relative;
+  transition: background var(--transition);
+}
+.toggle-slider::after {
+  content: '';
+  position: absolute;
+  width: 14px; height: 14px;
+  background: #fff;
+  border-radius: 50%;
+  top: 3px; left: 3px;
+  transition: transform var(--transition);
+  box-shadow: 0 1px 3px rgba(0,0,0,.25);
+}
+.toggle-switch input:checked + .toggle-slider { background: var(--success); }
+.toggle-switch input:checked + .toggle-slider::after { transform: translateX(18px); }
+.toggle-switch input:focus + .toggle-slider { box-shadow: 0 0 0 3px rgba(22,163,74,.2); }
+
+/* ── Wholesale tier list ────────────────────────────────────*/
+#tiers-list  { margin-bottom: 1rem; }
+.tier-add-form { background: var(--bg-table-head); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: .9rem 1rem; margin-top: .75rem; }
+.tier-add-form h4 { font-size: .9rem; font-weight: 700; margin-bottom: .65rem; }
+
+/* ── Audit log ──────────────────────────────────────────────*/
+.audit-detail { max-width: 300px; word-break: break-word; font-size: .8rem; }
+
+/* ── Staff page subtitle ────────────────────────────────────*/
+.staff-page-sub { font-size: .875rem; color: var(--text-muted); margin-bottom: .75rem; }
+
+/* ── Scan input hidden by default ──────────────────────────*/
+#scan-input { display: none; }
+#scan-mode-btn[aria-pressed="true"] ~ #scan-input { display: block; }
+/* Show when scan-area contains a visible input  */
+.scan-input { display: block; }
+
+/* ── Reports page date controls ─────────────────────────────*/
+.report-controls { display: flex; align-items: center; gap: .75rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+.report-controls label { font-weight: 600; font-size: .88rem; }
+
+/* ── Remittance table rider filter ─────────────────────────*/
+#remit-rider-filter { min-width: 180px; }
+
+/* ── Dispute description truncation ─────────────────────────*/
+.dispute-desc { max-width: 260px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ── Settings section grouping ─────────────────────────────*/
+.settings-section {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+.settings-section__header {
+  padding: .85rem 1.1rem;
+  background: var(--bg-table-head);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.settings-section__header h3 { font-size: .95rem; font-weight: 700; }
+.settings-section__body { padding: 1rem 1.1rem; }
