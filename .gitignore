@@ -1,0 +1,7 @@
+api/config.php
+uploads/*
+!uploads/.gitkeep
+*.sql
+.history/
+.qodo/
+.vscode/

@@ -1,0 +1,3838 @@
+/* ============================================================
+   POULTRYMART — FULFILLMENT STAFF PORTAL
+   fulfillment-entry.css  |  v1.0
+   Fonts: Playfair Display (headings/logo) + DM Sans (UI)
+   Theme: Farm-to-table · Fresh · Modern · Accessible
+   Based on admin-entry.css — tailored for fulfillment workflow
+   ============================================================ */
+
+
+/* ============================================================
+   SECTION 1 · GOOGLE FONTS IMPORT
+   ============================================================ */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+
+
+/* ============================================================
+   SECTION 2 · CSS VARIABLES (design tokens — shared with admin)
+   ============================================================ */
+:root {
+  /* ── Brand ──────────────────────────────────────────────── */
+  --primary:              #2E7D32;
+  --primary-hover:        #1B5E20;
+  --primary-active:       #145214;
+  --primary-pale:         #E8F5E9;
+
+  /* Aliases used in JS inline styles */
+  --green:                #2E7D32;
+  --green-dark:           #1B5E20;
+  --green-pale:           #E8F5E9;
+  --orange:               #E65100;
+  --blue:                 #1976D2;
+  --purple:               #7B1FA2;
+
+  /* ── Fulfillment Staff Accent (blue/orange pill) ─────── */
+  --staff-accent:         #1565C0;      /* blue base for staff-tag */
+  --staff-accent-pale:    rgba(21,101,192,.18);
+  --staff-accent-border:  rgba(66,165,245,.35);
+  --staff-accent-text:    #90CAF9;
+
+  /* ── Surfaces ───────────────────────────────────────────── */
+  --bg-app:               #F3F4F6;
+  --bg-card:              #FFFFFF;
+  --bg-alt:               #F9FAFB;
+  --bg-sidebar:           #1A2E1B;
+  --bg-sidebar-hover:     rgba(255,255,255,.07);
+  --bg-sidebar-active:    rgba(255,255,255,.13);
+
+  /* ── Typography ─────────────────────────────────────────── */
+  --text-main:            #111827;
+  --text-muted:           #6B7280;
+  --text-inverse:         #FFFFFF;
+  --text-sidebar:         rgba(255,255,255,.85);
+  --text-sidebar-muted:   rgba(255,255,255,.45);
+
+  /* ── Borders ────────────────────────────────────────────── */
+  --border:               #E5E7EB;
+  --border-focus:         #2E7D32;
+  --border-input:         #D1D5DB;
+
+  /* ── Status ─────────────────────────────────────────────── */
+  --success:              #2E7D32;
+  --success-pale:         #E8F5E9;
+  --success-text:         #1B5E20;
+  --warning:              #F9A825;
+  --warning-pale:         #FFF8E1;
+  --warning-text:         #E65100;
+  --warning-bg:           #fffbeb;
+  --warning-dark:         #b45309;
+  --error:                #D32F2F;
+  --error-pale:           #FFEBEE;
+  --error-text:           #B71C1C;
+  --error-bg:             #fff0f0;
+  --info:                 #1976D2;
+  --info-pale:            #E3F2FD;
+  --info-text:            #0D47A1;
+
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-xs:            0 1px 2px rgba(0,0,0,.05);
+  --shadow-sm:            0 1px 4px rgba(0,0,0,.06), 0 2px 8px rgba(0,0,0,.04);
+  --shadow-md:            0 4px 12px rgba(0,0,0,.08), 0 2px 6px rgba(0,0,0,.05);
+  --shadow-lg:            0 8px 30px rgba(0,0,0,.12), 0 4px 12px rgba(0,0,0,.06);
+  --shadow-modal:         0 20px 60px rgba(0,0,0,.22), 0 8px 24px rgba(0,0,0,.12);
+  --shadow-sidebar:       4px 0 20px rgba(0,0,0,.18);
+
+  /* ── Radii ───────────────────────────────────────────────── */
+  --radius-xs:            4px;
+  --radius-sm:            8px;
+  --radius-md:            12px;
+  --radius-lg:            16px;
+  --radius-xl:            24px;
+  --radius-pill:          999px;
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --sidebar-width:        248px;
+  --topbar-height:        62px;
+
+  /* ── Transitions ────────────────────────────────────────── */
+  --ease:                 0.2s ease;
+  --ease-spring:          0.22s cubic-bezier(.34,1.56,.64,1);
+
+  /* ── Fonts ──────────────────────────────────────────────── */
+  --font-display:         'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-body:            'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+
+/* ============================================================
+   SECTION 3 · RESET & BASE TYPOGRAPHY
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin:     0;
+  padding:    0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size:   .9375rem;       /* 15px */
+  line-height: 1.6;
+  color:       var(--text-main);
+  background:  var(--bg-app);
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+
+img, svg { display: block; max-width: 100%; }
+
+a {
+  color:       var(--primary);
+  text-decoration: none;
+  transition:  color var(--ease);
+}
+a:hover         { color: var(--primary-hover); }
+a:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius:  var(--radius-xs);
+}
+
+button {
+  font-family: var(--font-body);
+  cursor:      pointer;
+  border:      none;
+  background:  none;
+}
+button:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius:  var(--radius-xs);
+}
+
+input, select, textarea {
+  font-family: var(--font-body);
+  font-size:   inherit;
+}
+
+ul, ol { list-style: none; }
+p      { margin: 0; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  line-height: 1.25;
+  color:       var(--text-main);
+}
+
+table { border-collapse: collapse; }
+
+/* Inventory table needs more horizontal room for 8 columns */
+/* ============================================================
+   FIX: INVENTORY TABLE RESPONSIVENESS
+   ============================================================ */
+
+/* 1. Remove the hardcoded minimum width */
+#inventory-table {
+  min-width: 100% !important;
+  width: 100% !important;
+  table-layout: auto; 
+}
+
+/* 2. Allow text (like long product names) to wrap naturally */
+#inventory-table th,
+#inventory-table td {
+  white-space: normal;
+  word-wrap: break-word;
+  padding: 0.6rem 0.4rem; /* Keeps padding tight to save space */
+  vertical-align: middle;
+}
+
+/* 3. Protect the "Stock Level" bar from getting squished too small */
+#inventory-table th:nth-child(7),
+#inventory-table td:nth-child(7) {
+  min-width: 130px; 
+}
+
+/* 4. Keep the "Adjust" button on a single line */
+#inventory-table th:last-child,
+#inventory-table td:last-child {
+  white-space: nowrap;
+  width: 100px;
+}
+
+/* All Orders table needs room for 9 columns */
+#all-orders-table {
+  min-width: 980px;
+}
+
+[hidden] { display: none !important; }
+
+
+/* ============================================================
+   SECTION 4 · ACCESSIBILITY — FOCUS RINGS & SR-ONLY
+   ============================================================ */
+:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius:  var(--radius-xs);
+}
+
+.sr-only {
+  position:   absolute !important;
+  width:       1px !important;
+  height:      1px !important;
+  padding:     0 !important;
+  margin:     -1px !important;
+  overflow:   hidden !important;
+  clip:        rect(0,0,0,0) !important;
+  white-space: nowrap !important;
+  border:      0 !important;
+}
+
+
+/* ============================================================
+   SECTION 5 · LOGIN SCREEN
+   ============================================================ */
+.portal-login {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  width:           100%;          /* ← fills the flex row so card truly centers */
+  min-height:      100vh;
+  padding:         1.5rem;
+  background:
+    radial-gradient(ellipse 70% 55% at 70% -10%, rgba(25,118,210,.18) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 40% at 10% 110%, rgba(46,125,50,.12) 0%, transparent 55%),
+    var(--bg-app);
+}
+
+/* Card */
+.portal-login__card {
+  width:         100%;
+  max-width:     420px;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding:       2.5rem 2.25rem 2rem;
+  box-shadow:    var(--shadow-lg);
+  animation:     login-card-in .38s cubic-bezier(.22,.68,0,1.2) both;
+}
+
+@keyframes login-card-in {
+  from { opacity: 0; transform: translateY(18px) scale(.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);   }
+}
+
+/* Brand block inside login card */
+.portal-login__brand {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;      /* ← centers brand block horizontally */
+  gap:             .75rem;
+  margin-bottom:   1.75rem;
+  padding-bottom:  1.25rem;
+  border-bottom:   1px solid var(--border); /* subtle divider under brand */
+}
+
+.brand-chicken {
+  font-size:   2.1rem;
+  line-height: 1;
+  filter:      drop-shadow(0 2px 4px rgba(0,0,0,.12));
+  flex-shrink: 0;
+}
+
+.brand-wordmark {
+  font-family:    var(--font-display);
+  font-size:      1.5rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.02em;
+  line-height:    1.1;
+}
+.brand-wordmark strong { color: var(--primary); }
+
+.brand-portal-label {
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  margin-top:  .1rem;
+}
+
+/* Heading & subtitle */
+.portal-login__heading {
+  font-family:    var(--font-display);
+  font-size:      1.5rem;
+  font-weight:    800;
+  color:          var(--text-main);
+  margin-bottom:  .35rem;
+  text-align:     center;       /* ← centered heading */
+  margin-top:     1.25rem;      /* breathing room below brand divider */
+}
+
+.portal-login__sub {
+  font-size:     .875rem;
+  color:         var(--text-muted);
+  margin-bottom: 1.75rem;
+  line-height:   1.5;
+  text-align:    center;        /* ← centered subtitle */
+}
+
+/* Demo hint (below sign-in button) */
+.portal-login__hint {
+  font-size:    .8rem;
+  color:        var(--text-muted);
+  text-align:   center;
+  margin-top:   1.25rem;
+  padding:      .65rem .75rem;
+  background:   var(--bg-alt);
+  border-radius: var(--radius-sm);
+  border:       1px dashed var(--border);
+  line-height:  1.55;
+}
+.portal-login__hint strong { color: var(--text-main); }
+
+/* Top-margin utility applied to login button */
+.btn--mt { margin-top: .75rem; }  /* ← more breathing room above CTA */
+
+/* Enhanced sign-in button for login form */
+.portal-login__card .btn-primary {
+  background:  linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
+  box-shadow:  0 3px 12px rgba(46,125,50,.35);
+  font-size:   .95rem;
+  letter-spacing: .01em;
+  min-height:  44px;
+}
+.portal-login__card .btn-primary:hover {
+  background:  linear-gradient(135deg, #1B5E20 0%, #145214 100%);
+  box-shadow:  0 5px 18px rgba(46,125,50,.45);
+  transform:   translateY(-2px);
+}
+
+/* Back / switch-role link */
+.auth-back-link {
+  text-align: center;
+  margin-top: .9rem;
+  font-size:  .82rem;
+}
+
+.link-green {
+  color:       var(--primary);
+  font-weight: 500;
+  transition:  color var(--ease);
+}
+.link-green:hover { color: var(--primary-hover); }
+
+/* Form group spacing modifier used in login form */
+.form-group--spaced { margin-top: .875rem; }
+
+
+/* ============================================================
+   SECTION 6 · APP SHELL — BODY WRAPPERS
+   ============================================================ */
+/* ============================================================
+   FIX: APP SHELL & FLEX ROUTING
+   ============================================================ */
+
+/* 1. Make the app wrapper the actual flex container so it fills the body */
+#portal-app {
+  display: flex;
+  width: 100%;
+  flex: 1; /* Forces the app wrapper to take up all the dead 30% space */
+  min-height: 100vh;
+}
+
+/* 2. Prevent the main content from blowing out horizontally */
+.portal-main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0; /* CRITICAL: Allows flex child to shrink below table widths */
+  width: 100%;
+}
+
+/* 3. Fix the active page display bug 
+   (It was previously set to display: block, which broke the internal flex columns) */
+.staff-page.active {
+  display: flex; 
+  flex-direction: column;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* 4. Ensure wide tables trigger a horizontal scrollbar *inside* the panel, 
+      rather than stretching the whole screen */
+.panel-body.no-pad {
+  padding: 0;
+  overflow-x: auto; 
+  max-width: 100%; /* Keeps the table constrained to its parent card */
+}
+
+   .portal-body,
+.portal-body--admin,
+.portal-body--fulfillment {
+  display:    flex;
+  width:      100%;
+  min-height: 100vh;
+  position:   relative;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   SECTION 7 · SIDEBAR OVERLAY  (mobile backdrop)
+   ============================================================ */
+.portal-sidebar-overlay {
+  display:           none;
+  position:          fixed;
+  inset:             0;
+  background:        rgba(0,0,0,.45);
+  backdrop-filter:   blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  z-index:           199;
+  transition:        opacity var(--ease);
+  cursor:            pointer;
+}
+/* JS toggles .open OR .visible */
+.portal-sidebar-overlay.open,
+.portal-sidebar-overlay.visible {
+  display:   block;
+  animation: fade-in .18s ease;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+
+/* ============================================================
+   SECTION 8 · SIDEBAR
+   ============================================================ */
+.portal-sidebar {
+  position:   fixed;
+  top:        0;
+  left:       0;
+  width:      var(--sidebar-width);
+  height:     100vh;
+  background: var(--bg-sidebar);
+  color:      var(--text-sidebar);
+  display:    flex;
+  flex-direction: column;
+  z-index:    200;
+  box-shadow: var(--shadow-sidebar);
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,.1) transparent;
+  transition: transform .26s cubic-bezier(.4,0,.2,1);
+}
+.portal-sidebar::-webkit-scrollbar       { width: 4px; }
+.portal-sidebar::-webkit-scrollbar-track { background: transparent; }
+.portal-sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,.12); border-radius: 2px; }
+
+/* ── Sidebar Header ─────────────────────────────────────── */
+.portal-sidebar__header {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  padding:     1.25rem 1.125rem 1rem;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  flex-shrink: 0;
+  transition:  background var(--ease);
+}
+.portal-sidebar__header:hover {
+  background: var(--bg-sidebar-hover);
+}
+.portal-sidebar__header:focus-visible {
+  outline:        2px solid rgba(255,255,255,.6);
+  outline-offset: -2px;
+  border-radius:  var(--radius-xs);
+}
+
+.portal-sidebar__header .logo-icon {
+  font-size:   1.55rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.portal-sidebar__header .logo-text {
+  font-family:    var(--font-display);
+  font-size:      1.125rem;
+  font-weight:    700;
+  color:          #fff;
+  letter-spacing: -.01em;
+  flex:           1;
+  min-width:      0;
+}
+.portal-sidebar__header .logo-text strong { color: #81C784; }
+
+/* ── Staff Tag (blue/orange — differentiates from admin green) */
+.staff-tag {
+  font-family:    var(--font-body);
+  font-size:      .6rem;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background:     var(--staff-accent-pale);
+  color:          var(--staff-accent-text);
+  border:         1px solid var(--staff-accent-border);
+  border-radius:  var(--radius-pill);
+  padding:        .15rem .45rem;
+  flex-shrink:    0;
+}
+
+/* ── (Legacy) Admin Tag kept for drop-in compatibility ──── */
+.admin-tag {
+  font-family:    var(--font-body);
+  font-size:      .6rem;
+  font-weight:    700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background:     rgba(129,199,132,.2);
+  color:          #A5D6A7;
+  border:         1px solid rgba(129,199,132,.35);
+  border-radius:  var(--radius-pill);
+  padding:        .15rem .45rem;
+  flex-shrink:    0;
+}
+
+/* ── User Pill ──────────────────────────────────────────── */
+.portal-user-pill {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  padding:     .875rem 1.125rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  flex-shrink: 0;
+}
+
+.portal-avatar {
+  width:        34px;
+  height:       34px;
+  border-radius: 50%;
+  background:   linear-gradient(135deg, #42A5F5 0%, #1565C0 100%); /* blue for staff */
+  color:        #fff;
+  font-size:    .7rem;
+  font-weight:  700;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  flex-shrink:  0;
+  letter-spacing: .05em;
+  box-shadow:   0 2px 6px rgba(0,0,0,.25);
+}
+
+/* Wrapper for name + role (fulfillment uses .portal-user-info) */
+.portal-user-info {
+  flex:      1;
+  min-width: 0;
+  display:   flex;
+  flex-direction: column;
+  gap: .05rem;
+}
+
+.portal-user-name {
+  font-size:   .82rem;
+  font-weight: 600;
+  color:       #fff;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow:    hidden;
+  text-overflow: ellipsis;
+}
+
+.portal-role-tag {
+  font-size:  .7rem;
+  color:      var(--text-sidebar-muted);
+  line-height: 1.2;
+  margin-top: .1rem;
+}
+
+/* ── Navigation ────────────────────────────────────────── */
+.portal-nav {
+  display:        flex;
+  flex-direction: column;
+  padding:        .625rem 0;
+  flex:           1;
+  gap:            1px;
+}
+
+.portal-nav__section {
+  display:        block;
+  font-size:      .63rem;
+  font-weight:    700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color:          var(--text-sidebar-muted);
+  padding:        .875rem 1.125rem .3rem;
+  pointer-events: none;
+  user-select:    none;
+}
+
+.portal-nav__btn,
+.sidebar-link {
+  display:     flex;
+  align-items: center;
+  gap:         .65rem;
+  width:       100%;
+  padding:     .625rem 1.125rem;
+  font-size:   .875rem;
+  font-weight: 500;
+  color:       var(--text-sidebar);
+  background:  transparent;
+  border:      none;
+  border-radius: 0;
+  cursor:      pointer;
+  text-align:  left;
+  transition:  background var(--ease), color var(--ease);
+  position:    relative;
+  min-height:  42px;
+  line-height: 1.4;
+}
+.portal-nav__btn:hover,
+.sidebar-link:hover {
+  background: var(--bg-sidebar-hover);
+  color:      #fff;
+}
+.portal-nav__btn.active,
+.sidebar-link.active {
+  background:  var(--bg-sidebar-active);
+  color:       #fff;
+  font-weight: 600;
+}
+
+/* Active left-border indicator — blue for staff */
+.portal-nav__btn.active::before,
+.sidebar-link.active::before {
+  content:       '';
+  position:      absolute;
+  left:          0;
+  top:           20%;
+  bottom:        20%;
+  width:         3px;
+  background:    #90CAF9;     /* staff blue accent on sidebar */
+  border-radius: 0 2px 2px 0;
+}
+.portal-nav__btn:focus-visible,
+.sidebar-link:focus-visible {
+  outline:        2px solid rgba(255,255,255,.55);
+  outline-offset: -2px;
+}
+
+.nav-icon {
+  width:      16px;
+  height:     16px;
+  flex-shrink: 0;
+  opacity:    .75;
+  transition: opacity var(--ease);
+}
+.portal-nav__btn:hover   .nav-icon,
+.portal-nav__btn.active  .nav-icon,
+.sidebar-link:hover      .nav-icon,
+.sidebar-link.active     .nav-icon { opacity: 1; }
+
+/* Nav badge (counters) */
+/* Update near Line 411 in fulfillment-entry.css */
+.nav-badge {
+  margin-left: auto;
+  background-color: var(--error) !important; /* Keep it red/orange even if not active */
+  color: #FFFFFF !important;                /* Force white text always */
+  font-size: .7rem;
+  font-weight: 700;
+  min-width: 20px;
+  height: 20px;
+  border-radius: var(--radius-pill);
+  display: inline-flex !important;           /* Ensure it doesn't get hidden */
+  align-items: center;
+  justify-content: center;
+  padding: 0 6px;
+  line-height: 1;
+  flex-shrink: 0;
+  z-index: 5;                                /* Ensure it sits above button layers */
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);     /* Add depth against dark green */
+}
+
+/* Ensure color variants also force white text */
+.nav-badge-orange { background-color: var(--orange) !important; color: #FFFFFF !important; }
+.nav-badge-red    { background-color: var(--error) !important;  color: #FFFFFF !important; }
+.portal-nav__btn .nav-badge,
+.sidebar-link .nav-badge {
+  opacity: 1 !important; /* Prevent the badge from fading when the button is inactive */
+}
+/* ── Sidebar Footer (Logout) ───────────────────────────── */
+.portal-sidebar__footer {
+  padding:      .75rem .75rem 1rem;
+  border-top:   1px solid rgba(255,255,255,.08);
+  flex-shrink:  0;
+}
+
+.portal-nav__logout {
+  display:      flex;
+  align-items:  center;
+  gap:          .6rem;
+  width:        100%;
+  padding:      .55rem .875rem;
+  font-size:    .82rem;
+  font-weight:  500;
+  color:        rgba(255,255,255,.55);
+  background:   transparent;
+  border:       1px solid rgba(255,255,255,.1);
+  border-radius: var(--radius-sm);
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), border-color var(--ease);
+  min-height:   40px;
+}
+.portal-nav__logout:hover {
+  background:   rgba(211,47,47,.15);
+  color:        #EF9A9A;
+  border-color: rgba(211,47,47,.3);
+}
+.portal-nav__logout:focus-visible {
+  outline:        2px solid rgba(255,255,255,.55);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 9 · MAIN CONTENT AREA
+   ============================================================ */
+.portal-main {
+  margin-left:    var(--sidebar-width);
+  flex:           1;
+  display:        flex;
+  flex-direction: column;
+  min-width:      0;
+  min-height:     100vh;
+  /* No explicit width — flex: 1 already fills remaining space */
+  /* No overflow-x: hidden — it clips table columns */
+}
+
+
+/* ============================================================
+   SECTION 10 · TOPBAR
+   ============================================================ */
+.portal-topbar {
+  position:   sticky;
+  top:        0;
+  z-index:    100;
+  height:     var(--topbar-height);
+  display:    flex;
+  align-items: center;
+  gap:        .875rem;
+  padding:    0 1.5rem;
+  background: rgba(255,255,255,.92);
+  backdrop-filter:          blur(12px);
+  -webkit-backdrop-filter:  blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), var(--shadow-xs);
+}
+
+/* Hamburger / icon buttons */
+.topbar-menu-btn,
+.icon-btn {
+  width:        38px;
+  height:       38px;
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.topbar-menu-btn:hover,
+.icon-btn:hover {
+  background: var(--bg-alt);
+  color:      var(--text-main);
+}
+.topbar-menu-btn:focus-visible,
+.icon-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+/* Hidden on desktop; JS or media query reveals it */
+.topbar-menu-btn { display: none; }
+
+/* Title / subtitle */
+.topbar-title {
+  flex:        1;
+  font-size:   1.05rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  line-height: 1.2;
+  letter-spacing: -.01em;
+  display:     flex;
+  flex-direction: column;
+  gap:         .1rem;
+}
+.topbar-title small {
+  font-size:   .72rem;
+  font-weight: 400;
+  color:       var(--text-muted);
+  letter-spacing: 0;
+}
+
+.topbar-actions {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-shrink: 0;
+}
+
+/* ── Scan Mode Area (fulfillment-specific) ──────────────── */
+.topbar-scan-area {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-shrink: 0;
+}
+
+.scan-mode-btn {
+  display:      inline-flex;
+  align-items:  center;
+  gap:          .35rem;
+  height:       34px;
+  padding:      0 .875rem;
+  font-family:  var(--font-body);
+  font-size:    .82rem;
+  font-weight:  600;
+  color:        var(--text-muted);
+  background:   var(--bg-alt);
+  border:       1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), border-color var(--ease), box-shadow var(--ease);
+  user-select:  none;
+  white-space:  nowrap;
+}
+.scan-mode-btn:hover {
+  border-color: var(--info);
+  color:        var(--info);
+  background:   var(--info-pale);
+}
+/* Active / pressed state when scan mode is enabled */
+.scan-mode-btn.scan-mode-active,
+.scan-mode-btn[aria-pressed="true"] {
+  background:   var(--info);
+  color:        #fff;
+  border-color: var(--info);
+  box-shadow:   0 0 0 3px rgba(25,118,210,.25), inset 0 1px 3px rgba(0,0,0,.15);
+}
+.scan-mode-btn:focus-visible {
+  outline:        2px solid var(--info);
+  outline-offset: 2px;
+}
+
+/* Hidden scanner input — becomes visible when scan mode active */
+.scan-input-hidden {
+  position: absolute;
+  left:     -9999px;
+  opacity:  0;
+  width:    1px;
+  height:   1px;
+  pointer-events: none;
+}
+.scan-input-visible {
+  position:     static;
+  opacity:      1;
+  width:        180px;
+  height:       34px;
+  padding:      .35rem .65rem;
+  font-family:  var(--font-body);
+  font-size:    .82rem;
+  color:        var(--text-main);
+  background:   var(--bg-card);
+  border:       1.5px solid var(--info);
+  border-radius: var(--radius-sm);
+  pointer-events: auto;
+  transition:   box-shadow var(--ease);
+}
+.scan-input-visible:focus {
+  outline:   none;
+  box-shadow: 0 0 0 3px rgba(25,118,210,.18);
+}
+
+/* ── Notification Bell ──────────────────────────────────── */
+.notif-bell-btn {
+  position:     relative;
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  width:        38px;
+  height:       38px;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.notif-bell-btn:hover {
+  background: var(--warning-pale);
+  color:      var(--warning-text);
+}
+.notif-bell-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.notif-bell-badge {
+  position:      absolute;
+  top:           5px;
+  right:         5px;
+  min-width:     16px;
+  height:        16px;
+  background:    var(--error);
+  color:         #fff;
+  font-size:     .58rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  display:       flex;
+  align-items:   center;
+  justify-content: center;
+  padding:       0 3px;
+  line-height:   1;
+  border:        2px solid #fff;
+  pointer-events: none;
+}
+
+/* ── Staff Refresh Button ───────────────────────────────── */
+.staff-refresh-btn {
+  display:      inline-flex;
+  align-items:  center;
+  justify-content: center;
+  width:        34px;
+  height:       34px;
+  border-radius: var(--radius-sm);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease), transform var(--ease);
+  flex-shrink:  0;
+}
+.staff-refresh-btn:hover {
+  background: var(--bg-alt);
+  color:      var(--text-main);
+  transform:  rotate(30deg);
+}
+.staff-refresh-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* ── Live Clock ─────────────────────────────────────────── */
+.staff-topbar-clock {
+  font-size:      .8rem;
+  font-weight:    600;
+  color:          var(--text-muted);
+  letter-spacing: .02em;
+  white-space:    nowrap;
+  flex-shrink:    0;
+}
+
+
+/* ============================================================
+   SECTION 11 · NOTIFICATION PANEL
+   ============================================================ */
+.notif-panel {
+  position:    absolute;
+  top:         calc(var(--topbar-height) + 4px);
+  right:       1rem;
+  z-index:     300;
+  width:       360px;
+  max-width:   calc(100vw - 2rem);
+  background:  var(--bg-card);
+  border:      1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:  var(--shadow-lg);
+  overflow:    hidden;
+  animation:   notif-in .18s ease both;
+}
+
+@keyframes notif-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.notif-panel-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         .75rem 1rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  font-size:       .875rem;
+  font-weight:     700;
+  color:           var(--text-main);
+}
+
+.notif-dismiss-all {
+  font-size:   .75rem;
+  font-weight: 600;
+  color:       var(--primary);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  padding:     .2rem .4rem;
+  border-radius: var(--radius-xs);
+  transition:  color var(--ease), background var(--ease);
+}
+.notif-dismiss-all:hover {
+  color:      var(--primary-hover);
+  background: var(--primary-pale);
+}
+
+#notif-panel-body { max-height: 320px; overflow-y: auto; }
+
+/* Individual notification items */
+.notif-panel-item {
+  display:     flex;
+  align-items: flex-start;
+  gap:         .65rem;
+  padding:     .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  font-size:   .82rem;
+  line-height: 1.45;
+  transition:  background var(--ease);
+}
+.notif-panel-item:last-child { border-bottom: none; }
+.notif-panel-item:hover      { background: #FFF8E1; }
+
+/* Edit variant (customer changed order) */
+.notif-panel-item--edit:hover { background: var(--info-pale); }
+
+.notif-panel-icon {
+  font-size:   1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-top:  .1rem;
+}
+
+
+/* ============================================================
+   SECTION 12 · CANCEL OVERLAY (full-screen urgent alert)
+   ============================================================ */
+.cancel-overlay {
+  position:        fixed;
+  inset:           0;
+  z-index:         9000;
+  background:      rgba(183,28,28,.92);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  display:         none;        /* JS sets display:flex */
+  align-items:     center;
+  justify-content: center;
+  animation:       cancel-flash .5s ease;
+}
+
+@keyframes cancel-flash {
+  0%   { background: rgba(183,28,28,.4); }
+  50%  { background: rgba(183,28,28,.98); }
+  100% { background: rgba(183,28,28,.92); }
+}
+
+.cancel-overlay-inner {
+  text-align:    center;
+  padding:       2.5rem 2rem;
+  max-width:     480px;
+  color:         #fff;
+}
+
+.cancel-overlay-icon {
+  font-size:     3.5rem;
+  line-height:   1;
+  margin-bottom: .75rem;
+  animation:     icon-bounce .4s ease infinite alternate;
+}
+@keyframes icon-bounce {
+  from { transform: scale(1); }
+  to   { transform: scale(1.12); }
+}
+
+.cancel-overlay-inner h2 {
+  font-family:   var(--font-display);
+  font-size:     2rem;
+  font-weight:   800;
+  color:         #fff;
+  margin-bottom: .5rem;
+  letter-spacing: -.02em;
+}
+.cancel-overlay-inner p {
+  font-size:     1.05rem;
+  color:         rgba(255,255,255,.85);
+  margin-bottom: 1.5rem;
+  line-height:   1.55;
+}
+
+
+/* ============================================================
+   SECTION 13 · STAFF PAGES (page-level shell)
+   ============================================================ */
+.staff-page {
+  display: none;
+  flex:    1;
+  flex-direction: column;
+  width:   100%;    /* ← guarantees page fills its column */
+}
+.staff-page.active {
+  display:    block;
+  animation:  view-in .2s ease both;
+  padding:    1.5rem 1.75rem;
+  width:      100%;
+  box-sizing: border-box;
+}
+@keyframes view-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* Page header row (title + filter controls) */
+.staff-page-header {
+  display:         flex;
+  align-items:     center;       /* ← vertically align title and controls */
+  justify-content: space-between;
+  gap:             .75rem;
+  margin-bottom:   1rem;
+  flex-wrap:       wrap;
+}
+
+/* Title block — prevent it from stretching and pushing controls off */
+.staff-page-header > div:first-child {
+  flex:     1;
+  min-width: 0;
+}
+
+/* Controls/filter row — keep it compact and right-aligned */
+.staff-page-header .staff-filter-row {
+  flex-shrink: 0;
+  flex-wrap:   nowrap;   /* ← stop Zone View + search from wrapping to new line */
+}
+.staff-page-header h2 {
+  font-size:   1.25rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  margin-bottom: .15rem;
+}
+
+/* Sub-text below page title */
+.staff-page-sub {
+  font-size:  .875rem;
+  color:      var(--text-muted);
+  line-height: 1.5;
+}
+
+/* Filter row (search inputs + action buttons) */
+.staff-filter-row {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-wrap:   wrap;
+}
+
+.staff-filter-input {
+  height:     38px;
+  min-width:  160px;
+  max-width:  220px;
+  font-size:  .875rem;
+}
+
+
+/* ============================================================
+   SECTION 14 · STAFF PANEL  (mirrors .admin-panel exactly)
+   ============================================================ */
+.staff-panel {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  margin-bottom: 1.25rem;
+}
+.dashboard-grid .staff-panel,
+.settings-grid  .staff-panel {
+  margin-bottom: 0;
+}
+.staff-panel--spaced { margin-bottom: .75rem; }
+
+/* Reuse shared panel sub-elements (panel-header etc.) */
+.panel-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             .75rem;
+  padding:         .875rem 1.125rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  flex-wrap:       wrap;
+  min-height:      52px;
+}
+
+/* All Orders filter bar — force filters into a single horizontal row */
+.panel-header .filter-bar {
+  flex-shrink: 0;
+  flex-wrap:   nowrap;
+  gap:         .5rem;
+}
+
+/* Constrain the filter inputs so they don't push the table wide */
+.panel-header .filter-bar .form-input,
+.panel-header .filter-bar .staff-filter-input {
+  min-width:  120px;
+  max-width:  200px;
+  width:      auto;
+}
+
+/* Also keep .admin-panel for any shared partial templates */
+.admin-panel {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  margin-bottom: 1.25rem;
+}
+.dashboard-grid .admin-panel,
+.settings-grid  .admin-panel {
+  margin-bottom: 0;
+}
+.admin-panel--spaced { margin-bottom: .75rem; }
+
+.panel-title {
+  font-family:    var(--font-body);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+}
+.panel-title small {
+  font-size:   .78rem;
+  font-weight: 400;
+  color:       var(--text-muted);
+  margin-left: .4rem;
+}
+
+.panel-controls {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-wrap:   wrap;
+}
+
+.panel-body { padding: 1.125rem; }
+.panel-body.no-pad  { padding: 0; overflow-x: auto; } /* ← tables scroll inside, page doesn't clip */
+.panel-body--flush-bottom { padding-bottom: 0; }
+
+/* Ensure tables inside scroll wrappers always lay out at natural width */
+.panel-body.no-pad > .data-table {
+  min-width: 720px;  /* prevents columns from crushing before scroll kicks in */
+}
+
+.panel-hint {
+  font-size:     .82rem;
+  color:         var(--text-muted);
+  line-height:   1.6;
+  padding:       .625rem 1.125rem;
+  background:    #FAFBFC;
+  border-radius: 0 0 var(--radius-md) var(--radius-md);
+  border-top:    1px solid var(--border); /* ← visually anchors hint below header */
+}
+.panel-hint strong { color: var(--text-main); }
+.panel-hint em     { color: var(--primary); font-style: normal; font-weight: 600; }
+.panel-hint strong { color: var(--text-main); }
+.panel-hint em     { color: var(--primary); font-style: normal; font-weight: 600; }
+
+
+/* ============================================================
+   SECTION 15 · QUEUE SUMMARY BAR
+   ============================================================ */
+.queue-summary-bar {
+  display:       flex;
+  align-items:   center;
+  gap:           .5rem;
+  flex-wrap:     wrap;
+  padding:       .625rem 0;
+  margin-bottom: .875rem;
+}
+
+.queue-stat-pill {
+  display:       inline-flex;
+  align-items:   center;
+  gap:           .3rem;
+  padding:       .3rem .75rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size:     .82rem;
+  font-weight:   500;
+  color:         var(--text-muted);
+  box-shadow:    var(--shadow-xs);
+  white-space:   nowrap;
+}
+
+.qsp-icon { font-size: .9rem; line-height: 1; }
+
+.qsp-val {
+  font-weight: 700;
+  color:       var(--text-main);
+  min-width:   1ch;
+}
+
+
+/* ============================================================
+   SECTION 16 · QUEUE CARDS  (packing queue + returns)
+   ============================================================ */
+.queue-card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid transparent;
+  border-radius: var(--radius-md);
+  margin-bottom: .875rem;
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+  transition:    box-shadow var(--ease);
+}
+.queue-card:hover { box-shadow: var(--shadow-md); }
+
+/* Priority states */
+.queue-card.priority-urgent {
+  border-left-color: var(--error);
+  background: linear-gradient(to right, rgba(211,47,47,.025) 0%, transparent 36px);
+}
+.queue-card.priority-normal {
+  border-left-color: var(--success);
+}
+
+/* Card header */
+.queue-card-header {
+  display:         flex;
+  align-items:     center;
+  gap:             .6rem;
+  padding:         .75rem 1rem;
+  border-bottom:   1px solid var(--border);
+  background:      #FAFBFC;
+  flex-wrap:       wrap;
+}
+
+.queue-checkbox-wrap {
+  display:     flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.queue-checkbox {
+  width:        16px;
+  height:       16px;
+  cursor:       pointer;
+  accent-color: var(--primary);
+  flex-shrink:  0;
+}
+.queue-checkbox:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.queue-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+}
+
+.queue-delivery-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .6rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--info-pale);
+  color:         var(--info-text);
+  white-space:   nowrap;
+}
+
+.queue-urgency-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .6rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--error-pale);
+  color:         var(--error-text);
+  white-space:   nowrap;
+  animation:     urgency-pulse 1.6s ease infinite;
+}
+@keyframes urgency-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: .65; }
+}
+
+/* Badge applied by JS when customer edits order */
+.queue-edit-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .15rem .45rem;
+  font-size:     .68rem;
+  font-weight:   700;
+  border-radius: var(--radius-pill);
+  background:    var(--orange);
+  color:         #fff;
+  margin-left:   .35rem;
+  white-space:   nowrap;
+  flex-shrink:   0;
+}
+
+.queue-card-header-actions {
+  margin-left: auto;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-shrink: 0;
+}
+
+/* Card body — three-column layout */
+.queue-card-body {
+  display:   grid;
+  grid-template-columns: 1fr 1.5fr .85fr;
+  gap:       .875rem 1rem;
+  padding:   .875rem 1rem;
+  align-items: start;
+}
+
+.queue-col-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .25rem;
+}
+
+.queue-customer-col,
+.queue-items-col,
+.queue-action-col { min-width: 0; }
+
+.queue-customer-name {
+  font-weight: 600;
+  color:       var(--text-main);
+  font-size:   .875rem;
+  line-height: 1.3;
+}
+
+.queue-customer-detail {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.5;
+}
+
+.queue-items-list-wrap { min-height: 1.5rem; }
+
+.queue-items-list {
+  list-style: none;
+  margin:     0;
+  padding:    0;
+  display:    flex;
+  flex-direction: column;
+  gap:        .25rem;
+}
+.queue-items-list li {
+  display:    flex;
+  align-items: center;
+  gap:        .4rem;
+  font-size:  .82rem;
+  color:      var(--text-main);
+  line-height: 1.3;
+}
+
+.queue-item-catch {
+  font-size:   .7rem;
+  color:       var(--orange);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.queue-items-more {
+  font-size:  .72rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  font-style: italic;
+}
+
+.queue-action-col {
+  display:        flex;
+  flex-direction: column;
+  align-items:    stretch;      /* ← all child buttons fill the column */
+  gap:            .5rem;
+  min-width:      130px;
+}
+
+/* Primary pack/action button — full-width inside action col */
+.queue-action-col .btn-primary,
+.queue-action-col .btn-action-green {
+  width:        100%;
+  justify-content: center;
+  min-height:   38px;
+  font-size:    .82rem;
+  background:   linear-gradient(135deg, var(--primary) 0%, var(--primary-hover) 100%);
+  box-shadow:   0 2px 8px rgba(46,125,50,.3);
+}
+.queue-action-col .btn-primary:hover,
+.queue-action-col .btn-action-green:hover {
+  box-shadow:  0 4px 14px rgba(46,125,50,.4);
+  transform:   translateY(-1px);
+}
+
+/* Secondary buttons inside action col */
+.queue-action-col .btn-action,
+.queue-action-col .btn-outline {
+  width:        100%;
+  justify-content: center;
+  min-height:   34px;
+  font-size:    .78rem;
+}
+
+.queue-est-total {
+  display:        flex;
+  flex-direction: column;
+  gap:            .1rem;
+  font-size:      .72rem;
+  color:          var(--text-muted);
+  font-weight:    500;
+}
+.queue-est-total strong {
+  font-family: var(--font-display);
+  font-size:   1.05rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  line-height: 1.1;
+}
+
+
+/* ============================================================
+   SECTION 17 · PACKED CARDS  (assign riders page)
+   ============================================================ */
+.packed-card {
+  display:       flex;
+  align-items:   center;
+  gap:           1rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid var(--info);
+  border-radius: var(--radius-md);
+  padding:       .875rem 1rem;
+  margin-bottom: .75rem;
+  box-shadow:    var(--shadow-sm);
+  flex-wrap:     wrap;
+  transition:    box-shadow var(--ease);
+}
+.packed-card:hover { box-shadow: var(--shadow-md); }
+
+.packed-info {
+  flex:      1;
+  min-width: 0;
+}
+
+.packed-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  line-height:    1.2;
+}
+
+.packed-customer {
+  font-size:   .82rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  margin-top:  .2rem;
+}
+
+.packed-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.4;
+}
+
+.packed-final {
+  text-align:  right;
+  flex-shrink: 0;
+}
+
+.packed-final-amount {
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  font-weight: 700;
+  color:       var(--primary);
+  line-height: 1.1;
+}
+
+.packed-final-label {
+  font-size:  .68rem;
+  color:      var(--text-muted);
+  margin-top: .15rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+/* Shared row of action buttons (packed, dispatch, all-orders) */
+.btn-actions-row {
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+  flex-shrink: 0;
+}
+
+/* Action button variants */
+.btn-action {
+  display:       inline-flex;
+  align-items:   center;
+  justify-content: center;
+  gap:           .3rem;
+  padding:       .3rem .75rem;
+  font-family:   var(--font-body);
+  font-size:     .78rem;
+  font-weight:   600;
+  border-radius: var(--radius-xs);
+  border:        1.5px solid transparent;
+  cursor:        pointer;
+  white-space:   nowrap;
+  min-height:    30px;
+  transition:    background var(--ease), color var(--ease), border-color var(--ease), transform var(--ease);
+  text-decoration: none;
+}
+.btn-action:hover  { transform: translateY(-1px); }
+.btn-action:active { transform: translateY(0); }
+
+.btn-action-blue {
+  background:  var(--info-pale);
+  color:       var(--info-text);
+  border-color: rgba(25,118,210,.3);
+}
+.btn-action-blue:hover {
+  background:  var(--info);
+  color:       #fff;
+  border-color: var(--info);
+}
+
+.btn-action-green {
+  background:  var(--success-pale);
+  color:       var(--success-text);
+  border-color: rgba(46,125,50,.3);
+}
+.btn-action-green:hover {
+  background:  var(--success);
+  color:       #fff;
+  border-color: var(--success);
+}
+
+.btn-action-muted {
+  background:  var(--bg-alt);
+  color:       var(--text-muted);
+  border-color: var(--border);
+}
+.btn-action-muted:hover {
+  background:  #E5E7EB;
+  color:       var(--text-main);
+  border-color: #9CA3AF;
+}
+.btn-action:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 18 · DISPATCH CARDS  (active dispatch page)
+   ============================================================ */
+.dispatch-card {
+  display:       flex;
+  align-items:   center;
+  gap:           1rem;
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-left:   4px solid var(--orange);
+  border-radius: var(--radius-md);
+  padding:       .875rem 1rem;
+  margin-bottom: .75rem;
+  box-shadow:    var(--shadow-sm);
+  flex-wrap:     wrap;
+  transition:    box-shadow var(--ease);
+}
+.dispatch-card:hover { box-shadow: var(--shadow-md); }
+
+.dispatch-status-indicator {
+  font-size:   1.8rem;
+  line-height: 1;
+  flex-shrink: 0;
+  animation:   dispatch-pulse 2s ease infinite;
+}
+@keyframes dispatch-pulse {
+  0%, 100% { transform: scale(1);    opacity: 1; }
+  50%       { transform: scale(1.1); opacity: .75; }
+}
+
+.dispatch-info {
+  flex:      1;
+  min-width: 0;
+}
+
+.dispatch-order-num {
+  font-family:    var(--font-display);
+  font-size:      .95rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  line-height:    1.2;
+}
+
+.dispatch-customer {
+  font-size:   .82rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  margin-top:  .2rem;
+}
+
+.dispatch-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  margin-top: .2rem;
+  line-height: 1.4;
+}
+
+.dispatch-total {
+  text-align:  right;
+  flex-shrink: 0;
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  font-weight: 700;
+  color:       var(--primary);
+}
+
+
+/* ============================================================
+   SECTION 19 · ZONE VIEW  (grouped assign-riders view)
+   ============================================================ */
+.zone-group-card {
+  background:    var(--bg-card);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  box-shadow:    var(--shadow-sm);
+  overflow:      hidden;
+}
+
+.zone-group-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  gap:             .75rem;
+  padding:         .75rem 1rem;
+  background:      #FAFBFC;
+  border-bottom:   1px solid var(--border);
+  flex-wrap:       wrap;
+}
+.zone-group-header > div {
+  display:     flex;
+  align-items: center;
+  gap:         .45rem;
+  font-weight: 700;
+  font-size:   .95rem;
+  color:       var(--text-main);
+}
+
+.zone-group-icon { font-size: 1rem; line-height: 1; }
+
+.zone-order-count {
+  font-size:     .72rem;
+  font-weight:   600;
+  color:         var(--text-muted);
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-pill);
+  padding:       .1rem .5rem;
+}
+
+.zone-batch-btn { flex-shrink: 0; }
+
+.zone-order-list { padding: .5rem 0; }
+
+.zone-order-row {
+  display:       grid;
+  grid-template-columns: 1fr 1.5fr 1fr auto auto;
+  gap:           .5rem;
+  align-items:   center;
+  padding:       .5rem 1rem;
+  font-size:     .82rem;
+  color:         var(--text-main);
+  border-bottom: 1px solid var(--border);
+  transition:    background var(--ease);
+}
+.zone-order-row:last-child { border-bottom: none; }
+.zone-order-row:hover      { background: #F0F7F0; }
+
+.zone-order-num {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size:   .82rem;
+  color:       var(--text-main);
+}
+
+/* Mini order list inside batch-assign modal */
+.zone-assign-order-list {
+  max-height:  200px;
+  overflow-y:  auto;
+  border:      1px solid var(--border);
+  border-radius: var(--radius-sm);
+  margin-bottom: .5rem;
+}
+
+.zone-mini-order {
+  padding:     .45rem .875rem;
+  font-size:   .82rem;
+  color:       var(--text-main);
+  border-bottom: 1px solid var(--border);
+  line-height: 1.4;
+}
+.zone-mini-order:last-child { border-bottom: none; }
+
+
+/* ============================================================
+   SECTION 20 · PACK ORDER MODAL — Pack-specific layout
+   ============================================================ */
+
+/* Staff modal overlay (used by pack, assign, POD, etc.) */
+.staff-modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.staff-modal-overlay[style*="flex"],
+.staff-modal-overlay.open {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+@keyframes modal-overlay-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* Staff modal box */
+.staff-modal {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     520px;
+  max-height:    calc(100vh - 2rem);
+  display:       flex;
+  flex-direction: column;
+  overflow:      hidden;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+}
+
+/* Pack order modal — extra wide for item list */
+.staff-modal.pack-modal-box,
+.pack-modal-box {
+  max-width: 680px;
+}
+
+@keyframes modal-in {
+  from { opacity: 0; transform: scale(.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1)   translateY(0);    }
+}
+
+/* Shared modal header / body / footer (used by both staff-modal and admin-modal) */
+.modal-header {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  padding:         1.125rem 1.25rem .875rem;
+  border-bottom:   1px solid var(--border);
+  flex-shrink:     0;
+  background:      #FAFBFC;
+}
+.modal-header h3 {
+  font-size:      1rem;
+  font-weight:    700;
+  color:          var(--text-main);
+  letter-spacing: -.01em;
+  display:        flex;
+  align-items:    center;
+  gap:            .4rem;
+}
+
+.modal-close-btn {
+  width:        32px;
+  height:       32px;
+  display:      flex;
+  align-items:  center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  color:        var(--text-muted);
+  background:   transparent;
+  border:       none;
+  cursor:       pointer;
+  transition:   background var(--ease), color var(--ease);
+  flex-shrink:  0;
+}
+.modal-close-btn:hover {
+  background: var(--error-pale);
+  color:      var(--error);
+}
+.modal-close-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.modal-body {
+  flex:        1;
+  overflow-y:  auto;
+  padding:     1.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-footer {
+  display:         flex;
+  align-items:     center;
+  justify-content: flex-end;
+  gap:             .5rem;
+  padding:         .875rem 1.25rem 1.125rem;
+  border-top:      1px solid var(--border);
+  flex-shrink:     0;
+  flex-wrap:       wrap;
+  background:      #FAFBFC;
+}
+
+/* Pack-modal order meta (inline with header) */
+.pack-modal-order-meta {
+  font-size:  .85rem;
+  color:      var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ── Customer Strip ─────────────────────────────────────── */
+.pack-customer-strip {
+  display:       grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap:           .625rem .875rem;
+  padding:       .875rem 1rem;
+  background:    linear-gradient(to right, #F0F7FF, #EEF2FF);
+  border:        1px solid #DBEAFE;
+  border-radius: var(--radius-sm);
+  margin-bottom: 1rem;
+}
+
+.pack-cs-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .1rem;
+}
+
+.pack-cs-val {
+  font-size:   .82rem;
+  font-weight: 600;
+  color:       var(--text-main);
+  line-height: 1.4;
+  word-break:  break-word;
+}
+
+/* ── Items Fieldset ─────────────────────────────────────── */
+.pack-items-fieldset {
+  border:        1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:       0;
+  margin-bottom: 1rem;
+}
+
+.pack-items-legend {
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  padding:        .35rem .75rem;
+  margin-left:    .5rem;
+  background:     var(--bg-card);
+  border-radius:  var(--radius-xs);
+}
+
+#pack-items-list { padding: .25rem 0; }
+
+/* ── Individual Pack Item Row ───────────────────────────── */
+.pack-item-row {
+  display:       grid;
+  grid-template-columns: 1fr auto auto;
+  gap:           .625rem .875rem;
+  align-items:   start;
+  padding:       .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  transition:    background var(--ease);
+}
+.pack-item-row:last-child { border-bottom: none; }
+.pack-item-row:hover      { background: var(--bg-alt); }
+
+/* Out-of-stock state — muted & strikethrough hint */
+.pack-item-row.oos-active {
+  opacity:    .55;
+  background: var(--error-pale);
+}
+.pack-item-row.oos-active .pack-item-name { text-decoration: line-through; }
+
+.pack-item-info { min-width: 0; }
+
+.pack-item-name {
+  font-size:   .875rem;
+  font-weight: 600;
+  color:       var(--text-main);
+  line-height: 1.3;
+  margin-bottom: .25rem;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+}
+
+.pack-item-catch-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .1rem .4rem;
+  font-size:     .65rem;
+  font-weight:   700;
+  border-radius: var(--radius-xs);
+  background:    #FFF3E0;
+  color:         #E65100;
+  border:        1px solid rgba(230,81,0,.25);
+  white-space:   nowrap;
+}
+
+.pack-item-fixed-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .1rem .4rem;
+  font-size:     .65rem;
+  font-weight:   700;
+  border-radius: var(--radius-xs);
+  background:    var(--info-pale);
+  color:         var(--info-text);
+  border:        1px solid rgba(25,118,210,.2);
+  white-space:   nowrap;
+}
+
+.pack-item-meta {
+  font-size:  .75rem;
+  color:      var(--text-muted);
+  line-height: 1.4;
+  margin-bottom: .35rem;
+}
+
+/* FIFO batch pill */
+.batch-pill {
+  display:       flex;
+  align-items:   center;
+  gap:           .35rem;
+  flex-wrap:     wrap;
+  padding:       .3rem .65rem;
+  font-size:     .72rem;
+  color:         var(--text-muted);
+  background:    #F0F9FF;
+  border:        1px solid #BAE6FD;
+  border-radius: var(--radius-xs);
+  margin-top:    .35rem;
+  line-height:   1.45;
+}
+
+.batch-change-btn {
+  display:       inline;
+  font-size:     .7rem;
+  font-weight:   600;
+  color:         var(--info);
+  background:    none;
+  border:        none;
+  cursor:        pointer;
+  padding:       0;
+  text-decoration: underline;
+  transition:    color var(--ease);
+}
+.batch-change-btn:hover { color: var(--info-text); }
+
+/* Remaining after pack preview */
+.batch-remaining-preview {
+  font-size:   .72rem;
+  color:       var(--text-muted);
+  margin-top:  .2rem;
+  font-style:  italic;
+}
+.batch-remaining-preview.low      { color: var(--warning-text); font-weight: 600; }
+.batch-remaining-preview.depleted { color: var(--error);        font-weight: 700; }
+
+/* Batch override dropdown */
+.batch-override-select {
+  margin-top:    .5rem;
+  padding:       .5rem .65rem;
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-xs);
+}
+
+.batch-override-label {
+  display:     block;
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  margin-bottom: .3rem;
+}
+
+.batch-override-sel {
+  width:     100%;
+  max-width: 340px;
+  height:    36px;
+  font-size: .82rem;
+}
+
+/* OOS toggle */
+.oos-toggle-row {
+  margin-top: .5rem;
+}
+
+.oos-toggle-label {
+  display:     flex;
+  align-items: center;
+  gap:         .4rem;
+  font-size:   .75rem;
+  font-weight: 500;
+  color:       var(--text-muted);
+  cursor:      pointer;
+  transition:  color var(--ease);
+}
+.oos-toggle-label:hover { color: var(--error); }
+
+.oos-checkbox {
+  width:        14px;
+  height:       14px;
+  cursor:       pointer;
+  accent-color: var(--error);
+}
+
+/* Split batch UI */
+.split-batch-area {
+  margin-top:    .5rem;
+  padding:       .65rem .75rem;
+  background:    #FFF8E1;
+  border:        1.5px solid var(--warning);
+  border-radius: var(--radius-sm);
+}
+
+.split-batch-header {
+  font-size:     .75rem;
+  font-weight:   700;
+  color:         var(--warning-text);
+  margin-bottom: .5rem;
+}
+
+.split-batch-row {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  margin-bottom: .4rem;
+}
+.split-batch-row:last-child { margin-bottom: 0; }
+
+.split-label {
+  flex:      1;
+  font-size: .75rem;
+  color:     var(--text-muted);
+  line-height: 1.3;
+}
+
+.split-wt-input {
+  width:      100px;
+  height:     34px;
+  padding:    .3rem .55rem;
+  font-family: var(--font-body);
+  font-size:  .82rem;
+  font-weight: 600;
+  color:      var(--text-main);
+  background: var(--bg-card);
+  border:     1.5px solid var(--border-input);
+  border-radius: var(--radius-xs);
+  text-align: right;
+  transition: border-color var(--ease), box-shadow var(--ease);
+  -moz-appearance: textfield;
+}
+.split-wt-input::-webkit-outer-spin-button,
+.split-wt-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.split-wt-input:focus {
+  outline:   none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.15);
+}
+.split-wt-input[readonly] {
+  background: #F3F4F6;
+  color:      var(--text-muted);
+  cursor:     not-allowed;
+}
+
+.split-unit {
+  font-size:  .72rem;
+  color:      var(--text-muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.split-batch-warning {
+  font-size:   .78rem;
+  color:       var(--error);
+  font-weight: 600;
+  margin-top:  .4rem;
+  line-height: 1.45;
+}
+
+/* Weight input turns amber when split is needed */
+.pack-weight-input.split-needed {
+  border-color: var(--warning);
+  box-shadow:   0 0 0 3px rgba(249,168,37,.2);
+}
+
+/* ── Weight & Subtotal columns ──────────────────────────── */
+.pack-item-weight-group {
+  min-width:  120px;
+  display:    flex;
+  flex-direction: column;
+  gap:        .3rem;
+  align-items: flex-end;
+}
+.pack-item-weight-group label {
+  font-size:   .65rem;
+  font-weight: 700;
+  color:       var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  align-self:  flex-start;
+}
+
+.pack-weight-input {
+  width:      110px;
+  height:     38px;
+  padding:    .35rem .6rem;
+  font-family: var(--font-body);
+  font-size:  .875rem;
+  font-weight: 600;
+  color:      var(--text-main);
+  background: var(--bg-card);
+  border:     1.5px solid var(--border-input);
+  border-radius: var(--radius-xs);
+  text-align: right;
+  transition: border-color var(--ease), box-shadow var(--ease);
+  -moz-appearance: textfield;
+}
+.pack-weight-input::-webkit-outer-spin-button,
+.pack-weight-input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.pack-weight-input:focus {
+  outline:   none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(46,125,50,.15);
+}
+.pack-weight-input:disabled {
+  background: #F3F4F6;
+  color:      var(--text-muted);
+  cursor:     not-allowed;
+}
+
+.pack-fixed-summary {
+  display:     flex;
+  align-items: center;
+  gap:         .4rem;
+  font-size:   .875rem;
+  color:       var(--text-main);
+  padding:     .35rem 0;
+}
+
+.pack-item-subtotal {
+  min-width:   72px;
+  text-align:  right;
+  font-family: var(--font-display);
+  font-size:   .95rem;
+  font-weight: 700;
+  color:       var(--primary);
+  align-self:  center;
+}
+
+/* ── Pack Total Strip ───────────────────────────────────── */
+.pack-total-strip {
+  background:    linear-gradient(to right, #F0FDF4, #F9FAFB);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding:       .75rem 1rem;
+  display:       flex;
+  flex-direction: column;
+  gap:           .35rem;
+}
+
+.pack-total-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       .875rem;
+  color:           var(--text-muted);
+  gap:             .5rem;
+}
+
+.pack-total-row.pack-grand-total {
+  border-top:    1px solid var(--border);
+  padding-top:   .5rem;
+  margin-top:    .15rem;
+  font-size:     .95rem;
+  font-weight:   700;
+  color:         var(--text-main);
+}
+.pack-total-row.pack-grand-total strong {
+  font-family: var(--font-display);
+  font-size:   1.15rem;
+  color:       var(--primary);
+}
+
+
+/* ============================================================
+   SECTION 21 · LEGACY MODAL SYSTEM
+   (batch-assign, detail, adjust-stock, dispatch-confirm,
+    prep-sheet — all use .modal-overlay / .modal-box / .modal-close)
+   ============================================================ */
+.modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.modal-overlay[style*="flex"] {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+.modal-box {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     600px;
+  max-height:    calc(100vh - 2rem);
+  overflow-y:    auto;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+  padding:       1.75rem 1.5rem 1.5rem;
+}
+
+.modal-box h2 {
+  font-size:     1.1rem;
+  font-weight:   700;
+  color:         var(--text-main);
+  margin-bottom: .75rem;
+}
+
+.modal-close {
+  position:    absolute;
+  top:         .875rem;
+  right:       .875rem;
+  width:       28px;
+  height:      28px;
+  display:     flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-xs);
+  font-size:   1rem;
+  font-weight: 700;
+  color:       var(--text-muted);
+  background:  transparent;
+  border:      none;
+  cursor:      pointer;
+  line-height: 1;
+  transition:  background var(--ease), color var(--ease);
+}
+.modal-close:hover {
+  background: var(--error-pale);
+  color:      var(--error);
+}
+.modal-close:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Admin modal (kept for backward compatibility with shared partials) */
+.admin-modal-overlay {
+  display:         none;
+  position:        fixed;
+  inset:           0;
+  background:      rgba(0,0,0,.45);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index:         500;
+  align-items:     center;
+  justify-content: center;
+  padding:         1rem;
+  overflow-y:      auto;
+}
+.admin-modal-overlay.open,
+.admin-modal-overlay[aria-hidden="false"] {
+  display:   flex;
+  animation: modal-overlay-in .18s ease both;
+}
+
+.admin-modal {
+  background:    var(--bg-card);
+  border-radius: var(--radius-lg);
+  box-shadow:    var(--shadow-modal);
+  width:         100%;
+  max-width:     480px;
+  max-height:    calc(100vh - 2rem);
+  display:       flex;
+  flex-direction: column;
+  overflow:      hidden;
+  animation:     modal-in .22s cubic-bezier(.34,1.4,.64,1) both;
+  position:      relative;
+}
+.admin-modal.wide { max-width: 780px; }
+
+/* Staff modal alias (for .admin-modal patterns used in staff context) */
+.staff-modal-overlay.admin-modal-overlay {
+  /* fused — staff portal may use admin-modal-overlay class too */
+}
+
+
+/* ============================================================
+   SECTION 22 · ORDER DETAIL MODAL CONTENT
+   ============================================================ */
+.detail-section {
+  margin-bottom: 1.25rem;
+}
+
+.detail-section-title {
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  border-bottom:  1px solid var(--border);
+  padding-bottom: .35rem;
+  margin-bottom:  .75rem;
+}
+
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:    .625rem .875rem;
+}
+
+.detail-info-item { min-width: 0; }
+
+.detail-info-label {
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  margin-bottom:  .1rem;
+}
+
+.detail-info-val {
+  font-size:   .875rem;
+  font-weight: 500;
+  color:       var(--text-main);
+  line-height: 1.45;
+  word-break:  break-word;
+}
+
+/* Items table inside detail modal */
+.detail-items-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .82rem;
+  margin-top:      .5rem;
+}
+.detail-items-table th {
+  padding:        .5rem .75rem;
+  text-align:     left;
+  font-size:      .65rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+.detail-items-table td {
+  padding:       .5rem .75rem;
+  border-bottom: 1px solid var(--border);
+  color:         var(--text-main);
+  vertical-align: middle;
+}
+.detail-items-table tbody tr:last-child td { border-bottom: none; }
+.detail-items-table tbody tr:hover { background: #F0F7F0; }
+
+/* Totals rows below item table */
+.detail-total-rows {
+  padding:    .75rem 0 0;
+  margin-top: .5rem;
+  border-top: 1px solid var(--border);
+  display:    flex;
+  flex-direction: column;
+  gap:        .3rem;
+}
+
+.detail-total-row {
+  display:         flex;
+  align-items:     center;
+  justify-content: space-between;
+  font-size:       .875rem;
+  color:           var(--text-muted);
+  padding:         .1rem 0;
+}
+.detail-total-row.grand {
+  font-size:   .95rem;
+  font-weight: 700;
+  color:       var(--text-main);
+  border-top:  1px solid var(--border);
+  padding-top: .4rem;
+  margin-top:  .2rem;
+}
+.detail-total-row.grand span:last-child {
+  font-family: var(--font-display);
+  font-size:   1.1rem;
+  color:       var(--primary);
+}
+
+/* Status / pay badges inside detail */
+.status-badge {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .2rem .55rem;
+  font-size:     .72rem;
+  font-weight:   700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space:   nowrap;
+  line-height:   1.3;
+  vertical-align: middle;
+  background:    #F3F4F6;
+  color:         #374151;
+}
+.pay-status-Paid,
+.pay-status-Verified    { background: var(--success-pale); color: var(--success-text); }
+.pay-status-Unpaid      { background: var(--error-pale);   color: var(--error-text);   }
+.pay-status-Refunded    { background: var(--warning-pale); color: var(--warning-text); }
+
+
+/* ============================================================
+   SECTION 23 · INVENTORY PAGE COMPONENTS
+   ============================================================ */
+
+/* Low-stock alert banner (above the table) */
+.inventory-alert-banner {
+  display:       flex;
+  align-items:   flex-start;
+  gap:           .65rem;
+  padding:       .75rem 1rem;
+  background:    var(--warning-bg);
+  border:        1.5px solid var(--warning);
+  border-radius: var(--radius-sm);
+  margin-bottom: .5rem;
+  animation:     fade-in .2s ease;
+}
+
+.alert-icon {
+  font-size:   1.1rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.alert-text {
+  font-size:  .875rem;
+  color:      var(--warning-dark);
+  line-height: 1.45;
+}
+.alert-text strong { color: var(--text-main); }
+
+/* Batch ID tag in inventory table */
+.batch-id-tag {
+  display:       inline-flex;
+  align-items:   center;
+  padding:       .15rem .5rem;
+  font-size:     .75rem;
+  font-weight:   700;
+  font-family:   var(--font-display);
+  background:    var(--bg-alt);
+  border:        1px solid var(--border);
+  border-radius: var(--radius-xs);
+  color:         var(--text-main);
+}
+
+/* Stock level bar */
+.stock-bar-wrap {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+}
+
+.stock-bar {
+  flex:          1;
+  height:        8px;
+  background:    var(--border);
+  border-radius: var(--radius-pill);
+  overflow:      hidden;
+  min-width:     60px;
+}
+
+.stock-bar-fill {
+  height:        100%;
+  border-radius: var(--radius-pill);
+  transition:    width .4s ease;
+  background:    var(--success);   /* default: green (ok) */
+}
+
+/* State modifiers on the wrap */
+.stock-ok     .stock-bar-fill { background: var(--success); }
+.stock-low    .stock-bar-fill { background: var(--warning); }
+.stock-critical .stock-bar-fill { background: var(--error); }
+
+.stock-val {
+  font-size:   .72rem;
+  font-weight: 600;
+  color:       var(--text-muted);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.stock-low     .stock-val    { color: var(--warning-text); }
+.stock-critical .stock-val  { color: var(--error-text);   }
+
+
+/* ============================================================
+   SECTION 24 · STAFF TABLE (prep sheet + general tables)
+   ============================================================ */
+/* General fulfillment table — shares most data-table rules */
+.staff-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .865rem;
+}
+.staff-table th {
+  padding:        .6rem 1rem;
+  text-align:     left;
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+.staff-table td {
+  padding:        .65rem 1rem;
+  vertical-align: middle;
+  border-bottom:  1px solid var(--border);
+  color:          var(--text-main);
+  line-height:    1.45;
+}
+.staff-table tbody tr:last-child td { border-bottom: none; }
+.staff-table tbody tr:hover { background: #F0F7F0; }
+
+/* Prep sheet specific modifier */
+.prep-sheet-table th:nth-child(2),
+.prep-sheet-table td:nth-child(2) { text-align: right; }
+.prep-sheet-table th:nth-child(3),
+.prep-sheet-table td:nth-child(3) { text-align: center; }
+
+/* Meta line above the prep sheet table */
+.prep-sheet-meta {
+  font-size:     .82rem;
+  color:         var(--text-muted);
+  padding:       .5rem 0 .875rem;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: .875rem;
+}
+
+
+/* ============================================================
+   SECTION 25 · DATA TABLE  (shared with admin CSS)
+   ============================================================ */
+.data-table {
+  width:           100%;
+  border-collapse: collapse;
+  font-size:       .865rem;
+}
+
+.data-table th {
+  padding:        .6rem 1rem;
+  text-align:     left;
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  background:     #FAFBFC;
+  border-bottom:  1px solid var(--border);
+  white-space:    nowrap;
+}
+
+.data-table td {
+  padding:        .7rem 1rem;
+  vertical-align: middle;
+  border-bottom:  1px solid var(--border);
+  color:          var(--text-main);
+  line-height:    1.45;
+}
+
+
+/* 1. Allow the table to grow vertically to fit wrapped text */
+#all-orders-table {
+  width: 100% !important;
+  table-layout: auto; /* Changed from fixed to allow natural wrapping */
+}
+
+/* 2. Enable text wrapping for all headers and cells */
+#all-orders-table th,
+#all-orders-table td {
+  white-space: normal;     /* Allows text to wrap to the next line */
+  word-wrap: break-word;   /* Forces long strings like emails to break */
+  overflow-wrap: break-word;
+  text-overflow: clip;     /* Removes the ellipsis (...) */
+  padding: .7rem .5rem;    /* Maintains vertical breathing room for multi-line rows */
+  vertical-align: top;     /* Aligns content to the top for better readability when wrapped */
+}
+
+/* 3. Specifically handle the customer column email */
+#all-orders-table td:nth-child(2) small {
+  display: block;
+  white-space: normal;
+  word-break: break-all;   /* Ensures long emails break anywhere to stay in the column */
+  color: var(--text-muted);
+  margin-top: 0.2rem;
+}
+
+/* 4. Ensure the Actions column stays compact but visible */
+#all-orders-table th:last-child,
+#all-orders-table td:last-child {
+  width: 120px;            /* Narrower width since buttons can now stack */
+  min-width: 100px;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr { transition: background var(--ease); }
+.data-table tbody tr:hover { background: #F0F7F0; }
+
+.data-table .td-actions {
+  white-space: nowrap;
+  display:     flex;
+  align-items: center;
+  gap:         .35rem;
+  flex-wrap:   wrap;
+  padding-top: .55rem;
+  padding-bottom: .55rem;
+}
+
+.table-loading {
+  text-align: center;
+  padding:    2.5rem 1rem;
+  color:      var(--text-muted);
+  font-size:  .875rem;
+  font-style: italic;
+}
+
+.table-empty {
+  display:        flex;
+  flex-direction: column;
+  align-items:    center;
+  justify-content: center;
+  gap:            .6rem;
+  padding:        3rem 1rem;
+  text-align:     center;
+  color:          var(--text-muted);
+}
+.table-empty span { font-size: 2rem; line-height: 1; opacity: .7; }
+.table-empty p    { font-size: .875rem; }
+
+
+/* ============================================================
+   SECTION 26 · FORMS
+   ============================================================ */
+.form-group {
+  display:        flex;
+  flex-direction: column;
+  gap:            .35rem;
+  margin-bottom:  1rem;
+}
+.form-group:last-child { margin-bottom: 0; }
+
+.form-group label,
+.form-field  label {
+  font-size:      .78rem;
+  font-weight:    600;
+  color:          var(--text-main);
+  text-transform: uppercase;
+  letter-spacing: .04em;
+  line-height:    1.3;
+}
+
+.form-input {
+  display:     block;
+  width:       100%;
+  height:      42px;
+  padding:     .5rem .75rem;
+  font-family: var(--font-body);
+  font-size:   .875rem;
+  font-weight: 400;
+  color:       var(--text-main);
+  background:  var(--bg-card);
+  border:      1.5px solid var(--border-input);
+  border-radius: var(--radius-sm);
+  appearance:  none;
+  -webkit-appearance: none;
+  transition:  border-color var(--ease), box-shadow var(--ease), background var(--ease);
+  line-height: 1.5;
+}
+.form-input::placeholder { color: var(--text-muted); opacity: .7; }
+.form-input:hover         { border-color: #9CA3AF; }
+.form-input:focus,
+.form-input:focus-visible {
+  outline:     none;
+  border-color: var(--border-focus);
+  box-shadow:  0 0 0 3px rgba(46,125,50,.18);
+  background:  var(--bg-card);
+}
+.form-input:disabled,
+.form-input[readonly] {
+  background:   #F3F4F6;
+  color:        var(--text-muted);
+  cursor:       not-allowed;
+  border-color: var(--border);
+}
+
+textarea.form-input {
+  height:     auto;
+  resize:     vertical;
+  min-height: 80px;
+  line-height: 1.55;
+}
+
+select.form-input {
+  background-image:    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236B7280' stroke-width='1.6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:   no-repeat;
+  background-position: right .7rem center;
+  padding-right:       2rem;
+  cursor:              pointer;
+}
+
+.form-row {
+  display:       grid;
+  grid-template-columns: 1fr 1fr;
+  gap:           .875rem;
+  margin-bottom: .875rem;
+}
+.form-row.single  { grid-template-columns: 1fr; }
+.form-row.fourths { grid-template-columns: repeat(4, 1fr); }
+.form-row:last-child { margin-bottom: 0; }
+
+.form-field {
+  display:        flex;
+  flex-direction: column;
+  gap:            .3rem;
+}
+
+.form-error {
+  font-size:   .82rem;
+  color:       var(--error);
+  font-weight: 500;
+  min-height:  1.2em;
+  margin-bottom: .5rem;
+}
+
+.form-section-divider {
+  font-size:      .72rem;
+  font-weight:    700;
+  letter-spacing: .07em;
+  text-transform: uppercase;
+  color:          var(--text-muted);
+  border-bottom:  1px solid var(--border);
+  padding-bottom: .35rem;
+  margin:         .875rem 0 .625rem;
+}
+.form-section-divider:first-child { margin-top: 0; }
+
+.field-hint {
+  font-size:  .72rem;
+  color:      var(--text-muted);
+  line-height: 1.4;
+  margin-top: .15rem;
+}
+
+.req {
+  color:       var(--error);
+  margin-left: .2rem;
+  font-weight: 700;
+}
+
+.filter-bar {
+  display:     flex;
+  align-items: center;
+  gap:         .5rem;
+  flex-wrap:   wrap;
+}
+
+.search-input-wrap {
+  position: relative;
+  display:  flex;
+  align-items: center;
+}
+.search-input-wrap svg {
+  position:       absolute;
+  left:           .65rem;
+  color:          var(--text-muted);
+  pointer-events: none;
+  flex-shrink:    0;
+}
+.search-input-wrap .form-input { padding-left: 2.1rem; }
+
+
+/* ============================================================
+   SECTION 27 · BUTTONS
+   ============================================================ */
+
+/* Primary */
+.btn-primary {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             .4rem;
+  padding:         .55rem 1.125rem;
+  font-family:     var(--font-body);
+  font-size:       .875rem;
+  font-weight:     600;
+  color:           #fff;
+  background:      var(--primary);
+  border:          1.5px solid var(--primary);
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+  text-decoration: none;
+  white-space:     nowrap;
+  min-height:      40px;
+  transition:
+    background   var(--ease),
+    border-color var(--ease),
+    box-shadow   var(--ease),
+    transform    var(--ease);
+  box-shadow:  0 1px 3px rgba(46,125,50,.3);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.btn-primary:hover {
+  background:  var(--primary-hover);
+  border-color: var(--primary-hover);
+  transform:   translateY(-1px);
+  box-shadow:  0 3px 10px rgba(46,125,50,.35);
+}
+.btn-primary:active {
+  background: var(--primary-active);
+  transform:  translateY(0);
+  box-shadow: none;
+}
+.btn-primary:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 3px;
+}
+.btn-primary:disabled {
+  opacity:   .55;
+  cursor:    not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Outline */
+.btn-outline {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             .4rem;
+  padding:         .55rem 1.125rem;
+  font-family:     var(--font-body);
+  font-size:       .875rem;
+  font-weight:     600;
+  color:           var(--text-main);
+  background:      var(--bg-card);
+  border:          1.5px solid var(--border-input);
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+  text-decoration: none;
+  white-space:     nowrap;
+  min-height:      40px;
+  transition:
+    background    var(--ease),
+    border-color  var(--ease),
+    color         var(--ease),
+    transform     var(--ease),
+    box-shadow    var(--ease);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  color:        var(--primary);
+  background:   var(--primary-pale);
+  transform:    translateY(-1px);
+  box-shadow:   0 2px 8px rgba(46,125,50,.12);
+}
+.btn-outline:active {
+  transform:  translateY(0);
+  box-shadow: none;
+}
+.btn-outline:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 3px;
+}
+.btn-outline:disabled {
+  opacity:   .5;
+  cursor:    not-allowed;
+  transform: none;
+}
+
+/* Danger */
+.btn-danger {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             .4rem;
+  padding:         .55rem 1.125rem;
+  font-family:     var(--font-body);
+  font-size:       .875rem;
+  font-weight:     600;
+  color:           #fff;
+  background:      var(--error);
+  border:          1.5px solid var(--error);
+  border-radius:   var(--radius-sm);
+  cursor:          pointer;
+  text-decoration: none;
+  white-space:     nowrap;
+  min-height:      40px;
+  transition:
+    background    var(--ease),
+    border-color  var(--ease),
+    box-shadow    var(--ease),
+    transform     var(--ease);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.btn-danger:hover {
+  background:  #B71C1C;
+  border-color: #B71C1C;
+  transform:   translateY(-1px);
+  box-shadow:  0 3px 10px rgba(211,47,47,.3);
+}
+.btn-danger:active {
+  transform:  translateY(0);
+  box-shadow: none;
+}
+.btn-danger:focus-visible {
+  outline:        2px solid var(--error);
+  outline-offset: 3px;
+}
+.btn-danger:disabled {
+  opacity:   .5;
+  cursor:    not-allowed;
+  transform: none;
+}
+
+/* Modifiers */
+.btn-sm     {
+  padding:      .3rem .875rem;
+  font-size:    .78rem;
+  min-height:   34px;           /* ← matches filter input height */
+  border-radius: var(--radius-xs);
+}
+.full-width { width: 100%; justify-content: center; margin-top: .25rem; }
+
+/* Toolbar action button: Select All, Prep Sheet, Zone View */
+#select-all-btn,
+#prep-sheet-btn,
+#zone-view-btn {
+  background:   var(--bg-card);
+  border:       1.5px solid var(--border-input);
+  color:        var(--text-main);
+  border-radius: var(--radius-sm);
+  font-weight:  600;
+  transition:   background var(--ease), border-color var(--ease),
+                color var(--ease), box-shadow var(--ease), transform var(--ease);
+  box-shadow:   var(--shadow-xs);
+}
+#select-all-btn:hover,
+#prep-sheet-btn:hover {
+  border-color: var(--primary);
+  color:        var(--primary);
+  background:   var(--primary-pale);
+  transform:    translateY(-1px);
+  box-shadow:   0 2px 8px rgba(46,125,50,.15);
+}
+#zone-view-btn:hover,
+#zone-view-btn[aria-pressed="true"] {
+  border-color: var(--info);
+  color:        var(--info-text);
+  background:   var(--info-pale);
+  transform:    translateY(-1px);
+  box-shadow:   0 2px 8px rgba(25,118,210,.15);
+}
+
+
+/* ============================================================
+   SECTION 28 · BADGES
+   ============================================================ */
+.badge {
+  display:       inline-flex;
+  align-items:   center;
+  justify-content: center;
+  padding:       .2rem .55rem;
+  font-family:   var(--font-body);
+  font-size:     .72rem;
+  font-weight:   700;
+  letter-spacing: .03em;
+  border-radius: var(--radius-pill);
+  white-space:   nowrap;
+  line-height:   1.3;
+  vertical-align: middle;
+  background:    #F3F4F6;
+  color:         #374151;
+}
+
+.badge-paid        { background: var(--success-pale); color: var(--success-text); }
+.badge-unpaid      { background: var(--error-pale);   color: var(--error-text);   }
+.badge-active      { background: var(--success-pale); color: var(--success-text); }
+.badge-archived    { background: #F3F4F6;              color: #6B7280; }
+.badge-blocked     { background: var(--error-pale);   color: var(--error-text);   }
+.badge-suspended   { background: var(--warning-pale); color: var(--warning-text); }
+.badge-featured    { background: #FFF8E1;              color: #E65100; }
+
+.badge-catch-weight,
+.badge-catch_weight { background: #E8F5E9; color: #2E7D32; }
+.badge-fixed-pack,
+.badge-fixed_pack   { background: var(--info-pale); color: var(--info-text); }
+.badge-per-piece,
+.badge-per_piece    { background: #F3E5F5; color: #7B1FA2; }
+
+.badge-pending         { background: var(--warning-pale); color: var(--warning-text); }
+.badge-packed          { background: var(--info-pale);    color: var(--info-text);    }
+.badge-out-for-delivery,
+.badge-out_for_delivery { background: #FFF3E0; color: #BF360C; }
+.badge-arrived         { background: #EDE7F6; color: #4527A0; }
+.badge-completed       { background: var(--success-pale); color: var(--success-text); }
+.badge-cancelled       { background: var(--error-pale);   color: var(--error-text);   }
+
+.unit-badge        { display: inline-flex; align-items: center; padding: .15rem .45rem; font-size: .68rem; font-weight: 700; letter-spacing: .04em; border-radius: var(--radius-xs); text-transform: lowercase; }
+.unit-badge-kg     { background: #E8F5E9; color: #2E7D32; }
+.unit-badge-pack   { background: #E3F2FD; color: #1565C0; }
+.unit-badge-piece  { background: #F3E5F5; color: #7B1FA2; }
+
+
+/* ============================================================
+   SECTION 29 · TOAST NOTIFICATIONS
+   ============================================================ */
+.toast {
+  position:    fixed;
+  bottom:      1.5rem;
+  right:       1.5rem;
+  z-index:     9990;
+  max-width:   360px;
+  min-width:   220px;
+  padding:     .75rem 1.125rem;
+  background:  #1F2937;
+  color:       #F9FAFB;
+  border-radius: var(--radius-md);
+  font-size:   .875rem;
+  font-weight: 500;
+  box-shadow:  var(--shadow-lg);
+  line-height: 1.45;
+  pointer-events: none;
+  opacity:     0;
+  transform:   translateY(10px);
+  transition:  opacity .2s ease, transform .2s ease;
+}
+.toast.show {
+  opacity:       1;
+  transform:     translateY(0);
+  pointer-events: auto;
+}
+.toast.success { background: var(--success); }
+.toast.error   { background: var(--error);   }
+.toast.warning { background: #E65100;        }
+.toast.info    { background: var(--info);    }
+
+#staff-toast { /* anchor to #staff-toast ID — inherits .toast rules above */ }
+
+
+/* ============================================================
+   SECTION 30 · PAGINATION
+   ============================================================ */
+.pagination {
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             .3rem;
+  padding:         .875rem 1rem;
+  border-top:      1px solid var(--border);
+  background:      #FAFBFC;
+  flex-wrap:       wrap;
+}
+
+.pagination button,
+.pagination .page-btn {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  width:           34px;
+  height:          34px;
+  font-family:     var(--font-body);
+  font-size:       .82rem;
+  font-weight:     600;
+  border-radius:   var(--radius-xs);
+  border:          1.5px solid var(--border);
+  background:      var(--bg-card);
+  color:           var(--text-main);
+  cursor:          pointer;
+  transition:      background var(--ease), border-color var(--ease), color var(--ease);
+}
+.pagination button:hover,
+.pagination .page-btn:hover {
+  border-color: var(--primary);
+  color:        var(--primary);
+  background:   var(--primary-pale);
+}
+.pagination button.active,
+.pagination .page-btn.active,
+.pagination button[aria-current="page"] {
+  background:   var(--primary);
+  border-color: var(--primary);
+  color:        #fff;
+}
+.pagination button:disabled,
+.pagination .page-btn:disabled { opacity: .4; cursor: not-allowed; }
+.pagination button:focus-visible,
+.pagination .page-btn:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   SECTION 31 · MISCELLANEOUS SHARED UTILITIES
+   ============================================================ */
+
+/* ============================================================
+   SCREEN PROTECTIONS (Hide Print Elements on Monitors)
+   ============================================================ */
+@media screen {
+  .print-only {
+    display: none !important;
+  }
+}
+
+   .bg-alt              { background: var(--bg-alt); }
+.order-number-font   { font-family: var(--font-display); }
+
+.logo-icon {
+  line-height: 1;
+  display:     inline-block;
+}
+
+details > summary {
+  cursor:     pointer;
+  list-style: none;
+  transition: color var(--ease);
+}
+details > summary::-webkit-details-marker { display: none; }
+details > summary:hover         { color: var(--primary-hover); }
+details > summary:focus-visible {
+  outline:        2px solid var(--primary);
+  outline-offset: 2px;
+  border-radius:  var(--radius-xs);
+}
+
+tr[style*="cursor:pointer"] { cursor: pointer; }
+
+/* Scrollbar — modal body and staff content areas */
+.modal-body::-webkit-scrollbar,
+.modal-box::-webkit-scrollbar,
+.staff-page::-webkit-scrollbar   { width: 5px; height: 5px; }
+.modal-body::-webkit-scrollbar-track,
+.modal-box::-webkit-scrollbar-track,
+.staff-page::-webkit-scrollbar-track { background: transparent; }
+.modal-body::-webkit-scrollbar-thumb,
+.modal-box::-webkit-scrollbar-thumb,
+.staff-page::-webkit-scrollbar-thumb {
+  background:    var(--border);
+  border-radius: 3px;
+}
+.modal-body::-webkit-scrollbar-thumb:hover,
+.modal-box::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+
+/* ============================================================
+   SECTION 32 · RESPONSIVE — TABLET  (≤1024px)
+   ============================================================ */
+@media (max-width: 1024px) {
+  .queue-card-body {
+    grid-template-columns: 1fr 1.2fr;
+  }
+  .queue-action-col { grid-column: span 2; }
+
+  .form-row.fourths { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ============================================================
+   SECTION 33 · RESPONSIVE — MOBILE  (≤768px)
+   ============================================================ */
+@media (max-width: 768px) {
+
+  /* Sidebar off-canvas */
+  .portal-sidebar {
+    transform:  translateX(-100%);
+    width:      272px;
+    transition: transform .26s cubic-bezier(.4,0,.2,1);
+  }
+  .portal-sidebar.open { transform: translateX(0); }
+
+  .portal-main  { margin-left: 0; }
+  .topbar-menu-btn { display: inline-flex; }
+
+  .portal-topbar { padding: 0 1rem; }
+
+  .staff-page.active { padding: 1rem .875rem; }
+
+  /* Queue card: stack columns */
+  .queue-card-body {
+    grid-template-columns: 1fr;
+  }
+  .queue-action-col { grid-column: span 1; }
+
+  /* Pack modal */
+  .staff-modal,
+  .staff-modal.pack-modal-box,
+  .pack-modal-box {
+    max-width:     100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-top:    auto;
+    max-height:    92vh;
+  }
+  .staff-modal-overlay[style*="flex"] {
+    align-items: flex-end;
+    padding:     0;
+  }
+
+  /* Admin modal mobile (for detail / batch-assign modals) */
+  .admin-modal,
+  .admin-modal.wide,
+  .modal-box {
+    max-width:     100%;
+    border-radius: var(--radius-md) var(--radius-md) 0 0;
+    margin-top:    auto;
+    max-height:    90vh;
+  }
+  .admin-modal-overlay.open,
+  .admin-modal-overlay[aria-hidden="false"],
+  .modal-overlay[style*="flex"] {
+    align-items: flex-end;
+    padding:     0;
+  }
+
+  /* Packed/dispatch cards */
+  .packed-card,
+  .dispatch-card {
+    flex-direction: column;
+    align-items:    flex-start;
+  }
+  .packed-final  { text-align: left; }
+  .dispatch-total { text-align: left; }
+
+  /* Zone order row — simplified */
+  .zone-order-row {
+    grid-template-columns: 1fr auto auto;
+  }
+  .zone-order-row > span:nth-child(3) { display: none; }
+
+  /* Topbar scan area: hide label, shrink */
+  .topbar-scan-area { gap: .3rem; }
+  .scan-input-visible { width: 130px; }
+
+  /* Staff filter row: wrap fully */
+  .staff-filter-row { width: 100%; }
+  .staff-filter-input { max-width: 100%; flex: 1; }
+
+  .form-row,
+  .form-row.fourths { grid-template-columns: 1fr; }
+
+  /* Toast */
+  .toast {
+    bottom: 1rem;
+    right:  1rem;
+    left:   1rem;
+    max-width: none;
+  }
+
+  /* Notif panel */
+  .notif-panel {
+    width: calc(100vw - 2rem);
+    right: 1rem;
+  }
+
+  /* Detail info grid */
+  .detail-info-grid { grid-template-columns: 1fr; }
+
+  /* Pack customer strip */
+  .pack-customer-strip { grid-template-columns: 1fr 1fr; }
+}
+
+
+/* ============================================================
+   SECTION 34 · RESPONSIVE — SMALL PHONES  (≤480px)
+   ============================================================ */
+@media (max-width: 480px) {
+  .topbar-title small  { display: none; }
+  .staff-topbar-clock  { display: none; }
+  .scan-mode-btn > span:last-child { display: none; } /* hide "Scan Mode" label text */
+
+  .pack-item-row {
+    grid-template-columns: 1fr;
+  }
+  .pack-item-weight-group { align-items: flex-start; }
+
+  .btn-actions-row { gap: .25rem; }
+  .btn-action      { font-size: .72rem; padding: .25rem .55rem; }
+
+  .modal-box { padding: 1.25rem 1rem 1.25rem; }
+
+  .queue-stat-pill { font-size: .75rem; padding: .25rem .55rem; }
+}
+
+
+/* ============================================================
+   SECTION 35 · PRINT STYLES
+   ============================================================ */
+@media print {
+
+/* Center documents but ONLY take up necessary width */
+  #prep-sheet-print,
+  #print-slip {
+    display: block !important;
+    width: max-content !important; /* Shrinks wrapper to fit the table exactly */
+    max-width: 100% !important;    /* Prevents it from bleeding off the paper */
+    margin: 0 auto !important;     /* Perfectly centers the snug box */
+    padding: 10mm 0 !important;    /* Top/bottom breathing room */
+  }
+
+  /* Let tables size naturally based on their text */
+  .slip-items-table, 
+  .prep-sheet-table {
+    width: auto !important;        /* Let the browser size columns based on text */
+    min-width: 350px;              /* Ensures it doesn't get too squished */
+  }
+
+  /* ── Hide all portal shell elements ───────────────────── */
+  .portal-sidebar,
+  .portal-topbar,
+  .portal-sidebar-overlay,
+  .notif-panel,
+  .cancel-overlay,
+  .btn-primary,
+  .btn-outline,
+  .btn-danger,
+  .btn-action,
+  .btn-actions-row,
+  .modal-footer,
+  .toast,
+  #staff-toast,
+  .topbar-scan-area,
+  .staff-refresh-btn,
+  .notif-bell-btn,
+  .staff-topbar-clock,
+  .staff-filter-row,
+  .queue-summary-bar,
+  .queue-checkbox-wrap,
+  .queue-card-header-actions,
+  .pagination,
+  .pack-items-fieldset ~ .modal-footer,
+  #select-all-btn,
+  #prep-sheet-btn,
+  #zone-view-btn {
+    display: none !important;
+  }
+
+  .portal-main      { margin-left: 0 !important; }
+  .staff-page.active { padding: 0 !important; }
+
+  /* Modal overlays become static / transparent for print */
+  .staff-modal-overlay,
+  .admin-modal-overlay,
+  .modal-overlay {
+    position:        static !important;
+    background:      none !important;
+    backdrop-filter: none !important;
+    padding:         0 !important;
+    display:         block !important;
+  }
+
+  .staff-modal,
+  .admin-modal,
+  .modal-box {
+    box-shadow:    none !important;
+    max-width:     none !important;
+    border-radius: 0 !important;
+    max-height:    none !important;
+    overflow:      visible !important;
+    animation:     none !important;
+  }
+
+  /* Only .print-only elements visible in print */
+  .print-only {
+    display: none;
+  }
+
+  /* Hides the main app and all modals whenever a print job is active via JS */
+  body:has([data-print-mode="active"]) #portal-app,
+  body:has([data-print-mode="active"]) #portal-login-screen,
+  body:has([data-print-mode="active"]) .staff-modal-overlay,
+  body:has([data-print-mode="active"]) .modal-overlay {
+      display: none !important;
+}
+
+/* Ensure the active print container is displayed */
+.print-only[data-print-mode="active"] {
+    display: block !important;
+}
+  /* Reset body */
+/* Reset body - CRITICAL: Break out of Flexbox for printing */
+  body, 
+  body.portal-body, 
+  body.portal-body--fulfillment {
+    display: block !important; 
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff;
+    color: #000;
+    font-size: 12px;
+  }
+
+  /* ── PACKING SLIP PRINT STYLES ─────────────────────────── */
+  .print-only { display: block; }
+
+  .slip-header {
+    display:         flex;
+    align-items:     baseline;
+    justify-content: space-between;
+    margin-bottom:   .5rem;
+  }
+
+  .slip-brand {
+    font-family: var(--font-display);
+    font-size:   1.35rem;
+    font-weight: 800;
+    color:       #111;
+  }
+
+  .slip-portal {
+    font-size:   .8rem;
+    color:       #555;
+    font-weight: 500;
+  }
+
+  .slip-hr {
+    border:          none;
+    border-top:      1.5px solid #333;
+    margin:          .5rem 0;
+  }
+
+  .slip-title {
+    font-family:   var(--font-display);
+    font-size:     1rem;
+    font-weight:   700;
+    margin-bottom: .5rem;
+    color:         #111;
+  }
+
+  .slip-meta-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap:    .3rem .875rem;
+    margin-bottom: .75rem;
+  }
+
+  .slip-meta-item { min-width: 0; }
+
+  .slip-meta-label {
+    font-size:      .6rem;
+    font-weight:    700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    color:          #666;
+    margin-bottom:  .05rem;
+  }
+
+  .slip-meta-val {
+    font-size:  .78rem;
+    color:      #111;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .slip-items-table {
+    width:           100%;
+    border-collapse: collapse;
+    font-size:       .78rem;
+    margin-bottom:   .5rem;
+  }
+  .slip-items-table th {
+    border-bottom: 1.5px solid #333;
+    padding:       .3rem .5rem;
+    text-align:    left;
+    font-size:     .65rem;
+    font-weight:   700;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+    color:         #555;
+  }
+  .slip-items-table td {
+    border-bottom: 1px solid #ddd;
+    padding:       .35rem .5rem;
+    color:         #111;
+    vertical-align: middle;
+  }
+  .slip-items-table tbody tr:last-child td { border-bottom: none; }
+
+  .slip-totals {
+    display:        flex;
+    flex-direction: column;
+    gap:            .2rem;
+    margin-top:     .5rem;
+    padding-top:    .4rem;
+    border-top:     1.5px solid #333;
+    max-width:      260px;
+    margin-left:    auto;
+  }
+
+  .slip-total-row {
+    display:         flex;
+    justify-content: space-between;
+    font-size:       .78rem;
+    color:           #333;
+  }
+
+  .slip-grand-row {
+    font-weight: 700;
+    font-size:   .95rem !important;
+    color:       #111 !important;
+    border-top:  1px solid #333;
+    padding-top: .3rem;
+    margin-top:  .15rem;
+  }
+
+  .slip-notes {
+    margin-top:    .75rem;
+    font-size:     .78rem;
+    color:         #333;
+    padding:       .4rem .6rem;
+    border:        1px dashed #999;
+    border-radius: 3px;
+    line-height:   1.5;
+  }
+
+  .slip-footer {
+    margin-top:  1rem;
+    text-align:  center;
+    font-size:   .72rem;
+    color:       #777;
+    line-height: 1.5;
+    border-top:  1px solid #ddd;
+    padding-top: .5rem;
+  }
+
+  /* ── THERMAL LABELS  (4×6 or 3×2 ratio) ───────────────── */
+  /*
+   * Standard thermal label sizes:
+   *   4×6 in → Shipping labels (e.g. Zebra ZPL)
+   *   3×2 in → Small item labels (40×60 mm equivalent)
+   * We target 3×2 inch (76×51 mm) for individual product labels.
+   * The .thermal-labels-area wraps all labels; each .thermal-label
+   * represents one discrete peel-off sticker.
+   */
+  .thermal-labels-area {
+    display:   block;
+    width:     100%;
+  }
+
+  .thermal-label {
+    display:        flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width:          3in;
+    height:         2in;
+    padding:        .18in .2in;
+    border:         1.5px solid #333;
+    margin-bottom:  .15in;
+    page-break-inside: avoid;
+    break-inside:   avoid;
+    font-family:    var(--font-body), sans-serif;
+    background:     #fff;
+    overflow:       hidden;
+  }
+
+  .tl-brand {
+    font-size:   7pt;
+    font-weight: 700;
+    color:       #555;
+    letter-spacing: .04em;
+  }
+
+  .tl-product {
+    font-family: var(--font-display), serif;
+    font-size:   13pt;
+    font-weight: 700;
+    color:       #111;
+    line-height: 1.1;
+    margin:      2pt 0;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .tl-order {
+    font-size:   8pt;
+    font-weight: 600;
+    color:       #333;
+    letter-spacing: .03em;
+  }
+
+  .tl-weight {
+    font-family: var(--font-display), serif;
+    font-size:   14pt;
+    font-weight: 800;
+    color:       #111;
+    letter-spacing: -.02em;
+  }
+
+  .tl-price {
+    font-size:   11pt;
+    font-weight: 700;
+    color:       #111;
+  }
+
+  .tl-customer {
+    font-size:   8pt;
+    font-weight: 600;
+    color:       #333;
+    white-space: nowrap;
+    overflow:    hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tl-date {
+    font-size:  7pt;
+    color:      #666;
+    margin-top: 1pt;
+  }
+
+  /* 4×6 label variant — swap width/height for shipping labels */
+  .thermal-label.label-4x6 {
+    width:  6in;
+    height: 4in;
+  }
+
+  /* ── PREP SHEET PRINT ───────────────────────────────────── */
+  .prep-sheet-meta {
+    font-size:  .75rem;
+    color:      #555;
+    margin-bottom: .5rem;
+  }
+
+  .prep-sheet-table th,
+  .prep-sheet-table td {
+    padding:  .35rem .5rem;
+    font-size: .78rem;
+  }
+}
